@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "o2aks-c512"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "o2aks-c512"
+  template:
+    metadata:
+      labels:
+        app: "o2aks-c512"
+    spec:
+      containers:
+        - name: "o2aks-c512"
+          image: "o2bionics.azurecr.io/o2aks"
+          ports:
+          - containerPort: 80
