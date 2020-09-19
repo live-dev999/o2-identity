@@ -1,5 +1,3 @@
-using System;
-
 namespace O2.Identity.Web.Models
 {
     public class ErrorViewModel
