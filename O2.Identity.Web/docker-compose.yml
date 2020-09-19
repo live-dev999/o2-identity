@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  o2.identity.web:
-    image: ${DOCKER_REGISTRY-}o2identity
-    build:
-      context: .
-      dockerfile: ./Dockerfile
