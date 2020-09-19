@@ -19,8 +19,8 @@ namespace O2.Identity.Web.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<O2User> _userManager;
+        private readonly SignInManager<O2User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
@@ -28,8 +28,8 @@ namespace O2.Identity.Web.Controllers
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public ManageController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
+          UserManager<O2User> userManager,
+          SignInManager<O2User> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
@@ -494,7 +494,7 @@ namespace O2.Identity.Web.Controllers
         {
             return string.Format(
                 AuthenicatorUriFormat,
-                _urlEncoder.Encode("TokenServiceApi"),
+                _urlEncoder.Encode("O2.Identity.Web"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

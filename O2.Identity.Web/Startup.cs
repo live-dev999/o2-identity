@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using O2.Identity.Web.Data;
@@ -25,7 +29,7 @@ namespace O2.Identity.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionString"]));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<O2User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -33,6 +37,17 @@ namespace O2.Identity.Web
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
+            // configure identity server with in-memory stores, keys, clients and scopes
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryPersistedGrants()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
+                .AddAspNetIdentity<O2User>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +66,8 @@ namespace O2.Identity.Web
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

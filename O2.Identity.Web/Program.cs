@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 using O2.Identity.Web.Data;
+using Microsoft.AspNetCore.Identity;
+using O2.Identity.Web.Models;
 
 namespace O2.Identity.Web
 {
@@ -12,23 +19,30 @@ namespace O2.Identity.Web
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+
                 try
                 {
+
                     var context = services.GetRequiredService<ApplicationDbContext>();
-                    InitDb.PreparaDb(context);
+
+                    var userManager = services.GetRequiredService<UserManager<O2User>>();
+                    // var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+                    IdentityDbInit.Initialize(context, userManager);
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occured while seeding the database");
+                    logger.LogError(ex, "An error occurred while seeding the AuthorizationServer database.");
                 }
             }
+
             host.Run();
         }
-
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

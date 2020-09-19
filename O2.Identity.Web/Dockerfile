@@ -3,14 +3,13 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
 WORKDIR /src
-COPY ["O2.Identity.Web.csproj", "./"]
-RUN dotnet restore "O2.Identity.Web.csproj"
+COPY ["O2.Identity.Web.csproj", ""]
+RUN dotnet restore "./O2.Identity.Web.csproj"
 COPY . .
-WORKDIR "/src/"
+WORKDIR "/src/."
 RUN dotnet build "O2.Identity.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
