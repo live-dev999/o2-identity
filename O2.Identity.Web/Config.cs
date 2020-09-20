@@ -18,6 +18,7 @@ namespace O2.Identity.Web
 
             urls.Add("Mvc", configuration.GetValue<string>("MvcClient"));
             urls.Add("BasketApi", configuration.GetValue<string>("BasketApiClient"));
+
             return urls;
 
         }
@@ -25,7 +26,7 @@ namespace O2.Identity.Web
         {
             return new List<ApiResource>
             {
-                 new ApiResource("basket", "Shopping Cart Api"),
+                 new ApiResource("basket", "Basket Api"),
                  new ApiResource("orders", "Ordering Api"),
             };
         }
@@ -81,12 +82,12 @@ namespace O2.Identity.Web
                     RedirectUris = { $"{clientUrls["BasketApi"]}/swagger/o2c.html" },
                     PostLogoutRedirectUris = { $"{clientUrls["BasketApi"]}/swagger/" },
 
-                    AllowedScopes = new List<string>
-                    {
+                     AllowedScopes = new List<string>
+                     {
 
                         "basket"
-                    }
-                }
+                     }
+        }
             };
         }
 
