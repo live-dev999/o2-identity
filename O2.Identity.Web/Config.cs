@@ -16,8 +16,8 @@ namespace O2.Identity.Web
         {
             Dictionary<string, string> urls = new Dictionary<string, string>();
 
-            urls.Add("Mvc", configuration.GetValue<string>("MvcClient"));
-            urls.Add("BasketApi", configuration.GetValue<string>("BasketApiClient"));
+            urls.Add("Mvc", "http://shop.antonmarkov.com");//configuration.GetValue<string>("MvcClient"));
+            urls.Add("BasketApi", "http://api-basket.o2bus.com");//configuration.GetValue<string>("BasketApiClient"));
 
             return urls;
 
