@@ -8,7 +8,7 @@ using O2.Identity.Web.Models;
 
 namespace O2.Identity.Web.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<O2User>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

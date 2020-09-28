@@ -2,11 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace O2.Identity.Web.Quickstart.Account
+using System;
+
+namespace IdentityServer4.Quickstart.UI
 {
     public class AccountOptions
     {
         public static bool ShowLogoutPrompt = true;
-        public static bool AutomaticRedirectAfterSignOut = false;
+        public static bool AutomaticRedirectAfterSignOut = true;
     }
 }

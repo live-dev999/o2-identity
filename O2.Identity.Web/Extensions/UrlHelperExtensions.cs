@@ -1,7 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using O2.Identity.Web.Controllers;
 
-namespace O2.Identity.Web.Extensions
+namespace Microsoft.AspNetCore.Mvc
 {
     public static class UrlHelperExtensions
     {

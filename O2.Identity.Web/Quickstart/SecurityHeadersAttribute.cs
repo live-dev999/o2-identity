@@ -5,7 +5,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace O2.Identity.Web.Quickstart
+namespace IdentityServer4.Quickstart.UI
 {
     public class SecurityHeadersAttribute : ActionFilterAttribute
     {

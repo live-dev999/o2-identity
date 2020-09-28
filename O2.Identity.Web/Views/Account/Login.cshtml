@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
 @model LoginViewModel
-@inject SignInManager<O2User> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager
 
 @{
     ViewData["Title"] = "Log in";
@@ -47,14 +47,6 @@
                     </p>
                 </div>
             </form>
-            
-                    
-            <br/>
-            <div>
-                <p>demo version</p>
-                <p>Login:demo@o2bionics.com</p>
-                <p>Password:Pass@word</p>
-            </div>
         </section>
     </div>
     <div class="col-md-6 col-md-offset-2">

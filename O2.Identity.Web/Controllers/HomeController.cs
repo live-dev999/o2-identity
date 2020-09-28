@@ -1,7 +1,13 @@
-﻿using System.Threading.Tasks;
-using IdentityServer4.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using O2.Identity.Web.Quickstart.Home;
+ 
+using IdentityServer4.Services;
+ 
+using IdentityServer4.Quickstart.UI;
 
 namespace O2.Identity.Web.Controllers
 {

@@ -12,7 +12,7 @@ using O2.Identity.Web.Data;
 using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 
-namespace O2.Identity.Web
+namespace TokenServiceApi
 {
     public class Startup
     {
@@ -27,9 +27,9 @@ namespace O2.Identity.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionString"]));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<O2User, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -45,7 +45,7 @@ namespace O2.Identity.Web
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
-                .AddAspNetIdentity<O2User>();
+                .AddAspNetIdentity<ApplicationUser>();
 
 
         }
