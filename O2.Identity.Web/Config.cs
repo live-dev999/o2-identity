@@ -27,6 +27,7 @@ namespace O2.Identity.Web
             return new List<ApiResource>
             {
                  new ApiResource("basket", "Basket Api"),
+                 new ApiResource("certificates", "Certificate Api"),
                  new ApiResource("orders", "Ordering Api"),
             };
         }
@@ -42,7 +43,7 @@ namespace O2.Identity.Web
                // new IdentityResources.Email()
             };
         }
-        public static IEnumerable<Client> GetClients(Dictionary<string, string> clientUrls)
+        public static IEnumerable<Client> GetClients()
         {
 
             return new List<Client>()
@@ -50,44 +51,63 @@ namespace O2.Identity.Web
                 new Client
                 {
                     ClientId = "mvc",
-                    ClientSecrets = new [] { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.Hybrid,
-
-                    RedirectUris = {$"{clientUrls["Mvc"]}/signin-oidc"},
-                    PostLogoutRedirectUris = {$"{clientUrls["Mvc"]}/signout-callback-oidc"},
-                    AllowAccessTokensViaBrowser = false,
-                    AllowOfflineAccess = true,
-                    RequireConsent = false,
-                    AlwaysIncludeUserClaimsInIdToken = true,
-                    AllowedScopes = new List<string>
+                    ClientSecrets = new []
                     {
-
+                        new Secret("secret".Sha256())
+                    },
+                    RedirectUris = {"http://localhost:5500/signin-oidc"},
+                    PostLogoutRedirectUris = {$"http://localhost:5500/signout-callback-oidc"},
+                    
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AllowAccessTokensViaBrowser = false,
+                    RequireConsent = false,
+                    
+                    AllowedScopes = new List<string>()
+                    {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                      //  IdentityServerConstants.StandardScopes.Email,
-                         "orders",
+                        "orders",
                         "basket",
-
+                        "certificates"
                     }
+                    
+                    //
+                    // RedirectUris = {$"{clientUrls["Mvc"]}/signin-oidc"},
+                    // PostLogoutRedirectUris = {$"{clientUrls["Mvc"]}/signout-callback-oidc"},
+                    // AllowAccessTokensViaBrowser = false,
+                    // AllowOfflineAccess = true,
+                    // RequireConsent = false,
+                    // AlwaysIncludeUserClaimsInIdToken = true,
+                    // AllowedScopes = new List<string>
+                    // {
+                    //
+                    //     IdentityServerConstants.StandardScopes.OpenId,
+                    //     IdentityServerConstants.StandardScopes.Profile,
+                    //     IdentityServerConstants.StandardScopes.OfflineAccess,
+                    //   //  IdentityServerConstants.StandardScopes.Email,
+                    //      "orders",
+                    //     "basket",
+                    //
+                    // }
 
                 },
-                new Client
-                {
-                    ClientId = "basketswaggerui",
-                    ClientName = "Basket Swagger UI",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowAccessTokensViaBrowser = true,
-
-                    RedirectUris = { $"{clientUrls["BasketApi"]}/swagger/o2c.html" },
-                    PostLogoutRedirectUris = { $"{clientUrls["BasketApi"]}/swagger/" },
-
-                     AllowedScopes = new List<string>
-                     {
-
-                        "basket"
-                     }
-        }
+        //         new Client
+        //         {
+        //             ClientId = "basketswaggerui",
+        //             ClientName = "Basket Swagger UI",
+        //             AllowedGrantTypes = GrantTypes.Implicit,
+        //             AllowAccessTokensViaBrowser = true,
+        //
+        //             RedirectUris = { $"{clientUrls["BasketApi"]}/swagger/o2c.html" },
+        //             PostLogoutRedirectUris = { $"{clientUrls["BasketApi"]}/swagger/" },
+        //
+        //              AllowedScopes = new List<string>
+        //              {
+        //
+        //                 "basket"
+        //              }
+        // }
             };
         }
 

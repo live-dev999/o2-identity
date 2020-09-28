@@ -41,11 +41,15 @@ namespace O2.Identity.Web
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
+                .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<O2User>();
+            // .AddInMemoryPersistedGrants()
+            // .AddInMemoryIdentityResources(Config.GetIdentityResources())
+            //.AddInMemoryApiResources(Config.GetApiResources())
+            // .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
+            
 
 
         }

@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Mvc;
-using O2.Identity.Web.Quickstart.Home;
+using O2.Identity.Web.Models;
+
 
 namespace O2.Identity.Web.Controllers
 {
@@ -44,7 +45,7 @@ namespace O2.Identity.Web.Controllers
             var message = await _interaction.GetErrorContextAsync(errorId);
             if (message != null)
             {
-                vm.Error = message;
+                // vm.Error = message;
             }
 
             return View("Error", vm);
