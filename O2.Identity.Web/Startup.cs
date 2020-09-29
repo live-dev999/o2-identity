@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using O2.Identity.Web.Data;
-using O2.Identity.Web.Models;
-using O2.Identity.Web.Services;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace TokenServiceApi
+namespace O2.Identity.Web
 {
     public class Startup
     {
@@ -26,31 +25,7 @@ namespace TokenServiceApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["ConnectionString"];
-            Console.WriteLine($"ConnectionString = {connectionString}");
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddMvc();
-
-            // configure identity server with in-memory stores, keys, clients and scopes
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryPersistedGrants()
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
-                .AddAspNetIdentity<ApplicationUser>();
-
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,25 +34,15 @@ namespace TokenServiceApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-                app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
-            app.UseStaticFiles();
-
-            // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
-            app.UseIdentityServer();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseHttpsRedirection();
+            app.UseMvc();
         }
     }
 }
