@@ -1,35 +1,8 @@
 version: '3.4'
 
-networks:
-   frontend:
-   backend:
-
 services:
-
-  sql.data:
-    image: microsoft/mssql-server-linux:2017-latest
-    container_name: sqldatacontainer
-    environment:
-     - MSSQL_SA_PASSWORD=Pass@word
-     - ACCEPT_EULA=Y
-     - MSSQL_PID=Developer
-    ports:
-    - "5433:1433"
-    networks:
-    - backend
-
   o2.identity.web:
-    image: ${DOCKER_REGISTRY-}o2bionics/o2-identity.web:${PLATFORM:-linux}-${TAG:-latest}
+    image: ${DOCKER_REGISTRY-}o2identity
     build:
       context: .
-      dockerfile: Dockerfile
-    environment:
-      - ConnectionString=${O2_AZURE_CATALOG_DB:-Server=sql.data;Initial Catalog=O2Bionics.O2Platform.IdentityDb;User Id=sa;Password=Pass@word;}
-    networks:
-    - backend
-    ports:
-      - "5000:80"
-      - "5010:443"
-    depends_on:
-    - sql.data
-    
+      dockerfile: ./Dockerfile

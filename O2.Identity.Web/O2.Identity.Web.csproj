@@ -1,30 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-O2.Identity.Web-75CB7E4E-C6E5-40A7-8EF1-32E7DCF4AE46</UserSecretsId>
-	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	  <DockerfileContext>.</DockerfileContext>
-	  <DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-O2.Identity.Web-C45B673F-A204-4D5C-88E3-953B953E7EE6</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
 
-
   <ItemGroup>
-    <PackageReference Include="IdentityServer4" Version="2.0.1" />
-    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0"><PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
-<Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
-</PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+    <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
   </ItemGroup>
 
 </Project>
