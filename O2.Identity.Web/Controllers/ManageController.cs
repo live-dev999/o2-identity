@@ -495,7 +495,7 @@ namespace O2.Identity.Web.Controllers
         {
             return string.Format(
                 AuthenicatorUriFormat,
-                _urlEncoder.Encode("O2.Identity.Web"),
+                _urlEncoder.Encode("TokenServiceApi"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
