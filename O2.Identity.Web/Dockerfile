@@ -1,18 +1,21 @@
-﻿FROM microsoft/aspnetcore-build:2.0 AS build-env
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
 WORKDIR /app
+EXPOSE 80
 
-# copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
+WORKDIR /src
+COPY O2.Identity.Web.csproj ./
+RUN dotnet restore "./O2.Identity.Web.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "O2.Identity.Web.csproj" -c Release -o /app/build
 
-# copy everything else and build
-COPY . ./
+FROM build AS publish
+RUN dotnet publish "O2.Identity.Web.csproj" -c Release -o /app/publish
 
-RUN dotnet publish -c Release -o out
-
-# build runtime image
-FROM microsoft/aspnetcore:2.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
-EXPOSE 80/tcp
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "O2.Identity.Web.dll"]
