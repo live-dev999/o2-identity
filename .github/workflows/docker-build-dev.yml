@@ -18,7 +18,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@dev
+    - uses: actions/checkout@master
     - name: Build docker image
       id: build-image
       run: |
