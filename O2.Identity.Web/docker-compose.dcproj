@@ -3,9 +3,9 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}</ProjectGuid>
+    <ProjectGuid>{BD7F7CED-2A3B-4D60-9E32-7D67844CFDDF}</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>o2.identity.web</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

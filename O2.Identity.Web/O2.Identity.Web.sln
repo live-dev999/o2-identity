@@ -1,9 +1,9 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Identity.Web", "O2.Identity.Web.csproj", "{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Identity.Web", "O2.Identity.Web.csproj", "{0E4504AB-8D8B-454B-A900-B925EA4E0899}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BD7F7CED-2A3B-4D60-9E32-7D67844CFDDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +11,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4504AB-8D8B-454B-A900-B925EA4E0899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4504AB-8D8B-454B-A900-B925EA4E0899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4504AB-8D8B-454B-A900-B925EA4E0899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4504AB-8D8B-454B-A900-B925EA4E0899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD7F7CED-2A3B-4D60-9E32-7D67844CFDDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD7F7CED-2A3B-4D60-9E32-7D67844CFDDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD7F7CED-2A3B-4D60-9E32-7D67844CFDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD7F7CED-2A3B-4D60-9E32-7D67844CFDDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
