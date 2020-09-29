@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Identity.Web", "O2.Identity.Web.csproj", "{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7BEC855-5CEF-4298-A8B6-35AE6F1751C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{533031F3-4F74-4C61-8A96-21FE0FD1DB9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
