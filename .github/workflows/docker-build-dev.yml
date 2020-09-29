@@ -18,9 +18,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@dev
-      - name: Build docker image
-      - id: build-image
-        run: |
-          docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionics.azurecr.io/o2-identity-web:${{ github.sha }}
-          docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionics/o2-identity-web:${{ github.sha }}
+    - uses: actions/checkout@dev
+    - name: Build docker image
+    - id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionics.azurecr.io/o2-identity-web:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionics/o2-identity-web:${{ github.sha }}
