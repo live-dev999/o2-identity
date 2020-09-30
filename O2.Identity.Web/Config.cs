@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+using System;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
@@ -16,9 +17,15 @@ namespace O2.Identity.Web
         {
             Dictionary<string, string> urls = new Dictionary<string, string>();
 
-            urls.Add("Mvc", configuration.GetValue<string>("MvcClient"));
-            urls.Add("basket", configuration.GetValue<string>("BasketApi"));
-            urls.Add("orders", configuration.GetValue<string>("OrdersApi"));
+            urls.Add("Mvc", Environment.GetEnvironmentVariable("MvcClient") ?? configuration["MvcClient"]);
+            urls.Add("basket", Environment.GetEnvironmentVariable("BasketApi") ??  configuration["BasketApi"]);
+            urls.Add("orders", Environment.GetEnvironmentVariable("OrdersApi") ??  configuration["OrdersApi"]);
+
+            Console.WriteLine(" ========================= CONFIG IDENITY ========================== ");
+            foreach(var item in urls){
+                Console.WriteLine($"key={item.Key}   value={item.Value}");
+            } 
+            Console.WriteLine(" ================= END SETTINGS ====================\r\n");
             return urls;
 
         }
