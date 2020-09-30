@@ -71,6 +71,38 @@ namespace O2.Identity.Web
 
                     }
 
+                },
+                new Client
+                {
+                    ClientId = "basketswaggerui",
+                    ClientName = "Basket Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{clientUrls["basket"]}/swagger/o2c.html" },
+                    PostLogoutRedirectUris = { $"{clientUrls["basket"]}/swagger/" },
+
+                    AllowedScopes = new List<string>
+                    {
+
+                        "basket"
+                    }
+                },
+                new Client
+                {
+                    ClientId = "orderswaggerui",
+                    ClientName = "Order Swagger UI",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = { $"{clientUrls["orders"]}/swagger/o2c.html" },
+                    PostLogoutRedirectUris = { $"{clientUrls["orders"]}/swagger/" },
+
+                    AllowedScopes = new List<string>
+                    {
+
+                        "orders"
+                    }
                 }
             };
         }
