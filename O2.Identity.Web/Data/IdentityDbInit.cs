@@ -13,7 +13,7 @@ namespace O2.Identity.Web.Data
         //This example just creates an Administrator role and one Admin users
         public static async void Initialize(
             ApplicationDbContext context,
-            UserManager<ApplicationUser> userManager)
+            UserManager<O2User> userManager)
         {
             //create database schema if none exists
             // _context.Database.EnsureCreated();
@@ -27,7 +27,7 @@ namespace O2.Identity.Web.Data
             //Create the default Admin account and apply the Administrator role
             string user = "demo@demo.com";
             string password = "P@ssword1";
-            await userManager.CreateAsync(new ApplicationUser { UserName = user, Email = user, EmailConfirmed = true }, password);
+            await userManager.CreateAsync(new O2User { UserName = user, Email = user, EmailConfirmed = true }, password);
             //   await userManager.AddToRoleAsync(await userManager.FindByNameAsync(user), "Administrator");
         }
 

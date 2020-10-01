@@ -34,7 +34,7 @@ namespace O2.Identity.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<O2User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -50,7 +50,7 @@ namespace O2.Identity.Web
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<O2User>();
 
 
         }

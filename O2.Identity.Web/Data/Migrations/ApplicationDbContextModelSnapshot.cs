@@ -125,7 +125,7 @@ namespace O2.Identity.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("O2.Identity.Web.Models.ApplicationUser", b =>
+            modelBuilder.Entity("O2.Identity.Web.Models.O2User", b =>
                 {
                     b.Property<string>("Id");
 
@@ -184,7 +184,7 @@ namespace O2.Identity.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("O2.Identity.Web.Models.ApplicationUser")
+                    b.HasOne("O2.Identity.Web.Models.O2User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -192,7 +192,7 @@ namespace O2.Identity.Web.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("O2.Identity.Web.Models.ApplicationUser")
+                    b.HasOne("O2.Identity.Web.Models.O2User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -205,7 +205,7 @@ namespace O2.Identity.Web.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("O2.Identity.Web.Models.ApplicationUser")
+                    b.HasOne("O2.Identity.Web.Models.O2User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

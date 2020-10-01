@@ -29,7 +29,7 @@ namespace O2.Identity.Web
                     logger.LogInformation("========== Starting Application ==========");
                     var context = services.GetRequiredService<ApplicationDbContext>();
 
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var userManager = services.GetRequiredService<UserManager<O2User>>();
                     // var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     IdentityDbInit.Initialize(context, userManager);
