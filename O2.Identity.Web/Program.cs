@@ -12,7 +12,7 @@ using O2.Identity.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using O2.Identity.Web.Models;
 
-namespace TokenServiceApi
+namespace O2.Identity.Web
 {
     public class Program
     {
@@ -23,20 +23,20 @@ namespace TokenServiceApi
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
+                var logger = services.GetRequiredService<ILogger<Program>>();
                 try
                 {
-
+                    logger.LogInformation("========== Starting Application ==========");
                     var context = services.GetRequiredService<ApplicationDbContext>();
 
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var userManager = services.GetRequiredService<UserManager<O2User>>();
                     // var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     IdentityDbInit.Initialize(context, userManager);
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    
                     logger.LogError(ex, "An error occurred while seeding the AuthorizationServer database.");
                 }
             }

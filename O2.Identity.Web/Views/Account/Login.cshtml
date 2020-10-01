@@ -3,34 +3,35 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
 @model LoginViewModel
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<O2User> SignInManager
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Вход в систему";
 }
 
 <h2>@ViewData["Title"]</h2>
 <div class="row">
     <div class="col-md-4">
         <section>
+            <img src="~/images/icon.jpg" alt="">
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
+                <h4>Используйте свой "O2 Account" для авторизации в системе.</h4>
+                <hr/>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control" />
+                    <input asp-for="Email" class="form-control"/>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
+                    <input asp-for="Password" class="form-control"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <label asp-for="RememberMe">
-                            <input asp-for="RememberMe" />
+                            <input asp-for="RememberMe"/>
                             @Html.DisplayNameFor(m => m.RememberMe)
                         </label>
                     </div>
@@ -47,37 +48,62 @@
                     </p>
                 </div>
             </form>
+
         </section>
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Use another service to log in.</h4>
+            <div>
+                <img src="~/images/brand.png" alt="">
+            
+            </div>
+            <br>
+            <h4>Подключайся и управляй своим бизнесом прямо тут и сейчас.</h4>
             <hr />
-            @{
-                var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-                if (loginProviders.Count == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in loginProviders)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
+            @*             @{ *@
+            @*                 var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList(); *@
+            @*                 if (loginProviders.Count == 0) *@
+            @*                 { *@
+             <div>
+                 <p>
+                      O2 Platform - это огромная микросервисная система с многообразием компонентов для вас и вашего бизнеса. Читать подробнее <a href="https://o2bus.com">официальный сайт</a>
+                     чтобы ознакомиться с платформой.
+                 </p>
+            
+            
+             </div>
+            @*                 } *@
+            @*                 else *@
+            @*                 { *@
+            @*                     <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal"> *@
+            @*                         <div> *@
+            @*                             <p> *@
+            @*                                 @foreach (var provider in loginProviders) *@
+            @*                                 { *@
+            @*                                     <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.Name</button> *@
+            @*                                 } *@
+            @*                             </p> *@
+            @*                         </div> *@
+            @*                     </form> *@
+            @*                 } *@
+            @*             } *@
+        </section>
+        <br>
+        <section>
+            <h4>Демо вход</h4>
+            <hr>
+            <div>
+                <p>Для проверки и демострации вы можете использовать демо режим.</p>
+                
+                <p style="font-weight: bold;">
+                    username = "demo@demo.com"; 
+                </p>
+                <p style="font-weight: bold;">
+                                     password = "P@ssword1";
+                 </p>
+                <hr>
+                <p>Внимание! В демо режиме могут быть недоступны некоторые функции продуктов.</p>
+            </div>
         </section>
     </div>
 </div>
