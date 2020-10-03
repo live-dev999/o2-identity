@@ -31,15 +31,15 @@ jobs:
     
     - name: Create namespace
       run: |
-        namespacePresent=`kubectl get namespace | grep o2identityweb | wc -l`
+        namespacePresent=`kubectl get namespace | grep o2platform | wc -l`
         if [ $namespacePresent -eq 0 ]
         then
-            echo `kubectl create namespace o2identityweb`
+            echo `kubectl create namespace o2platform`
         fi
 
     - uses: azure/k8s-create-secret@v1
       with:
-        namespace: o2identityweb
+        namespace: o2platform
         container-registry-url: o2bionics.azurecr.io
         container-registry-username: ${{ secrets.acr_o2bionics_username }}
         container-registry-password: ${{ secrets.acr_o2bionics_password }}
@@ -47,7 +47,7 @@ jobs:
        
     - uses: azure/k8s-deploy@v1
       with:
-        namespace: o2identityweb
+        namespace: o2platform
         manifests: |
           manifests/deployment.yml
           manifests/service.yml
