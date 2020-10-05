@@ -54,13 +54,13 @@ namespace O2.Identity.Web
                 // }
                     )
                 // this adds the operational data from DB (codes, tokens, consents)
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString);
-                    // this enables automatic token cleanup. this is optional.
-                    options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 30; // interval in seconds
-                })
+                // .AddOperationalStore(options =>
+                // {
+                //     options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString);
+                //     // this enables automatic token cleanup. this is optional.
+                //     options.EnableTokenCleanup = true;
+                //     options.TokenCleanupInterval = 30; // interval in seconds
+                // })
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
