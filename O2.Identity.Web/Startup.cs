@@ -35,8 +35,8 @@ namespace O2.Identity.Web
                 options.UseSqlServer(connectionString));
 
             services.AddIdentity<O2User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+                //.AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
