@@ -16,7 +16,8 @@ namespace O2.Identity.Web.Data
             UserManager<O2User> userManager)
         {
             //create database schema if none exists
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreatedAsync();
             context.Database.Migrate();
             //If there is already an Administrator role, abort
             //  if (context.Roles.Any(r => r.Name == "Administrator")) return;
