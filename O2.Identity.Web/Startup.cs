@@ -46,13 +46,13 @@ namespace O2.Identity.Web
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer(
                     //options =>
-                // {
-                //     options.Events.RaiseErrorEvents = true;
-                //     options.Events.RaiseInformationEvents = true;
-                //     options.Events.RaiseFailureEvents = true;
-                //     options.Events.RaiseSuccessEvents = true;
-                // }
-                    )
+                    // {
+                    //     options.Events.RaiseErrorEvents = true;
+                    //     options.Events.RaiseInformationEvents = true;
+                    //     options.Events.RaiseFailureEvents = true;
+                    //     options.Events.RaiseSuccessEvents = true;
+                    // }
+                )
                 // this adds the operational data from DB (codes, tokens, consents)
                 // .AddOperationalStore(options =>
                 // {
@@ -67,7 +67,9 @@ namespace O2.Identity.Web
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
                 .AddAspNetIdentity<O2User>();
-
+            //  .AddDataProtection()
+            // .SetApplicationName("fow-customer-portal")
+            // .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"/var/dpkeys/"));
 
         }
 
