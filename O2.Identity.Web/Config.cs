@@ -56,6 +56,25 @@ namespace O2.Identity.Web
             {
                 new Client
                 {
+                    ClientId = "o2business-spa",
+                    ClientName = "o2business-client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RedirectUris = {"http://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    AllowedScopes = new List<string>
+                    {
+
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        // IdentityServerConstants.StandardScopes.OfflineAccess,
+                        // IdentityServerConstants.StandardScopes.Email
+                    },
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600
+                },
+                new Client
+                {
                     ClientId = "mvc",
                     ClientSecrets = new [] { new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.Hybrid,
