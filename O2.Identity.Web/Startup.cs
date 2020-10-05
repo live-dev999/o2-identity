@@ -44,7 +44,23 @@ namespace O2.Identity.Web
             services.AddMvc();
 
             // configure identity server with in-memory stores, keys, clients and scopes
-            services.AddIdentityServer()
+            services.AddIdentityServer(
+                    //options =>
+                // {
+                //     options.Events.RaiseErrorEvents = true;
+                //     options.Events.RaiseInformationEvents = true;
+                //     options.Events.RaiseFailureEvents = true;
+                //     options.Events.RaiseSuccessEvents = true;
+                // }
+                    )
+                // this adds the operational data from DB (codes, tokens, consents)
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString);
+                    // this enables automatic token cleanup. this is optional.
+                    options.EnableTokenCleanup = true;
+                    options.TokenCleanupInterval = 30; // interval in seconds
+                })
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
