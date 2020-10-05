@@ -64,7 +64,6 @@ namespace O2.Identity.Web
                     AllowedCorsOrigins = {"http://app.o2bus.com"},
                     AllowedScopes = new List<string>
                     {
-
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         // IdentityServerConstants.StandardScopes.OfflineAccess,

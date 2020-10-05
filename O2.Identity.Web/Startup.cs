@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -35,8 +36,8 @@ namespace O2.Identity.Web
                 options.UseSqlServer(connectionString));
 
             services.AddIdentity<O2User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-                //.AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -45,15 +46,16 @@ namespace O2.Identity.Web
 
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer(
-                    //options =>
-                    // {
+                    
+                    options =>
+                     {
                     //     options.Events.RaiseErrorEvents = true;
                     //     options.Events.RaiseInformationEvents = true;
                     //     options.Events.RaiseFailureEvents = true;
                     //     options.Events.RaiseSuccessEvents = true;
-                    // }
+                     }
                 )
-                // this adds the operational data from DB (codes, tokens, consents)
+                // // this adds the operational data from DB (codes, tokens, consents)
                 // .AddOperationalStore(options =>
                 // {
                 //     options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString);
@@ -67,10 +69,11 @@ namespace O2.Identity.Web
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
                 .AddAspNetIdentity<O2User>();
-            //  .AddDataProtection()
+
             // .SetApplicationName("fow-customer-portal")
             // .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"/var/dpkeys/"));
-
+            services.AddDataProtection()
+                .SetDefaultKeyLifetime(TimeSpan.FromDays(30));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
