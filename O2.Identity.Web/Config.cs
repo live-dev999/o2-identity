@@ -18,13 +18,14 @@ namespace O2.Identity.Web
             Dictionary<string, string> urls = new Dictionary<string, string>();
 
             urls.Add("Mvc", Environment.GetEnvironmentVariable("MvcClient") ?? configuration["MvcClient"]);
-            urls.Add("basket", Environment.GetEnvironmentVariable("BasketApi") ??  configuration["BasketApi"]);
-            urls.Add("orders", Environment.GetEnvironmentVariable("OrdersApi") ??  configuration["OrdersApi"]);
+            urls.Add("basket", Environment.GetEnvironmentVariable("BasketApi") ?? configuration["BasketApi"]);
+            urls.Add("orders", Environment.GetEnvironmentVariable("OrdersApi") ?? configuration["OrdersApi"]);
 
             Console.WriteLine(" ========================= CONFIG IDENITY ========================== ");
-            foreach(var item in urls){
+            foreach (var item in urls)
+            {
                 Console.WriteLine($"key={item.Key}   value={item.Value}");
-            } 
+            }
             Console.WriteLine(" ================= END SETTINGS ====================\r\n");
             return urls;
 
@@ -59,9 +60,9 @@ namespace O2.Identity.Web
                     ClientId = "o2business-spa",
                     ClientName = "o2business-client",
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    RedirectUris = {"http://app.o2bus.com/auth-callback"},
-                    PostLogoutRedirectUris = {"http://app.o2bus.com/"},
-                    AllowedCorsOrigins = {"http://app.o2bus.com"},
+                    RedirectUris = {"http://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
