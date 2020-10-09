@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +39,9 @@ namespace O2.Identity.Web
             services.AddIdentity<O2User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            
+            services.AddDataProtection();
+            
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -45,22 +49,23 @@ namespace O2.Identity.Web
 
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer(
-                    //options =>
+                    
+                    options =>
+                     {
+                    //     options.Events.RaiseErrorEvents = true;
+                    //     options.Events.RaiseInformationEvents = true;
+                    //     options.Events.RaiseFailureEvents = true;
+                    //     options.Events.RaiseSuccessEvents = true;
+                     }
+                )
+                // // this adds the operational data from DB (codes, tokens, consents)
+                // .AddOperationalStore(options =>
                 // {
-                //     options.Events.RaiseErrorEvents = true;
-                //     options.Events.RaiseInformationEvents = true;
-                //     options.Events.RaiseFailureEvents = true;
-                //     options.Events.RaiseSuccessEvents = true;
-                // }
-                    )
-                // this adds the operational data from DB (codes, tokens, consents)
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString);
-                    // this enables automatic token cleanup. this is optional.
-                    options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 30; // interval in seconds
-                })
+                //     options.ConfigureDbContext = builder => builder.UseSqlServer(connectionString);
+                //     // this enables automatic token cleanup. this is optional.
+                //     options.EnableTokenCleanup = true;
+                //     options.TokenCleanupInterval = 30; // interval in seconds
+                // })
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
@@ -68,7 +73,14 @@ namespace O2.Identity.Web
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
                 .AddAspNetIdentity<O2User>();
 
-
+            // .SetApplicationName("fow-customer-portal")
+            // .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"/var/dpkeys/"));
+                // ----- finally Add this DataProtection -----
+                // var keysFolder = Path.Combine(WebHostEnvironment.ContentRootPath, "temp-keys");
+               
+                // .SetApplicationName("Your_Project_Name")
+                // .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
+                // .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,4 +110,5 @@ namespace O2.Identity.Web
             });
         }
     }
+
 }

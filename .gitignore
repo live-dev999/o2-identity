@@ -350,4 +350,6 @@ MigrationBackup/
 .ionide/
 .DS_Store
 **/*.idea
+**/tempkey.rsa
 
+*.rsa

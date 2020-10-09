@@ -26,9 +26,4 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="tempkey.rsa" />
-    <Content Include="tempkey.rsa" />
-  </ItemGroup>
-
 </Project>
