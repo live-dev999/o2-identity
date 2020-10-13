@@ -6,7 +6,7 @@ metadata:
         app: "o2platformcluster-397a"
     annotations:
         # kubernetes.io/ingress.class: addon-http-application-routing
-        kubernetes.io/ingress.class: nginx
+        # kubernetes.io/ingress.class: nginx
         cert-manager.io/issuer: letsencrypt-prod
 spec:
     tls:
