@@ -10,8 +10,8 @@ metadata:
 spec:
     tls:
         - hosts:
-        - tls-prod-o2platformcluster-397a.cedc7c6f3e354120aaa6.eastus.aksapp.io
-        secretName: tls-prod
+            - tls-prod-o2platformcluster-397a.cedc7c6f3e354120aaa6.eastus.aksapp.io
+            secretName: tls-prod
     rules:
         - host: tls-prod-o2platformcluster-397a.cedc7c6f3e354120aaa6.eastus.aksapp.io
           http:
