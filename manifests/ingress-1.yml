@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "o2platformcluster-0fc1"
+    labels:
+        app: "o2platformcluster-0fc1"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: tls-staging-o2platformcluster-0fc1.cedc7c6f3e354120aaa6.eastus.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "o2platformcluster-0fc1"
+                servicePort: 80
