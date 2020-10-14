@@ -14,8 +14,8 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
-        docker push o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionicsllc.azurecr.io/o2-identity-web:${{ github.sha }}
+        docker push o2bionicsllc.azurecr.io/o2-identity-web:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
       with:
@@ -42,10 +42,10 @@ jobs:
       with:
         namespace: tls-staging
         manifests: |
-          manifests/deployment-2.yml
-          manifests/service-2.yml
+          manifests/deployment-staging.yml
+          manifests/service-staging.yml
           manifests/ingress-staging.yml
         images: |
-          o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
+          o2bionicsllc.azurecr.io/o2-identity-web:${{ github.sha }}
         imagepullsecrets: |
           o2platformcldockerauth

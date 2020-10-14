@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: "o2platformcluster-0fc1"
+    name: "o2-identity-web-svc"
     labels:
-        app: "o2platformcluster-0fc1"
+        app: "o2-identity-web"
 spec:
     type: ClusterIP
     ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
     selector:
-        app: "o2platformcluster-0fc1"
+        app: "o2-identity-web"

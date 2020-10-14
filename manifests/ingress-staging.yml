@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-    name: "o2platformcluster-0fc1"
+    name: "o2-identity-web-ingreess"
     labels:
-        app: "o2platformcluster-0fc1"
+        app: "o2-identity-web"
     annotations:
         # kubernetes.io/ingress.class: addon-http-application-routing
         # kubernetes.io/ingress.class: nginx
@@ -39,12 +39,12 @@ spec:
             paths:
             - path: /
               backend:
-                serviceName: "o2platformcluster-0fc1"
+                serviceName: "o2-identity-web-svc"
                 servicePort: 80
         - host: identity.stage.o2bus.com
           http:
             paths:
             - path: /
               backend:
-                serviceName: "o2platformcluster-0fc1"
+                serviceName: "o2-identity-web-svc"
                 servicePort: 80
