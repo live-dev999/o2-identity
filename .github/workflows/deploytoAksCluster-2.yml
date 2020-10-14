@@ -44,7 +44,7 @@ jobs:
         manifests: |
           manifests/deployment-2.yml
           manifests/service-2.yml
-          manifests/ingress-1.yml
+          manifests/ngress-staging.yml
         images: |
           o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
         imagepullsecrets: |
