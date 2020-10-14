@@ -1,0 +1,51 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: o2bionicsllc.azurecr.io
+        username: ${{ secrets.acr_o2bionicsllc_username }}
+        password: ${{ secrets.acr_o2bionicsllc_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
+        docker push o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_o2platformcluster_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep tls-staging | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace tls-staging`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: tls-staging
+        container-registry-url: o2bionicsllc.azurecr.io
+        container-registry-username: ${{ secrets.acr_o2bionicsllc_username }}
+        container-registry-password: ${{ secrets.acr_o2bionicsllc_password }}
+        secret-name: o2platformcldockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: tls-staging
+        manifests: |
+          manifests/deployment-2.yml
+          manifests/service-2.yml
+          manifests/ingress-1.yml
+        images: |
+          o2bionicsllc.azurecr.io/o2platformcluster:${{ github.sha }}
+        imagepullsecrets: |
+          o2platformcldockerauth
