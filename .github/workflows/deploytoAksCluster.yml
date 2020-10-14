@@ -51,6 +51,7 @@ jobs:
         manifests: |
           manifests/deployment.yml
           manifests/service.yml
+          manifests/ingress.yml
         images: |
           o2bionics.azurecr.io/o2-identity-web:${{ github.sha }}
         imagepullsecrets: |

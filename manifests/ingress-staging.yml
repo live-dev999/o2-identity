@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-    name: "o2platformcluster-397a"
+    name: "o2-identity-web-ingreess"
     labels:
-        app: "o2platformcluster-397a"
+        app: "o2-identity-web"
     annotations:
         # kubernetes.io/ingress.class: addon-http-application-routing
         # kubernetes.io/ingress.class: nginx
@@ -30,21 +30,21 @@ spec:
     tls:
         - hosts:
           # - tls-prod-o2platformcluster-397a.cedc7c6f3e354120aaa6.eastus.aksapp.io
-          -  www.identity.stage.o2bus.com
-          - identity.o2bus.com
+          # -  www.identity.stage.o2bus.com
+          - identity.stage.o2bus.com
           secretName: letsencrypt-staging
     rules:
-        - host: www.identity.stage.o2bus.com
-          http:
-            paths:
-            - path: /
-              backend:
-                serviceName: "o2platformcluster-397a"
-                servicePort: 80
+        # - host: www.identity.stage.o2bus.com
+        #   http:
+        #     paths:
+        #     - path: /
+        #       backend:
+        #         serviceName: "o2-identity-web-svc"
+        #         servicePort: 80
         - host: identity.stage.o2bus.com
           http:
             paths:
             - path: /
               backend:
-                serviceName: "o2platformcluster-397a"
+                serviceName: "o2-identity-web-svc"
                 servicePort: 80
