@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "o2-752d"
+    labels:
+        app: "o2-752d"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: default-o2-752d.672096fc2d614013870b.eastus.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "o2-752d"
+                servicePort: 80
