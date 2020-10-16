@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "o2-752d"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "o2-752d"
+  template:
+    metadata:
+      labels:
+        app: "o2-752d"
+    spec:
+      containers:
+        - name: "o2-752d"
+          image: "o2bionicsllc.azurecr.io/o2"
+          ports:
+          - containerPort: 80
