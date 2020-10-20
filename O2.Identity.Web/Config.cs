@@ -60,9 +60,9 @@ namespace O2.Identity.Web
                     ClientId = "o2business-spa",
                     ClientName = "o2business-client",
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200/"},
-                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    RedirectUris = {"http://app.o2bus.com/auth-callback"},
+                    PostLogoutRedirectUris = {"http://app.o2bus.com/"},
+                    AllowedCorsOrigins = {"http://app.o2bus.com"},
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
