@@ -43,8 +43,10 @@ namespace O2.Identity.Web
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration["ConnectionString"];
+            var settings = Configuration.GetSection("DataProtection").Get<DataProtectionSettings>();
             Console.WriteLine(" ========================= SETTINGS ========================== ");
             Console.WriteLine($"ConnectionString={connectionString}");
+            Console.WriteLine($"DataProtection AadTenantId={settings.AadTenantId} keyId={settings.KeyVaultKeyId} account={settings.StorageAccountName} blob={settings.StorageKeyBlobName}");
             Console.WriteLine(" ================= END SETTINGS ====================\r\n");
             
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -62,9 +64,13 @@ namespace O2.Identity.Web
             //});
 
 
-            var settings = Configuration.GetSection("DataProtection").Get<DataProtectionSettings>();
+           
+
+
+
+    
+
             
-            var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
 
             var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net");
             var client = storageAccount.CreateCloudBlobClient();
@@ -81,6 +87,7 @@ namespace O2.Identity.Web
                 //Todo: I don't understand this code, I will read a description later
                 .ProtectKeysWithAzureKeyVault(keyVaultClient, settings.KeyVaultKeyId);
             
+            //var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
             // services.AddDataProtection()
             //     .ProtectKeysWithAzureKeyVault(kvClient, settings.KeyVaultKeyId);
 

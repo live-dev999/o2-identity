@@ -6,10 +6,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
 WORKDIR /src
-COPY Services/o2-identity/O2.Identity.Web/O2.Identity.Web.csproj Services/o2-identity/O2.Identity.Web/
-RUN dotnet restore "Services/o2-identity/O2.Identity.Web/O2.Identity.Web.csproj"
+COPY O2.Identity.Web.csproj ./
+RUN dotnet restore "./O2.Identity.Web.csproj"
 COPY . .
-WORKDIR "/src/Services/o2-identity/O2.Identity.Web"
+WORKDIR "/src/."
 RUN dotnet build "O2.Identity.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
