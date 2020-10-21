@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -11,12 +10,11 @@ using O2.Identity.Web.Data;
 using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.AspNetCore.DataProtection.AzureStorage;
-using Microsoft.Azure.Storage.Auth;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.StackExchangeRedis;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using StorageCredentials = Microsoft.WindowsAzure.Storage.Auth.StorageCredentials;
+using SQLitePCL;
+using  StackExchange.Redis;
 
 namespace O2.Identity.Web
 {
@@ -34,11 +32,13 @@ namespace O2.Identity.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _tokenProvider = new AzureServiceTokenProvider();
+            // _tokenProvider = new AzureServiceTokenProvider();
         }
 
         public IConfiguration Configuration { get; }
 
+        
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -56,6 +56,27 @@ namespace O2.Identity.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net"); 
+                //CloudStorageAccount.DevelopmentStorageAccount;
+                Console.WriteLine($"storageAccount={storageAccount}");
+            var client = storageAccount.CreateCloudBlobClient();
+            var container = client.GetContainerReference(settings.StorageKeyContainerName);
+            
+            // The container must exist before calling the DataProtection APIs.
+            // The specific file within the container does not have to exist,
+            // as it will be created on-demand.
+
+            container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
+            services.AddDataProtection().PersistKeysToAzureBlobStorage(container, "keys.xml");
+            // // Connect
+            // var redis = ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]);
+            // services.AddDataProtection(opts =>
+            //     {
+            //         opts.ApplicationDiscriminator = "eshop.identity";
+            //     }).PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
+                
+                // .PersistKeysToRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys"));
+            
             //services.Configure<CookiePolicyOptions>(options =>
             //{
             //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -70,23 +91,24 @@ namespace O2.Identity.Web
 
     
 
+            //
+            //
+            // var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net");
+            // var client = storageAccount.CreateCloudBlobClient();
+            // var container = client.GetContainerReference(settings.StorageKeyContainerName);
+            //
+            // var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            // var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(
+            //     azureServiceTokenProvider.KeyVaultTokenCallback));
+            //
             
-
-            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net");
-            var client = storageAccount.CreateCloudBlobClient();
-            var container = client.GetContainerReference(settings.StorageKeyContainerName);
-
-            var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(
-                azureServiceTokenProvider.KeyVaultTokenCallback));
-
-            services.AddDataProtection()
-                //This blob must already exist before the application is run
-                .PersistKeysToAzureBlobStorage(container, settings.StorageKeyBlobName)
-                // //Removing this line below for an initial run will ensure the file is created correctly
-                //Todo: I don't understand this code, I will read a description later
-                .ProtectKeysWithAzureKeyVault(keyVaultClient, settings.KeyVaultKeyId);
-            
+             
+            //     //This blob must already exist before the application is run
+            //     .PersistKeysToAzureBlobStorage(container, settings.StorageKeyBlobName)
+            //     // //Removing this line below for an initial run will ensure the file is created correctly
+            //     //Todo: I don't understand this code, I will read a description later
+            //     .ProtectKeysWithAzureKeyVault(keyVaultClient, settings.KeyVaultKeyId);
+            //
             //var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
             // services.AddDataProtection()
             //     .ProtectKeysWithAzureKeyVault(kvClient, settings.KeyVaultKeyId);
