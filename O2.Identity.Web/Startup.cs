@@ -181,11 +181,14 @@ namespace O2.Identity.Web
 
             services.AddMvc();
 
+            // Adds IdentityServer
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer(
                     
                     options =>
                      {
+                        options.IssuerUri = "null";
+                        options.Authentication.CookieLifetime = TimeSpan.FromHours(2);
                     //     options.Events.RaiseErrorEvents = true;
                     //     options.Events.RaiseInformationEvents = true;
                     //     options.Events.RaiseFailureEvents = true;
@@ -231,10 +234,25 @@ namespace O2.Identity.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Make work identity server redirections in Edge and lastest versions of browers. WARN: Not valid in a production environment.
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
+                await next();
+            });
+            app.UseForwardedHeaders();
             app.UseStaticFiles();
 
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
+
+            // Fix a problem with chrome. Chrome enabled a new feature "Cookies without SameSite must be secure", 
+            // the coockies shold be expided from https, but in eShop, the internal comunicacion in aks and docker compose is http.
+            // To avoid this problem, the policy of cookies shold be in Lax mode.
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                //MinimumSameSitePolicy = AspNetCore.Http.SameSiteMode.Lax
+            });
 
             app.UseMvc(routes =>
             {

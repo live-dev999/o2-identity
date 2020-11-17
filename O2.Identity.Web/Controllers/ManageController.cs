@@ -101,7 +101,7 @@ namespace O2.Identity.Web.Controllers
                 }
             }
 
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Ваш профиль has been updated";
             return RedirectToAction(nameof(Index));
         }
 

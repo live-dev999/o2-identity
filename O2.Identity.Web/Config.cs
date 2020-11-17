@@ -20,7 +20,8 @@ namespace O2.Identity.Web
             urls.Add("Mvc", Environment.GetEnvironmentVariable("MvcClient") ?? configuration["MvcClient"]);
             urls.Add("basket", Environment.GetEnvironmentVariable("BasketApi") ?? configuration["BasketApi"]);
             urls.Add("orders", Environment.GetEnvironmentVariable("OrdersApi") ?? configuration["OrdersApi"]);
-
+            urls.Add("O2BusinessSpa", Environment.GetEnvironmentVariable("O2BusinessSpa") ?? configuration["O2BusinessSpa"]);
+            urls.Add("PFRCenterSPA", Environment.GetEnvironmentVariable("PFRCenterSPA") ?? configuration["PFRCenterSPA"]);
             Console.WriteLine(" ========================= CONFIG IDENITY ========================== ");
             foreach (var item in urls)
             {
@@ -55,14 +56,28 @@ namespace O2.Identity.Web
 
             return new List<Client>()
             {
+                new Client{
+                    ClientId="pfr-center-spa",
+                    ClientName="pfr-center-client",
+                    AllowedGrantTypes=GrantTypes.Implicit,
+                    RedirectUris = {$"{clientUrls["PFRCenterSPA"]}/auth-callback"},
+                    PostLogoutRedirectUris = {$"{clientUrls["PFRCenterSPA"]}/"},
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    },
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600
+                },
                 new Client
                 {
                     ClientId = "o2business-spa",
                     ClientName = "o2business-client",
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    RedirectUris = {"http://app.o2bus.com/auth-callback"},
-                    PostLogoutRedirectUris = {"http://app.o2bus.com/"},
-                    AllowedCorsOrigins = {"http://app.o2bus.com"},
+                    RedirectUris = {$"{clientUrls["O2BusinessSpa"]}/auth-callback"},
+                    PostLogoutRedirectUris = {$"{clientUrls["O2BusinessSpa"]}/"},
+                    // AllowedCorsOrigins = {"http://app.o2bus.com"},
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
