@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.KeyVault;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using O2.Identity.Web.Data;
@@ -11,16 +10,14 @@ using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.DataProtection.StackExchangeRedis;
 using Microsoft.WindowsAzure.Storage;
-using SQLitePCL;
-using  StackExchange.Redis;
 
 namespace O2.Identity.Web
 {
     public class Startup
     {
         private readonly AzureServiceTokenProvider _tokenProvider;
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public class DataProtectionSettings
         {
             public string KeyVaultKeyId { get; set; }
@@ -218,6 +215,32 @@ namespace O2.Identity.Web
                 // .SetApplicationName("Your_Project_Name")
                 // .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
                 // .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
+
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(name: MyAllowSpecificOrigins,
+                        builder =>
+                        {
+                            builder.AllowAnyOrigin()
+                                .WithOrigins(
+                                    "https://pfr-centr.com",
+                                    "http://pfr-centr.com",
+
+                                    "https://beta.pfr-centr.com",
+                                    "http://beta.pfr-centr.com",
+
+                                    "http://pfr-community.o2bus.com",
+                                    "https://pfr-community.o2bus.com",
+
+                                    "http://chat-api.o2bus.com",
+                                    "https://chat-api.o2bus.com",
+
+                                    "http://localhost:5010",
+                                    "http://localhost:4200")
+                                .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                        });
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -234,12 +257,12 @@ namespace O2.Identity.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            // Make work identity server redirections in Edge and lastest versions of browers. WARN: Not valid in a production environment.
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
-                await next();
-            });
+            // // Make work identity server redirections in Edge and lastest versions of browers. WARN: Not valid in a production environment.
+            // app.Use(async (context, next) =>
+            // {
+            //     context.Response.Headers.Add("Content-Security-Policy", "script-src 'unsafe-inline'");
+            //     await next();
+            // });
             app.UseForwardedHeaders();
             app.UseStaticFiles();
 
@@ -254,6 +277,25 @@ namespace O2.Identity.Web
                 //MinimumSameSitePolicy = AspNetCore.Http.SameSiteMode.Lax
             });
 
+            app.UseCors(x => x.AllowAnyOrigin()
+                .WithOrigins(
+
+                    "https://pfr-centr.com",
+                    "http://pfr-centr.com",
+                    
+                    "https://beta.pfr-centr.com",
+                    "http://beta.pfr-centr.com",
+
+                    "http://pfr-community.o2bus.com",
+                    "https://pfr-community.o2bus.com",
+                    
+                    "http://chat-api.o2bus.com", 
+                    "https://chat-api.o2bus.com",
+                    
+                    "http://localhost:5010",
+                    "http://localhost:4200")
+                .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

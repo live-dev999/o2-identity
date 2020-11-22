@@ -5,10 +5,7 @@
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
-using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.Quickstart.UI

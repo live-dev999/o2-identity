@@ -1,5 +1,4 @@
-﻿@using O2.Identity.Web.Views.Manage
-@inject SignInManager<O2User> SignInManager
+﻿@inject SignInManager<O2User> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using O2.Identity.Web.Models;
 using O2.Identity.Web.Models.AccountViewModels;
 using O2.Identity.Web.Services;
@@ -262,19 +258,28 @@ namespace O2.Identity.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
-            // build a model so the logout page knows what to display
-            var vm = await _account.BuildLogoutViewModelAsync(logoutId);
-
-            if (vm.ShowLogoutPrompt == false)
-            {
-                // if the request for logout was properly authenticated from IdentityServer, then
-                // we don't need to show the prompt and can just log the user out directly.
-                return await Logout(vm);
-            }
-
-            return View(vm);
+            // // build a model so the logout page knows what to display
+            // var vm = await _account.BuildLogoutViewModelAsync(logoutId);
+            //
+            // if (vm.ShowLogoutPrompt == false)
+            // {
+            //     // if the request for logout was properly authenticated from IdentityServer, then
+            //     // we don't need to show the prompt and can just log the user out directly.
+            //     return await Logout(vm);
+            // }
+            await _signInManager.SignOutAsync();
+            var context = await _interaction.GetLogoutContextAsync(logoutId);
+            return Redirect(context.PostLogoutRedirectUri);
         }
 
+        // [HttpGet]
+        // public async Task<IActionResult> Logout(string logoutId)
+        // {
+        //     await _signInManager.SignOutAsync();
+        //     var context = await _interaction.GetLogoutContextAsync(logoutId);
+        //     return Redirect(context.PostLogoutRedirectUri);
+        // }
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

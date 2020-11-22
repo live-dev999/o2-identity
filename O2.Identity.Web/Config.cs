@@ -6,7 +6,6 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace O2.Identity.Web
 {
@@ -22,6 +21,9 @@ namespace O2.Identity.Web
             urls.Add("orders", Environment.GetEnvironmentVariable("OrdersApi") ?? configuration["OrdersApi"]);
             urls.Add("O2BusinessSpa", Environment.GetEnvironmentVariable("O2BusinessSpa") ?? configuration["O2BusinessSpa"]);
             urls.Add("PFRCenterSPA", Environment.GetEnvironmentVariable("PFRCenterSPA") ?? configuration["PFRCenterSPA"]);
+            
+            urls.Add("certificate-api", Environment.GetEnvironmentVariable("CertificateApi") ?? configuration["CertificateApi"]);
+            
             Console.WriteLine(" ========================= CONFIG IDENITY ========================== ");
             foreach (var item in urls)
             {
@@ -37,6 +39,8 @@ namespace O2.Identity.Web
             {
                  new ApiResource("basket", "Shopping Cart Api"),
                  new ApiResource("orders", "Ordering Api"),
+
+                 new ApiResource("CertificateApi","Certificate API of O2 Platform")
             };
         }
 
@@ -56,17 +60,30 @@ namespace O2.Identity.Web
 
             return new List<Client>()
             {
+                new Client
+                {
+                    ClientId = "client",
+                    ClientName="Console Client",
+                    ClientSecrets = new []{ new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = new List<string>()
+                    {
+                        "CertificateApi"
+                    }
+                },
+                
                 new Client{
                     ClientId="pfr-center-spa",
-                    ClientName="pfr-center-client",
+                    ClientName="PFR Center SPA",
                     AllowedGrantTypes=GrantTypes.Implicit,
-                    RedirectUris = {$"{clientUrls["PFRCenterSPA"]}/auth-callback"},
+                    RedirectUris = {$"{clientUrls["PFRCenterSPA"]}/auth/callback"},
                     PostLogoutRedirectUris = {$"{clientUrls["PFRCenterSPA"]}/"},
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     },
+                    AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600
                 },
@@ -144,7 +161,21 @@ namespace O2.Identity.Web
 
                         "orders"
                     }
-                }
+                },
+                new Client
+                {
+                    ClientId = "certificateswaggerui",
+                    ClientName="Certificate Swagger UI",
+                    AllowAccessTokensViaBrowser = true,
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RedirectUris = { $"{clientUrls["certificate-api"]}/swagger/o2c.html" },
+                    PostLogoutRedirectUris = { $"{clientUrls["certificate-api"]}/swagger/" },
+
+                    AllowedScopes = new List<string>()
+                    {
+                        "CertificateApi"
+                    }
+                },
             };
         }
 
