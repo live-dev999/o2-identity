@@ -1,4 +1,5 @@
 ﻿using System;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,9 @@ namespace O2.Identity.Web
             Console.WriteLine($"ConnectionString={connectionString}");
             Console.WriteLine($"DataProtection AadTenantId={settings.AadTenantId} keyId={settings.KeyVaultKeyId} account={settings.StorageAccountName} blob={settings.StorageKeyBlobName}");
             Console.WriteLine(" ================= END SETTINGS ====================\r\n");
+            
+            // Custom ProfileService
+            services.AddScoped<IProfileService, ProfileService>();
             
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
