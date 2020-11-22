@@ -262,7 +262,6 @@ namespace O2.Identity.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            //fixed error identity
             var forwardOptions = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
