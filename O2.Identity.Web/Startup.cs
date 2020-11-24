@@ -11,6 +11,7 @@ using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.WindowsAzure.Storage;
 
 namespace O2.Identity.Web
@@ -261,7 +262,18 @@ namespace O2.Identity.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            //fixed error identity
+            var forwardOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                RequireHeaderSymmetry = false
+            };
 
+            forwardOptions.KnownNetworks.Clear();
+            forwardOptions.KnownProxies.Clear();
+
+            // ref: https://github.com/aspnet/Docs/issues/2384
+            app.UseForwardedHeaders(forwardOptions);
             // // Make work identity server redirections in Edge and lastest versions of browers. WARN: Not valid in a production environment.
             // app.Use(async (context, next) =>
             // {
