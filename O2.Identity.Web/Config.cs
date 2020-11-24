@@ -83,7 +83,7 @@ namespace O2.Identity.Web
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     },
-                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    AllowedCorsOrigins = {$"{clientUrls["PFRCenterSPA"]}"},
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600
                 },
