@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using O2.Identity.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using O2.Identity.Web.Models;
+using Serilog;
+
 
 namespace O2.Identity.Web
 {
@@ -13,15 +15,23 @@ namespace O2.Identity.Web
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+
             var host = BuildWebHost(args);
 
             using (var scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
-                var logger = services.GetRequiredService<ILogger<Program>>();
                 try
                 {
-                    logger.LogInformation("========== Starting Application ==========");
+                    Log.Information("O2.Identity.Web - Starting up");
+
+                var services = scope.ServiceProvider;
+                    //var logger = services.GetRequiredService<ILogger<Program>>();
+              
+                    Log.Information("========== Starting Application ==========");
                     var context = services.GetRequiredService<ApplicationDbContext>();
 
                     var userManager = services.GetRequiredService<UserManager<O2User>>();
@@ -32,7 +42,7 @@ namespace O2.Identity.Web
                 catch (Exception ex)
                 {
                     
-                    logger.LogError(ex, "An error occurred while seeding the AuthorizationServer database.");
+                    Log.Error(ex, "An error occurred while seeding the AuthorizationServer database.");
                 }
             }
 
@@ -42,6 +52,7 @@ namespace O2.Identity.Web
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseSerilog() // <- Add this line
                 .Build();
     }
 }
