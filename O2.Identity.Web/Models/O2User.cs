@@ -12,5 +12,8 @@ namespace O2.Identity.Web.Models
         
         // maybe be other code in this model
         public ICollection<Photo> Photos { get; set; }
+        
+        public string Lastname { get; set; }
+        public string Firstname { get; set; }
     }
 }

@@ -84,7 +84,10 @@ namespace O2.Identity.Web.Controllers
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage,
-                ProfilePhoto = user.ProfilePhoto
+                ProfilePhoto = user.ProfilePhoto,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname
+                
             };
 
             return View(model);
@@ -132,39 +135,64 @@ namespace O2.Identity.Web.Controllers
             {
                 var uploadResult = new ImageUploadResult();
                 var file = model.FormFile;
-                if (file.Length > 0)
+                if (model.FormFile != null)
                 {
-                    using (var stream = file.OpenReadStream())
+                    if (file.Length > 0)
                     {
-                        var uploadParams = new ImageUploadParams()
+                        using (var stream = file.OpenReadStream())
                         {
-                            File = new FileDescription(user.Id+"_"+file.Name, stream),
-                            Transformation = new Transformation()
-                                .Width(500).Height(500).Crop("fill").Gravity("face")
-                        };
-                
-                        uploadResult = _cloudinary.Upload(uploadParams);
-                        
-                    }
-                } 
+                            var uploadParams = new ImageUploadParams()
+                            {
+                                File = new FileDescription(user.Id + "_" + file.Name, stream),
+                                Transformation = new Transformation()
+                                    .Width(500).Height(500).Crop("fill").Gravity("face")
+                            };
 
-                var newPhoto = new Photo();
-                newPhoto.Url = uploadResult.Uri.ToString();
-                newPhoto.PublicId = uploadResult.PublicId;
-                newPhoto.IsMain = true;
-                //
-                if(user.Photos==null)
-                    user.Photos = new List<Photo>();
-                user.Photos.Add(newPhoto);
-                //
-                user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
-                
+                            uploadResult = _cloudinary.Upload(uploadParams);
+                        }
+                    }
+
+                    var newPhoto = new Photo();
+                    newPhoto.Url = uploadResult.Uri.ToString();
+                    newPhoto.PublicId = uploadResult.PublicId;
+                    newPhoto.IsMain = true;
+                    //
+                    if (user.Photos == null)
+                        user.Photos = new List<Photo>();
+                    user.Photos.Add(newPhoto);
+                    //
+                    user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
+
+                    var setUpdateUser = await _userManager.UpdateAsync(user);
+                    if (!setUpdateUser.Succeeded)
+                    {
+                        throw new ApplicationException(
+                            $"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                    }
+                }
+
+            }
+            
+            var firstname = user.Firstname;
+            if (model.Firstname != firstname)
+            {
+                user.Firstname = model.Firstname;
                 var setUpdateUser = await _userManager.UpdateAsync(user);
                 if (!setUpdateUser.Succeeded)
                 {
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
-                
+            }
+            
+            var lastname = user.Lastname;
+            if (model.Lastname != lastname)
+            {
+                user.Lastname = model.Lastname;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
             }
         
             StatusMessage = "Ваш профиль has been updated";

@@ -5,6 +5,8 @@ namespace O2.Identity.Web.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        public string Lastname { get; set; }
+        public string Firstname { get; set; }
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -21,9 +23,8 @@ namespace O2.Identity.Web.Models.ManageViewModels
         
         [Display(Name = "ProfilePhoto")]
         public string ProfilePhoto { get; set; }
-
-        [Required]
-        [Display(Name="File")]
+        
+        [Display(Name="Profile Photo")]
         public IFormFile FormFile { get; set; }
     }
 }

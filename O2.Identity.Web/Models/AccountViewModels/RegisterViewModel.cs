@@ -1,9 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace O2.Identity.Web.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Lastname")]
+        public string Lastname { get; set; }
+        
+        [Required]
+        [Display(Name = "Firstname")]
+        public string Firstname { get; set; }
+        
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -19,5 +28,17 @@ namespace O2.Identity.Web.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        
+        [Display(Name = "ProfilePhoto")]
+        public string ProfilePhoto { get; set; }
+
+        // [Required]
+        [Display(Name="Profile photo")]
+        public IFormFile FormFile { get; set; }
+        
+        [Required]
+        [Phone]
+        [Display(Name="PhoneNumber")]
+        public string PhoneNumber { get; set; }
     }
 }
