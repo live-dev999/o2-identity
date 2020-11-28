@@ -11,9 +11,10 @@ using System;
 namespace O2.Identity.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201128122757_AddedUserPhoto")]
+    partial class AddedUserPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,11 +144,7 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("Firstname");
-
                     b.Property<bool>("IsSpecialist");
-
-                    b.Property<string>("Lastname");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -165,7 +162,7 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("ProfilePhoto");
+                    b.Property<byte[]>("ProfilePhoto");
 
                     b.Property<string>("SecurityStamp");
 
@@ -185,32 +182,6 @@ namespace O2.Identity.Web.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("O2.Identity.Web.Models.Photo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<string>("Description");
-
-                    b.Property<bool>("IsMain");
-
-                    b.Property<string>("PublicId");
-
-                    b.Property<string>("Url");
-
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -256,13 +227,6 @@ namespace O2.Identity.Web.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("O2.Identity.Web.Models.Photo", b =>
-                {
-                    b.HasOne("O2.Identity.Web.Models.O2User", "User")
-                        .WithMany("Photos")
-                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

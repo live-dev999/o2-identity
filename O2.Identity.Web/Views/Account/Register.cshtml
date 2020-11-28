@@ -7,14 +7,30 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
+         
+            <div class="form-group">
+                <label asp-for="Firstname"></label>
+                <input asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname"></label>
+                <input asp-for="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
@@ -26,6 +42,41 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
+             <div class="form-group">
+                            @* <label asp-for="ProfilePhoto" style="width: 100%;"></label> *@
+@*                                             @if (Model.ProfilePhoto != null || Model == null) *@
+@*                                             { *@
+@*                                                 <img id="profilePhoto" style="width:350px;height:350px;object-fit:cover; border-radius:320px"  src="@Model.ProfilePhoto"> *@
+@*                                             } *@
+@*                                             else *@
+                                            @* { *@
+                                                @* <img id="profilePhoto" style="width:350px;height:350px;object-fit:cover; border-radius:320px"  style="width:350px;height:350px; object-fit:cover" src="~/images/avatars/user.png"> *@
+                                            @* } *@
+                                     
+                                            @* <label asp-for="ProfilePhoto"></label> *@
+                                            @* <form enctype="multipart/form-data" method="post"> *@
+                                                <dl>
+                                                    <dt>
+                                                        <label asp-for="FormFile"></label>
+                                                    </dt>
+                                                    <dd>
+                                                        <input asp-for="FormFile" type="file">
+                                                        <span asp-validation-for="FormFile"></span>
+                                                    </dd>
+                                                </dl>
+                                                @* <input type="submit"/> *@
+                                                @* <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" /> *@
+                                            @* </form> *@
+                            @* <input asp-for="ProfilePhoto" type="file" accept=".png,.jpg,.jpeg,.gif,.tif" class="form-control" style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;" *@
+                            @*        onchange="document.getElementById('ProfilePhoto').src = (window.URL || window.webkitURL).URL.createObjectURL(this.files[0].path)"> *@
+                                            @* <span asp-validation-for="ProfilePhoto" class="text-danger"></span> *@
+                                            @* <form enctype="multipart/form-data" method="post"> *@
+                                            @*     <input asp-for="FileUpload.FormFile" type="file"> *@
+                                            @*      <span asp-validation-for="FileUpload.FormFile"></span> *@
+                                            @*     $1$ <input type="file" name="file" asp-action="Upload"/> #1# *@
+                                            @*     $1$ <input type="submit"/> #1# *@
+                                            @* </form> *@
+                        </div>
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>

@@ -13,6 +13,7 @@ using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.WindowsAzure.Storage;
+using O2.Identity.Web.Controllers;
 
 namespace O2.Identity.Web
 {
@@ -49,8 +50,9 @@ namespace O2.Identity.Web
             Console.WriteLine(" ================= END SETTINGS ====================\r\n");
             
             // Custom ProfileService
-            services.AddScoped<IProfileService, ProfileService>();
+            services.AddTransient<IProfileService, ProfileService>();
             //services.AddTransient
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -58,6 +60,8 @@ namespace O2.Identity.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<ManageController.CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            
             var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net"); 
                 //CloudStorageAccount.DevelopmentStorageAccount;
                 Console.WriteLine($"storageAccount={storageAccount}");
@@ -86,7 +90,7 @@ namespace O2.Identity.Web
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
 
-
+           
            
 
 

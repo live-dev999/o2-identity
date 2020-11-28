@@ -11,9 +11,10 @@ using System;
 namespace O2.Identity.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201128125147_AddedCollectionUserPhoto")]
+    partial class AddedCollectionUserPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,11 +144,7 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("Firstname");
-
                     b.Property<bool>("IsSpecialist");
-
-                    b.Property<string>("Lastname");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -164,8 +161,6 @@ namespace O2.Identity.Web.Data.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("ProfilePhoto");
 
                     b.Property<string>("SecurityStamp");
 

@@ -6,6 +6,8 @@ namespace O2.Identity.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<O2User>
     {
+        public DbSet<Photo> Photos { get; set; }
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
