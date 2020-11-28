@@ -1,13 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using O2.Identity.Web.Models;
 using O2.Identity.Web.Models.ManageViewModels;
 using O2.Identity.Web.Services;
@@ -23,7 +31,8 @@ namespace O2.Identity.Web.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
-
+        private Cloudinary _cloudinary;
+        
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public ManageController(
@@ -31,13 +40,29 @@ namespace O2.Identity.Web.Controllers
           SignInManager<O2User> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          IOptions<CloudinarySettings> _cloudinaryConfig)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            
+            Account acc = new Account(
+                _cloudinaryConfig.Value.CloudName,
+                _cloudinaryConfig.Value.ApiKey,
+                _cloudinaryConfig.Value.ApiSecret
+            );
+
+            _cloudinary = new Cloudinary(acc);
+        }
+
+        public class CloudinarySettings
+        {
+            public string CloudName { get; set; }
+            public string ApiKey { get; set; }
+            public string ApiSecret { get; set; }
         }
 
         [TempData]
@@ -58,12 +83,15 @@ namespace O2.Identity.Web.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                ProfilePhoto = user.ProfilePhoto
             };
 
             return View(model);
         }
 
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
@@ -99,6 +127,46 @@ namespace O2.Identity.Web.Controllers
                 }
             }
 
+            var profilePhoto = user.ProfilePhoto;
+            if (model.ProfilePhoto != profilePhoto || profilePhoto==null)
+            {
+                var uploadResult = new ImageUploadResult();
+                var file = model.FormFile;
+                if (file.Length > 0)
+                {
+                    using (var stream = file.OpenReadStream())
+                    {
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new FileDescription(user.Id+"_"+file.Name, stream),
+                            Transformation = new Transformation()
+                                .Width(500).Height(500).Crop("fill").Gravity("face")
+                        };
+                
+                        uploadResult = _cloudinary.Upload(uploadParams);
+                        
+                    }
+                } 
+
+                var newPhoto = new Photo();
+                newPhoto.Url = uploadResult.Uri.ToString();
+                newPhoto.PublicId = uploadResult.PublicId;
+                newPhoto.IsMain = true;
+                //
+                if(user.Photos==null)
+                    user.Photos = new List<Photo>();
+                user.Photos.Add(newPhoto);
+                //
+                user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
+                
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+                
+            }
+        
             StatusMessage = "Ваш профиль has been updated";
             return RedirectToAction(nameof(Index));
         }
