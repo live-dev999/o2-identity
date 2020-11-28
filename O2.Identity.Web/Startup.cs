@@ -50,8 +50,9 @@ namespace O2.Identity.Web
             Console.WriteLine(" ================= END SETTINGS ====================\r\n");
             
             // Custom ProfileService
-            services.AddScoped<IProfileService, ProfileService>();
+            services.AddTransient<IProfileService, ProfileService>();
             //services.AddTransient
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
