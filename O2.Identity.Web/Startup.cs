@@ -12,8 +12,11 @@ using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using O2.Identity.Web.Controllers;
+using O2.Identity.Web.Extensions;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace O2.Identity.Web
 {
@@ -42,6 +45,7 @@ namespace O2.Identity.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             var connectionString = Configuration["ConnectionString"];
             var settings = Configuration.GetSection("DataProtection").Get<DataProtectionSettings>();
             Console.WriteLine(" ========================= SETTINGS ========================== ");
@@ -56,9 +60,13 @@ namespace O2.Identity.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+
+            
+            
             services.AddIdentity<O2User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            
 
             services.Configure<ManageController.CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             
@@ -185,8 +193,10 @@ namespace O2.Identity.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
 
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+            services.AddConfiguredLocalization();
+            
             // Adds IdentityServer
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer(
@@ -288,14 +298,14 @@ namespace O2.Identity.Web
 
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
-
-            // Fix a problem with chrome. Chrome enabled a new feature "Cookies without SameSite must be secure", 
-            // the coockies shold be expided from https, but in eShop, the internal comunicacion in aks and docker compose is http.
-            // To avoid this problem, the policy of cookies shold be in Lax mode.
-            app.UseCookiePolicy(new CookiePolicyOptions
-            {
-                //MinimumSameSitePolicy = AspNetCore.Http.SameSiteMode.Lax
-            });
+            app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
+            // // Fix a problem with chrome. Chrome enabled a new feature "Cookies without SameSite must be secure", 
+            // // the coockies shold be expided from https, but in eShop, the internal comunicacion in aks and docker compose is http.
+            // // To avoid this problem, the policy of cookies shold be in Lax mode.
+            // app.UseCookiePolicy(new CookiePolicyOptions
+            // {
+            //     //MinimumSameSitePolicy = AspNetCore.Http.SameSiteMode.Lax
+            // });
 
             app.UseCors(x => x.AllowAnyOrigin()
                 .WithOrigins(

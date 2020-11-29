@@ -15,12 +15,14 @@ namespace O2.Identity.Web
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
+           
 
             var host = BuildWebHost(args);
+
+            Log.Logger = new LoggerConfiguration()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console()
+                            .CreateLogger();
 
             using (var scope = host.Services.CreateScope())
             {
