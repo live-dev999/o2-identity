@@ -19,10 +19,20 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
 
-    <data name="en">
-        <value>Английский</value>
-    </data>
-    <data name="ru">
-        <value>Русский</value>
-    </data>
+  <data name="en" xml:space="preserve">
+    <value>Ingilizce</value>
+    <comment/>
+  </data>
+  <data name="ru" xml:space="preserve">
+    <value>Rusça</value>
+    <comment/>
+  </data>
+  <data name="de" xml:space="preserve">
+    <value>Almanca</value>
+    <comment/>
+  </data>
+  <data name="tr" xml:space="preserve">
+    <value>Türk</value>
+    <comment/>
+  </data>
 </root>

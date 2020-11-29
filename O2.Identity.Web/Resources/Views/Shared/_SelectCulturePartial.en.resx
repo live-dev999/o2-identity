@@ -3,6 +3,7 @@
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
+            
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -18,7 +19,18 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
 
-    <data name="ForgotPassword">
-   <value>Forgot your password?</value>
+    <data name="en">
+        <value>English</value>
+    </data>
+    <data name="ru">
+        <value>Russian</value>
+    </data>
+    <data name="de" xml:space="preserve">
+    <value>German</value>
+    <comment/>
+  </data>
+  <data name="tr" xml:space="preserve">
+    <value>Turkish</value>
+    <comment/>
   </data>
 </root>

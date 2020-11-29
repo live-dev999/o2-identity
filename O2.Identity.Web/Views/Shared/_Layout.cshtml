@@ -34,11 +34,18 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
+               
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
     <div class="container body-content">
+        <hr />
+        <div class="row">
+                <div class="col-sm-3 offset-sm-9 text-right">
+                    @await Html.PartialAsync("_SelectCulturePartial")
+                </div>
+            </div>
         @RenderBody()
         <hr />
         <footer>

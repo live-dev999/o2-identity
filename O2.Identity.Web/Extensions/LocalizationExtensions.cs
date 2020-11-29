@@ -17,7 +17,9 @@ namespace O2.Identity.Web.Extensions
                     var cultures = new[]
                     {
                         new CultureInfo("en"),
-                        new CultureInfo("ru")
+                        new CultureInfo("ru"),
+                        new CultureInfo("de"),
+                        new CultureInfo("tr")
                     };
                     options.DefaultRequestCulture = new RequestCulture("en");
                     options.SupportedCultures = cultures;

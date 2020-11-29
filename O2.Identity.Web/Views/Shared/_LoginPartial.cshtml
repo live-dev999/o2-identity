@@ -5,7 +5,7 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li> @await Html.PartialAsync("_SelectCulturePartial")</li>
+            
             <li class="nav-item" style="align-self: center;">
                 @if (UserManager.GetUserAsync(User).Result.ProfilePhoto != null)
                 {

@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using O2.Identity.Web.Controllers;
 using O2.Identity.Web.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace O2.Identity.Web
@@ -82,121 +83,17 @@ namespace O2.Identity.Web
 
             container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
             services.AddDataProtection().PersistKeysToAzureBlobStorage(container, "keys.xml");
-            // // Connect
-            // var redis = ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]);
-            // services.AddDataProtection(opts =>
-            //     {
-            //         opts.ApplicationDiscriminator = "eshop.identity";
-            //     }).PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys");
-                
-                // .PersistKeysToRedis(ConnectionMultiplexer.Connect(Configuration["DPConnectionString"]), "DataProtection-Keys"));
             
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
-           
-           
-
-
-
-    
-
-            //
-            //
-            // var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net");
-            // var client = storageAccount.CreateCloudBlobClient();
-            // var container = client.GetContainerReference(settings.StorageKeyContainerName);
-            //
-            // var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            // var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(
-            //     azureServiceTokenProvider.KeyVaultTokenCallback));
-            //
-            
-             
-            //     //This blob must already exist before the application is run
-            //     .PersistKeysToAzureBlobStorage(container, settings.StorageKeyBlobName)
-            //     // //Removing this line below for an initial run will ensure the file is created correctly
-            //     //Todo: I don't understand this code, I will read a description later
-            //     .ProtectKeysWithAzureKeyVault(keyVaultClient, settings.KeyVaultKeyId);
-            //
-            //var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(_tokenProvider.KeyVaultTokenCallback));
-            // services.AddDataProtection()
-            //     .ProtectKeysWithAzureKeyVault(kvClient, settings.KeyVaultKeyId);
-
-
-            // // Replicates PersistKeysToAzureBlobStorage
-            // // There is no overload to give it the func it ultimately uses
-            // // We need to do that so that we can get refreshed tokens when needed
-            // services.Configure<KeyManagementOptions>(options =>
-            // {
-            //     options.XmlRepository = new AzureBlobXmlRepository(() =>
-            //     {
-            //         // This func is called every time before getting the blob and before modifying the blob
-            //         // Get access token for Storage
-            //         // User / managed identity needs Blob Data Contributor on the Storage Account (container was not enough)
-            //         string accessToken = _tokenProvider.GetAccessTokenAsync("https://storage.azure.com/", tenantId: settings.AadTenantId)
-            //      .GetAwaiter()
-            //      .GetResult();
-            //         // Create blob reference with token
-            //         var tokenCredential = new TokenCredential(accessToken);
-            //         var storageCredentials = new StorageCredentials(tokenCredential.Token);
-            //         var uri = new Uri($"https://{settings.StorageAccountName}.blob.core.windows.net/{settings.StorageKeyContainerName}/{settings.StorageKeyBlobName}");
-            //         // Note this func is expected to return a new instance on each call
-            //         var blob = new CloudBlockBlob(uri, storageCredentials);
-            //         return blob;
-            //     });
-            // });
-
-            // services.AddDataProtection().SetApplicationName("O2 Platform for Business");
-
-            //     
-            // var storageAccount = CloudStorageAccount.Parse("<storage account connection string">);
-            // var client = storageAccount.CreateCloudBlobClient();
-            // var container = client.GetContainerReference("<key store container name>");
-            //
-            // var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            // var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(
-            //     azureServiceTokenProvider.KeyVaultTokenCallback));
-            //
-            // services.AddDataProtection()
-            //     //This blob must already exist before the application is run
-            //     .PersistKeysToAzureBlobStorage(container, "<key store blob name>")
-            //     //Removing this line below for an initial run will ensure the file is created correctly
-            //     .ProtectKeysWithAzureKeyVault(keyVaultClient, "<keyIdentifier>");
-            //
-            // var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net");
-            // var client = storageAccount.CreateCloudBlobClient();
-            // var container = client.GetContainerReference("o2-temp-keys");
-            //
-            // var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            // var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(
-            //         azureServiceTokenProvider.KeyVaultTokenCallback));
-            //
-            // services.AddDataProtection()
-            //     //This blob must already exist before the application is run
-            //     .PersistKeysToAzureBlobStorage(container, "o2-protection-key")
-            //     //Removing this line below for an initial run will ensure the file is created correctly
-            //     .ProtectKeysWithAzureKeyVault(keyVaultClient, "actualkey")
-            //     .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
-
-            // ----- finally Add this DataProtection -----
-            // var keysFolder = Path.Combine(WebHostEnvironment.ContentRootPath, "temp-keys");
-            //     services.AddDataProtection()
-            // //    .SetApplicationName("O2 Platform for Business")
-            //    .PersistKeysToFileSystem(new DirectoryInfo(keysFolder))
-            //    .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
-
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-
-            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
             services.AddConfiguredLocalization();
-            
+            services.AddMvc()
+            .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+                // .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat)
+                // .AddDataAnnotationsLocalization();
+       
             // Adds IdentityServer
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer(
@@ -298,6 +195,7 @@ namespace O2.Identity.Web
 
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
+            
             app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
             // // Fix a problem with chrome. Chrome enabled a new feature "Cookies without SameSite must be secure", 
             // // the coockies shold be expided from https, but in eShop, the internal comunicacion in aks and docker compose is http.
