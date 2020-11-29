@@ -11,18 +11,15 @@
     <PackageReference Include="IdentityServer4" Version="2.0.1"/>
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.0.0"/>
     <PackageReference Include="IdentityServer4.EntityFramework" Version="2.0.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0">
-      <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
-      <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureKeyVault" Version="2.1.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.8"/>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureKeyVault" Version="2.2.0"/>
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="2.2.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2"/>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0"/>
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.0"/>
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.2"/>
     <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.2.2"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6"/>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0"/>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0"/>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All"/>
@@ -34,6 +31,7 @@
     <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0"/>
     <PackageReference Include="Serilog.Sinks.Console" Version="2.0.0"/>
     <PackageReference Include="Serilog.Sinks.File" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="2.8.0"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0"/>
