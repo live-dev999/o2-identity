@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
 namespace O2.Identity.Web.Models.ManageViewModels
@@ -11,8 +12,8 @@ namespace O2.Identity.Web.Models.ManageViewModels
 
         public bool IsEmailConfirmed { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required] 
+        [EmailAddress] 
         public string Email { get; set; }
 
         [Phone]
@@ -20,11 +21,15 @@ namespace O2.Identity.Web.Models.ManageViewModels
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
-        
-        [Display(Name = "ProfilePhoto")]
+
+        [Display(Name = "ProfilePhoto")] 
         public string ProfilePhoto { get; set; }
-        
-        [Display(Name="Profile Photo")]
+
+        [Display(Name = "Profile Photo")] 
         public IFormFile FormFile { get; set; }
+
+        public DateTime Birthday { get; set; }
+        public  string Country { get; set; }
+        public string City { get; set; }
     }
 }
