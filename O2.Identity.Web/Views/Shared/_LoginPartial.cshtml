@@ -5,16 +5,17 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            
             <li class="nav-item" style="align-self: center;">
-                    @if (UserManager.GetUserAsync(User).Result.ProfilePhoto != null)
-                    {
-                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@UserManager.GetUserAsync(User).Result.ProfilePhoto">
-                    }
-                    else
-                    {
-                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png">
-                    }
-                </li>
+                @if (UserManager.GetUserAsync(User).Result.ProfilePhoto != null)
+                {
+                    <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@UserManager.GetUserAsync(User).Result.ProfilePhoto">
+                }
+                else
+                {
+                    <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png">
+                }
+            </li>
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello, @UserManager.GetUserAsync(User).Result.Firstname @UserManager.GetUserAsync(User).Result.Lastname !</a>
             </li>

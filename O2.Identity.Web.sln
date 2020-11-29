@@ -1,11 +1,11 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Identity.Web", "O2.Identity.Web.csproj", "{0E4504AB-8D8B-454B-A900-B925EA4E0899}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Identity.Web", "O2.Identity.Web\O2.Identity.Web.csproj", "{0E4504AB-8D8B-454B-A900-B925EA4E0899}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{22309B61-D183-4C58-85EE-A10F065F2F8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleClient.Identity.Web", "SampleClient.Identity.Web\SampleClient.Identity.Web.csproj", "{B7C61A4F-F0E5-4AA1-B145-6B5E64B16A13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleClient.Identity.Web", "O2.Identity.Web\SampleClient.Identity.Web\SampleClient.Identity.Web.csproj", "{B7C61A4F-F0E5-4AA1-B145-6B5E64B16A13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
