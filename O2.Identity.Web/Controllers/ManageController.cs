@@ -86,8 +86,10 @@ namespace O2.Identity.Web.Controllers
                 StatusMessage = StatusMessage,
                 ProfilePhoto = user.ProfilePhoto,
                 Firstname = user.Firstname,
-                Lastname = user.Lastname
-                
+                Lastname = user.Lastname,
+                Country = user.Country,
+                City = user.City,
+                Birthday = user.Birthday
             };
 
             return View(model);
@@ -195,6 +197,39 @@ namespace O2.Identity.Web.Controllers
                 }
             }
         
+            var birthday = user.Birthday;
+            if (model.Birthday != birthday)
+            {
+                user.Birthday = model.Birthday;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+                
+            }
+            
+            var country = user.Country;
+            if (model.Country != country)
+            {
+                user.Country = model.Country;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+            }
+            var city = user.City;
+            if (model.City != city)
+            {
+                user.City = model.City;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+                
+            }
             StatusMessage = "Ваш профиль has been updated";
             return RedirectToAction(nameof(Index));
         }
