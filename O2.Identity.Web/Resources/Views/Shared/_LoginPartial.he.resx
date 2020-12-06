@@ -14,4 +14,13 @@
     <data name="Welcome" xml:space="preserve">
         <value>ברוך שובך</value>
     </data>
+    <data name="Register" xml:space="preserve">
+        <value>להירשם</value>
+    </data>
+    <data name="LogIn" xml:space="preserve">
+        <value>התחברות</value>
+    </data>
+    <data name="LogOut" xml:space="preserve">
+        <value>להתנתק</value>
+    </data>
 </root>

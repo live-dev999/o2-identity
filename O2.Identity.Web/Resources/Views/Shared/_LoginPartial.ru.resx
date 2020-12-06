@@ -14,4 +14,13 @@
     <data name="Welcome" xml:space="preserve">
         <value>C возвращением</value>
     </data>
+    <data name="Register" xml:space="preserve">
+        <value>Регистрироваться</value>
+    </data>
+    <data name="LogIn" xml:space="preserve">
+        <value>Вход</value>
+    </data>
+    <data name="LogOut" xml:space="preserve">
+        <value>Выход</value>
+    </data>
 </root>

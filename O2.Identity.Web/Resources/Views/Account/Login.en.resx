@@ -125,7 +125,7 @@
     <value>Login to the system</value>
   </data>
   <data name="LoginTitle" xml:space="preserve">
-    <value>Use your "O2 Account" to log in to the system.</value>
+    <value>Use your "O2 Account" to login to the system.</value>
   </data>
   <data name="RegisterNewUser" xml:space="preserve">
     <value>Register as a new user?</value>

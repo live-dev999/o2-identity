@@ -50,5 +50,23 @@ namespace O2.Identity.Web.Resources.Views.Shared {
                 return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
+        
+        internal static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        internal static string LogIn {
+            get {
+                return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        internal static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
     }
 }
