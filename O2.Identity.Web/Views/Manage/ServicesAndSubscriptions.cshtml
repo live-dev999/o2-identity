@@ -1,0 +1,91 @@
+@model SubscriptionsViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = @Localizer["SubscriptionBullingTitle"];
+    ViewData.AddActivePage(ManageNavPages.ServicesAndSubscriptions);
+}
+
+<h4>@ViewData["Title"]</h4>
+@if ((Model.Subscriptions != null && Model.Subscriptions.Count > 0))
+{
+    
+
+<table class="table">
+    <tr>
+        <th>@Localizer["ServiceName"]</th>
+        <th>@Localizer["Description"]</th>
+        <th>@Localizer["SubscriptionType"]</th>
+        <th>@Localizer["Cost"]</th>
+        <th>...</th>
+        @* <th>Status</th> *@
+        @* <th>Term</th> *@
+    </tr>
+    @foreach (SubscriptionViewModel u in Model.Subscriptions)
+    {
+        <tr>
+            <td>@u.AppName</td>
+            <td style="max-width: 150px;">@u.Description</td>
+             <td>@u.TypeSubscription</td>
+            @if (u.Cost != 0)
+            {
+                <td>@u.Cost</td>
+            }
+            else
+            {
+                <td> - </td>
+            }
+            
+            <td><button>...</button></td>
+            @* <td>@u.IsActive</td>  *@
+             @* <td>@u.Term</td> *@
+            @*                 @if (@u.ProfilePhoto != null) *@
+@*                 { *@
+@*                     <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@u.ProfilePhoto"> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png"> *@
+@*                 } *@
+@*             </td><td>@u.Email</td> *@
+@*             <td>@u.Firstname</td> *@
+@*             <td>@u.Lastname</td> *@
+@*             <td>@u.PhoneNumber</td> *@
+@*             <td>@u.Country</td> *@
+@*             <td>@u.City</td> *@
+@*             <td>@if (@u.IsSpecialist) *@
+@*                 { *@
+@*                     <p>Специалист</p> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     <p>Клиент</p> *@
+@*                 } *@
+@*             </td> *@
+        </tr>
+    }
+</table>
+}
+else
+{
+    <p>У вас нет подписок на данный момент</p>
+}
+@* @if (Model.PageViewModel.HasPreviousPage) *@
+@* { *@
+@*     <a asp-action="GetUsers" *@
+@*        asp-route-page="@(Model.PageViewModel.PageNumber - 1)" *@
+@*        class="btn btn-outline-dark"> *@
+@*         <i class="glyphicon glyphicon-chevron-left"></i> *@
+@*         Назад *@
+@*     </a> *@
+@* } *@
+@* @if (Model.PageViewModel.HasNextPage) *@
+@* { *@
+@*     <a asp-action="GetUsers" *@
+@*        asp-route-page="@(Model.PageViewModel.PageNumber + 1)" *@
+@*        class="btn btn-outline-dark"> *@
+@*         Вперед *@
+@*         <i class="glyphicon glyphicon-chevron-right"></i> *@
+@*     </a> *@
+@* } *@
+
+

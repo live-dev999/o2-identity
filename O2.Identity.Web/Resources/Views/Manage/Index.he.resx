@@ -1,0 +1,59 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="UserTitle" xml:space="preserve">
+        <value>מִשׁתַמֵשׁ</value>
+    </data>
+    <data name="Email" xml:space="preserve">
+        <value>אימייל</value>
+    </data>
+    <data name="Firstname" xml:space="preserve">
+        <value>שם פרטי</value>
+    </data>
+    <data name="Lastname" xml:space="preserve">
+        <value>שם משפחה</value>
+    </data>
+    <data name="Username" xml:space="preserve">
+        <value>שם משתמש</value>
+    </data>
+    <data name="SendVerificationEmail" xml:space="preserve">
+        <value>שלח דוא"ל אימות</value>
+    </data>
+    <data name="PhoneNumber" xml:space="preserve">
+        <value>מספר טלפון</value>
+    </data>
+    <data name="Country" xml:space="preserve">
+        <value>מדינה</value>
+    </data>
+    <data name="City" xml:space="preserve">
+        <value>עִיר</value>
+    </data>
+    <data name="ProfilePhoto" xml:space="preserve">
+        <value>תמונת פרופיל</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>להציל</value>
+    </data>
+    <data name="UserIdentity" xml:space="preserve">
+        <value>מזהה ייחודי</value>
+    </data>
+    <data name="RegistrationDate" xml:space="preserve">
+        <value>תאריך רישום במערכת</value>
+    </data>
+    <data name="CopyId" xml:space="preserve">
+        <value>מספר ייחודי שהועתק ללוח</value>
+    </data>
+    <data name="btnCopyId" xml:space="preserve">
+        <value>מזהה העתק</value>
+    </data>
+</root>

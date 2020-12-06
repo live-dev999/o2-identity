@@ -1,5 +1,5 @@
 ﻿@model LoggedOutViewModel
-
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{ 
     // set this so the layout rendering sees an anonymous user
     ViewData["signed-out"] = true;
@@ -7,8 +7,8 @@
 
 <div class="page-header logged-out">
     <h1>
-        Выйти
-        <small>Вы вышли из системы</small>
+        @* Выйти *@
+        <small>@Localizer["LogoutMessage"]</small>
     </h1>
 
     @if (Model.PostLogoutRedirectUri != null)

@@ -1,8 +1,9 @@
 ﻿@model LoginViewModel
-@inject SignInManager<O2User> SignInManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@* @inject SignInManager<O2User> SignInManager *@
 
 @{
-    ViewData["Title"] = "Вход в систему";
+    ViewData["Title"] = @Localizer["LoginHeader"];
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -11,36 +12,41 @@
         <section>
             <img src="~/images/icon.jpg" alt="">
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <h4>Используйте свой "O2 Account" для авторизации в системе.</h4>
-                <hr/>
+                <h4> @Localizer["LoginTitle"] </h4>
+                <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input asp-for="Email" class="form-control"/>
+                    <label asp-for="Email">
+                        @Localizer["lbEmail"]
+                    </label>
+                    <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control"/>
+                    <label asp-for="Password">
+                         @Localizer["lbPassword"]
+                    </label>
+                    <input asp-for="Password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <label asp-for="RememberMe">
-                            <input asp-for="RememberMe"/>
-                            @Html.DisplayNameFor(m => m.RememberMe)
+                            <input asp-for="RememberMe" />
+                            @* @Html.DisplayNameFor(m => m.RememberMe) *@
+                            @Localizer["RememberMe"]
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Log in</button>
+                    <button type="submit" class="btn btn-default">@Localizer["LogIn"]</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
+                        <a asp-action="ForgotPassword">@Localizer["ForgotPassword"]</a>
                     </p>
                     <p>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">@Localizer["RegisterNewUser"]</a>
                     </p>
                 </div>
             </form>
@@ -51,23 +57,24 @@
         <section>
             <div>
                 <img src="~/images/brand.png" alt="">
-            
+
             </div>
             <br>
-            <h4>Подключайся и управляй своим бизнесом прямо тут и сейчас.</h4>
+            <h4>@Localizer["O2LoginHeader"]</h4>
             <hr />
             @*             @{ *@
             @*                 var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList(); *@
             @*                 if (loginProviders.Count == 0) *@
             @*                 { *@
-             <div>
-                 <p>
-                      O2 Platform - это огромная микросервисная система с многообразием компонентов для вас и вашего бизнеса. Читать подробнее <a href="https://o2bus.com">официальный сайт</a>
-                     чтобы ознакомиться с платформой.
-                 </p>
-            
-            
-             </div>
+            <div>
+                <p>
+                    @Localizer["O2LoginHeader2"]
+                    @* O2 Platform - это огромная микросервисная система с многообразием компонентов для вас и вашего бизнеса. Читать подробнее <a href="https://o2bus.com">официальный сайт</a> *@
+                    @* чтобы ознакомиться с платформой. *@
+                </p>
+
+
+            </div>
             @*                 } *@
             @*                 else *@
             @*                 { *@
@@ -86,19 +93,19 @@
         </section>
         <br>
         <section>
-            <h4>Демо вход</h4>
+            <h4>@Localizer["DemoHeader"]</h4>
             <hr>
             <div>
-                <p>Для проверки и демострации вы можете использовать демо режим.</p>
-                
+                <p>@Localizer["DemoTitle"]</p>
+
                 <p style="font-weight: bold;">
-                    username = "demo@demo.com"; 
+                    username = "demo@demo.com";
                 </p>
                 <p style="font-weight: bold;">
-                                     password = "P@ssword1";
-                 </p>
+                    password = "P@ssword1";
+                </p>
                 <hr>
-                <p>Внимание! В демо режиме могут быть недоступны некоторые функции продуктов.</p>
+                <p>@Localizer["DemoAttention"]</p>
             </div>
         </section>
     </div>
