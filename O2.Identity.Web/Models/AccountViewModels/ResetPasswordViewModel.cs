@@ -15,7 +15,7 @@ namespace O2.Identity.Web.Models.AccountViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "PasswordNotMatch")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

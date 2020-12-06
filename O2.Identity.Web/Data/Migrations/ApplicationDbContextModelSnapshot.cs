@@ -153,6 +153,8 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("IsSpecialist");
 
+                    b.Property<DateTime?>("LastLoginTime");
+
                     b.Property<string>("Lastname");
 
                     b.Property<bool>("LockoutEnabled");
@@ -172,6 +174,8 @@ namespace O2.Identity.Web.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("ProfilePhoto");
+
+                    b.Property<DateTime?>("RegistrationDate");
 
                     b.Property<string>("SecurityStamp");
 

@@ -1,0 +1,70 @@
+@model UsersViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = @Localizer["UsersTitle"];
+    ViewData.AddActivePage(ManageNavPages.GetUsers);
+}
+
+<h4>@ViewData["Title"]</h4>
+<h5>Специалистов - @Model.Users.Where(x=>x.IsSpecialist).Count(), клиентов - @Model.Users.Where(x=>!x.IsSpecialist).Count()</h5>
+<table class="table">
+    <tr>
+        <th>@Localizer["ProfilePhoto"]</th>
+        <th>@Localizer["Email"]</th>
+        <th>@Localizer["Firstname"]</th>
+        <th>@Localizer["Lastname"]</th>
+        <th>@Localizer["PhoneNumber"]</th>
+        <th>@Localizer["Country"]</th>
+        <th>@Localizer["City"]</th>
+        <th>@Localizer["Type"]</th>
+        <th>...</th>
+    </tr>
+    @foreach (O2User u in Model.Users)
+    {
+        <tr>
+            <td>
+                @if (@u.ProfilePhoto != null)
+                {
+                    <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@u.ProfilePhoto">
+                }
+                else
+                {
+                    <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png">
+                }
+            </td><td>@u.Email</td>
+            <td>@u.Firstname</td>
+            <td>@u.Lastname</td>
+            <td>@u.PhoneNumber</td>
+            <td>@u.Country</td>
+            <td>@u.City</td>
+            <td>@if (@u.IsSpecialist)
+                {
+                    <p>@Localizer["TypeSpecialist"]</p>
+                }
+                else
+                {
+                    <p>@Localizer["TypeClient"]</p>
+                }
+            </td>
+            <td><button>...</button></td>
+        </tr>
+    }
+</table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="GetUsers"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="GetUsers"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}

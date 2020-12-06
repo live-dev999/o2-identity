@@ -133,4 +133,10 @@
     <value>Türkisch</value>
     <comment/>
   </data>
+  <data name="he" xml:space="preserve">
+    <value>Hebräisch</value>
+  </data>
+  <data name="LanguageUI" xml:space="preserve">
+    <value>Sprachbenutzeroberfläche</value>
+  </data>
 </root>

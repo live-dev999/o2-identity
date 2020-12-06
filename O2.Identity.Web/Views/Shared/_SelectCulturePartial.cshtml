@@ -14,16 +14,19 @@
     var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
 }
 <div >
-    <form id="selectLanguage" 
-          asp-controller="Culture" 
-          asp-action="SelectCulture" 
+    <form id="selectLanguage"
+          asp-controller="Culture"
+          asp-action="SelectCulture"
           asp-route-returnUrl="@returnUrl"
-          method="post" 
-          class="form-horizontal" 
+          method="post"
+          class="form-horizontal"
           role="form">
-        <select name="culture" 
-                onchange="this.form.submit();" 
-                asp-for="@requestCulture.RequestCulture.UICulture.Name" 
-                asp-items="cultureItems"></select>
+          <div class=”col-md-offset-2 col-md-10”>
+            <label>@Localizer["LanguageUI"]</label>
+              <select name="culture"
+                      onchange="this.form.submit();"
+                      asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                      asp-items="cultureItems"></select>
+          </div>
     </form>
 </div> 

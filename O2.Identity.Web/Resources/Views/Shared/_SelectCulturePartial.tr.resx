@@ -35,4 +35,10 @@
     <value>Türk</value>
     <comment/>
   </data>
+    <data name="he" xml:space="preserve">
+        <value>İbranice</value>
+    </data>
+    <data name="LanguageUI" xml:space="preserve">
+        <value>Dil kullanıcı arayüzü</value>
+    </data>
 </root>

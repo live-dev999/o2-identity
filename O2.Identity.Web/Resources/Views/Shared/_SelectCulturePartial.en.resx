@@ -33,4 +33,10 @@
     <value>Turkish</value>
     <comment/>
   </data>
+    <data name="he" xml:space="preserve">
+        <value>Hebrew</value>
+    </data>
+    <data name="LanguageUI" xml:space="preserve">
+        <value>Language user interface</value>
+    </data>
 </root>
