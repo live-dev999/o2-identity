@@ -1,30 +1,48 @@
 ﻿@model IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = Localizer["UserTitle"];
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<h4>@ViewData["Title"]</h4>
+<h2>@ViewData["Title"]</h2>
+
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 <div class="row">
     <div class="col-md-6">
         <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Firstname"></label>
+                <label asp-for="Id">@Localizer["UserIdentity"]</label>
+                <input asp-for="Id" id="textId" class="form-control" disabled />
+                @* <button id="btnCopy" onclick="copyToClipboar()" value="copyId">@Localizer["btnCopyId"]</button> *@
+                @* <input type="button" onclick="copyToClipboar()" value="Copy" >@Localizer["btnCopyId"]</button> *@
+                @* <input type="submit" value="Work 1" asp-action="" /> *@
+                @* <button type="submit" id="btnCopy" class="btn btn-default" value="copyId" >@Localizer["btnCopyId"]</button> *@
+                @* <button id="btnCopy" value="copyId">@Localizer["btnCopyId"]</button> *@
+                <button type="button" id="btnCopy" value="@Localizer["CopyId"]" class="btn btn-info btn-sm">
+                   @Localizer["btnCopyId"]
+                </button>
+            </div>
+             <div class="form-group">
+                <label asp-for="RegistrationDate">@Localizer["RegistrationDate"]</label>
+                <input asp-for="RegistrationDate" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Firstname">@Localizer["Firstname"]</label>
                 <input asp-for="Firstname" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Lastname"></label>
+                <label asp-for="Lastname">@Localizer["Lastname"]</label>
                 <input asp-for="Lastname" class="form-control" />
             </div>
             
             <div class="form-group">
-                <label asp-for="Username"></label>
+                <label asp-for="Username">@Localizer["Username"]</label>
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group">
-                <label asp-for="Email"></label>
+                <label asp-for="Email">@Localizer["Email"]</label>
                 @if (Model.IsEmailConfirmed)
                 {
                     <div class="input-group">
@@ -35,12 +53,12 @@
                 else
                 {
                     <input asp-for="Email" class="form-control" />
-                    <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                    <button asp-action="SendVerificationEmail" class="btn btn-link">@Localizer["SendVerificationEmail"]</button>
                 }
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber"></label>
+                <label asp-for="PhoneNumber">@Localizer["PhoneNumber"]</label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
@@ -50,11 +68,11 @@
             @*     $1$ <label for="date-picker-example">asp-for="ToDoStartDate"</label> #1# *@
             @* </div> *@
             <div class="form-group">
-                <label asp-for="Country"></label>
+                <label asp-for="Country">@Localizer["Country"]</label>
                 <input asp-for="Country" class="form-control" />
             </div>
              <div class="form-group">
-                <label asp-for="City"></label>
+                <label asp-for="City">@Localizer["City"]</label>
                 <input asp-for="City" class="form-control" />
             </div>
             <div class="form-group">
@@ -72,7 +90,7 @@
                 @* <form enctype="multipart/form-data" method="post"> *@
                     <dl>
                         <dt>
-                            <label asp-for="FormFile"></label>
+                            <label asp-for="FormFile">@Localizer["ProfilePhoto"]</label>
                         </dt>
                         <dd>
                             <input asp-for="FormFile" type="file">
@@ -93,7 +111,7 @@
                 @* </form> *@
             </div>
             
-            <button type="submit" class="btn btn-default">Save</button>
+            <button type="submit" class="btn btn-default">@Localizer["Save"]</button>
         </form>
     </div>
 </div>
@@ -102,4 +120,27 @@
     @* // Data Picker Initialization *@
     @* $('.datepicker').pickadate(); *@
     @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript">
+                $(function () {
+    
+                    $("#btnCopy").click(
+                        function ()
+                        {
+    
+                            try {
+                                $('#textId').select();
+                                document.execCommand("copy");
+                                var message_localization = $("#btnCopy").val();
+                                //Localizer["CopyId"]
+                                alert(message_localization);
+                            }
+                            catch (e) {
+                                alert('Copy operation failed');
+                            }
+                        }
+                    );
+                });
+    
+            </script>
 }

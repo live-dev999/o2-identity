@@ -1,7 +1,8 @@
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using O2.Identity.Web.Services;
 
-namespace O2.Identity.Web.Services
+namespace O2.Identity.Web.Extensions
 {
     public static class EmailSenderExtensions
     {

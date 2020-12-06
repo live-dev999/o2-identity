@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -10,14 +9,15 @@ using CloudinaryDotNet.Actions;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using O2.Identity.Web.Extensions;
 using O2.Identity.Web.Models;
 using O2.Identity.Web.Models.ManageViewModels;
+using O2.Identity.Web.Resources;
 using O2.Identity.Web.Services;
 
 namespace O2.Identity.Web.Controllers
@@ -31,24 +31,31 @@ namespace O2.Identity.Web.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private readonly IStringLocalizer<IndexViewModel> _localizer;
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
         private Cloudinary _cloudinary;
-        
+
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public ManageController(
-          UserManager<O2User> userManager,
-          SignInManager<O2User> signInManager,
-          IEmailSender emailSender,
-          ILogger<ManageController> logger,
-          UrlEncoder urlEncoder,
-          IOptions<CloudinarySettings> _cloudinaryConfig)
+            UserManager<O2User> userManager,
+            SignInManager<O2User> signInManager,
+            IEmailSender emailSender,
+            ILogger<ManageController> logger,
+            UrlEncoder urlEncoder,
+            IOptions<CloudinarySettings> _cloudinaryConfig,
+            IStringLocalizer<IndexViewModel> localizer,
+            IStringLocalizer<SharedResource> sharedLocalizer
+        )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
-            
+            _localizer = localizer;
+            _sharedLocalizer = sharedLocalizer;
+
             Account acc = new Account(
                 _cloudinaryConfig.Value.CloudName,
                 _cloudinaryConfig.Value.ApiKey,
@@ -65,8 +72,7 @@ namespace O2.Identity.Web.Controllers
             public string ApiSecret { get; set; }
         }
 
-        [TempData]
-        public string StatusMessage { get; set; }
+        [TempData] public string StatusMessage { get; set; }
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -79,6 +85,7 @@ namespace O2.Identity.Web.Controllers
 
             var model = new IndexViewModel
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -89,18 +96,142 @@ namespace O2.Identity.Web.Controllers
                 Lastname = user.Lastname,
                 Country = user.Country,
                 City = user.City,
-                Birthday = user.Birthday
+                Birthday = user.Birthday,
+                RegistrationDate = user.RegistrationDate
             };
 
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult PaymentAndBilling(int page = 1)
+        {
+            var invoicesViewModels = new List<InvoiceViewModel>()
+            {
+                new InvoiceViewModel()
+                {
+                    InvoiceID = 1,
+                    InvoiceDate = DateTime.Now,
+                    DueDate = DateTime.Now.AddDays(30),
+                    BillingPeriod = "9/8/2020 - 9/30/2020",
+                    AmountDue = "50 USD",
+                    TotalAmount = "50 USD",
+                    Status = "Paid on 9/26/2020"
+                },
+                new InvoiceViewModel()
+                {
+                    InvoiceID = 2,
+                    InvoiceDate = DateTime.Now.AddDays(30),
+                    DueDate = DateTime.Now.AddDays(60),
+                    BillingPeriod = "10/8/2020 - 10/30/2020",
+                    AmountDue = "100 USD",
+                    TotalAmount = "100 USD",
+                    Status = "Paid on 10/26/2020"
+                },
+                new InvoiceViewModel()
+                {
+                    InvoiceID = 3,
+                    InvoiceDate = DateTime.Now.AddDays(30),
+                    DueDate = DateTime.Now.AddDays(60),
+                    BillingPeriod = "11/8/2020 - 11/30/2020",
+                    AmountDue = "100 USD",
+                    TotalAmount = "100 USD",
+                    Status = "Paid on 11/26/2020"
+                }
+            };
+            
+            int pageSize = 10;   // количество элементов на странице
+
+            var source = invoicesViewModels;
+            var count =  source.Count();
+            var items =  source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+             
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            InvoicesViewModel viewModel = new InvoicesViewModel
+            {
+                PageViewModel = pageViewModel,
+                Invoices = items
+            };
+            return View(viewModel);
+        }
         
+        [HttpGet]
+        public IActionResult ServicesAndSubscriptions(int page = 1)
+        {
+            var list = new List<SubscriptionViewModel>()
+            {
+                new SubscriptionViewModel()
+                {
+                    AppName = "PFR Community",
+                    Cost = 0,
+                    Term = true,
+                    Description = "ПФР сообщество. Платформа. Позволяет реализовать связь между клиентами и специалистами ПФР."
+                },
+                new SubscriptionViewModel()
+                {
+                    AppName = "O2 Account",
+                    Cost = 0,
+                    Term = true,
+                    Description = "O2 Аккаунт  - специальзированный аккаунт для входа во все системы платформы O2."
+                },
+                new SubscriptionViewModel()
+                {
+                    AppName = "O2 OrdLine",
+                    Cost = 0,
+                    Term = true,
+                    Description = "O2 OrdLine  - Приложения для связи социальных сетей. Landing Page - Аккаунт."
+                }
+            };
+            
+             int pageSize = 10;   // количество элементов на странице
+
+             var source = list;
+            var count =  source.Count();
+            var items =  source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+ 
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            SubscriptionsViewModel viewModel = new SubscriptionsViewModel
+            {
+                PageViewModel = pageViewModel,
+                Subscriptions = items
+            };
+                        
+                        
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        // [ValidateAntiForgeryToken]
+        //[ActionName("Users")]
+        public IActionResult GetUsers(int page=1)
+        {
+            
+            int pageSize = 10;   // количество элементов на странице
+             
+            var source = _userManager.Users.ToList();
+            var count =  source.Count();
+            var items =  source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+ 
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            UsersViewModel viewModel = new UsersViewModel
+            {
+                PageViewModel = pageViewModel,
+                Users = items
+            };
+            
+            return View(viewModel);
+        }
+
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Index(IndexViewModel model, string submit)
         {
+            if (submit=="copyId")
+            {
+                return View(model);
+            }
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -137,7 +268,7 @@ namespace O2.Identity.Web.Controllers
             {
                 var uploadResult = new ImageUploadResult();
                 var file = model.FormFile;
-                if (model.FormFile != null)
+                if (file != null)
                 {
                     if (file.Length > 0)
                     {
@@ -512,7 +643,6 @@ namespace O2.Identity.Web.Controllers
                 SharedKey = FormatKey(unformattedKey),
                 AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey)
             };
-
             return View(model);
         }
 
@@ -630,5 +760,7 @@ namespace O2.Identity.Web.Controllers
         }
 
         #endregion
+
+        
     }
 }

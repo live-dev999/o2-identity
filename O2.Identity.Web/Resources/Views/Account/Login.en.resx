@@ -121,4 +121,40 @@
     <value>Forgot your password?</value>
     <comment/>
   </data>
+  <data name="LoginHeader" xml:space="preserve">
+    <value>Login to the system</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Use your "O2 Account" to log in to the system.</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>Register as a new user?</value>
+  </data>
+  <data name="lbEmail" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="lbPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="O2LoginHeader" xml:space="preserve">
+    <value>Connect and manage your business right here and now.</value>
+  </data>
+  <data name="O2LoginHeader2" xml:space="preserve">
+    <value>The O2 platform is a huge microservices system with many components for you and your business. Read more on the official website to familiarize yourself with the platform.</value>
+  </data>
+  <data name="DemoHeader" xml:space="preserve">
+    <value>Demo login</value>
+  </data>
+  <data name="DemoTitle" xml:space="preserve">
+    <value>You can use the demo mode for testing and demonstration.</value>
+  </data>
+  <data name="DemoAttention" xml:space="preserve">
+    <value>Attention! Some product functions may not be available in demo mode.</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
 </root>

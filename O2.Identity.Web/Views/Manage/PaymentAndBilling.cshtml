@@ -1,0 +1,87 @@
+@model InvoicesViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "User";
+    ViewData.AddActivePage(ManageNavPages.PaymentsAndBulling);
+}
+
+<h4>Subscription & Bulling</h4>
+@if ((Model.Invoices != null && Model.Invoices.Count > 0))
+{
+<table class="table">
+    <tr>
+        <th>InvoiceID</th>
+        <th>Invoice Date</th>
+        <th>Billing Period</th>
+        <th>Amount Due</th>
+        <th>TotalAmount</th>
+        <th>Status</th>
+         <th>...</th>
+        @* <th>Cost</th> *@
+        @* <th>Status</th> *@
+        @* <th>Term</th> *@
+    </tr>
+    @foreach (InvoiceViewModel u in Model.Invoices)
+    {
+        <tr>
+            <td>@u.InvoiceID</td>
+            <td>@u.InvoiceDate</td>
+            <td>@u.BillingPeriod</td>
+             <td>@u.AmountDue</td>
+             <td>@u.TotalAmount</td>
+             <td>@u.Status</td>
+            <td><button>...</button></td>
+            @* <td>@u.Cost</td>  *@
+            @* <td>@u.IsActive</td>  *@
+             @* <td>@u.Term</td> *@
+            @*                 @if (@u.ProfilePhoto != null) *@
+@*                 { *@
+@*                     <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@u.ProfilePhoto"> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png"> *@
+@*                 } *@
+@*             </td><td>@u.Email</td> *@
+@*             <td>@u.Firstname</td> *@
+@*             <td>@u.Lastname</td> *@
+@*             <td>@u.PhoneNumber</td> *@
+@*             <td>@u.Country</td> *@
+@*             <td>@u.City</td> *@
+@*             <td>@if (@u.IsSpecialist) *@
+@*                 { *@
+@*                     <p>Специалист</p> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     <p>Клиент</p> *@
+@*                 } *@
+@*             </td> *@
+        </tr>
+    }
+</table>
+}
+else
+{
+    <p>У вас нет выставленных счетов на данный момент</p>
+}
+@* @if (Model.PageViewModel.HasPreviousPage) *@
+@* { *@
+@*     <a asp-action="GetUsers" *@
+@*        asp-route-page="@(Model.PageViewModel.PageNumber - 1)" *@
+@*        class="btn btn-outline-dark"> *@
+@*         <i class="glyphicon glyphicon-chevron-left"></i> *@
+@*         Назад *@
+@*     </a> *@
+@* } *@
+@* @if (Model.PageViewModel.HasNextPage) *@
+@* { *@
+@*     <a asp-action="GetUsers" *@
+@*        asp-route-page="@(Model.PageViewModel.PageNumber + 1)" *@
+@*        class="btn btn-outline-dark"> *@
+@*         Вперед *@
+@*         <i class="glyphicon glyphicon-chevron-right"></i> *@
+@*     </a> *@
+@* } *@
+
+

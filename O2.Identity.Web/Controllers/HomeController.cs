@@ -18,7 +18,8 @@ namespace O2.Identity.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(ManageController.Index), "Manage");
+            //return View();
         }
 
         public IActionResult About()

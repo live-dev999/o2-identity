@@ -16,7 +16,10 @@ using O2.Identity.Web.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Quickstart.UI;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using O2.Identity.Web.Extensions;
+using O2.Identity.Web.Resources;
 
 
 namespace O2.Identity.Web.Controllers
@@ -29,6 +32,8 @@ namespace O2.Identity.Web.Controllers
         private readonly SignInManager<O2User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IStringLocalizer<LoginViewModel> _localizer;
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
         private readonly AccountService _account;
         private readonly IIdentityServerInteractionService _interaction;
         private Cloudinary _cloudinary;
@@ -39,12 +44,16 @@ namespace O2.Identity.Web.Controllers
             IHttpContextAccessor httpContextAccessor,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IOptions<ManageController.CloudinarySettings> _cloudinaryConfig)
+            IOptions<ManageController.CloudinarySettings> _cloudinaryConfig,
+            IStringLocalizer<LoginViewModel> localizer,
+            IStringLocalizer<SharedResource> sharedLocalizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _localizer = localizer;
+            _sharedLocalizer = sharedLocalizer;
             _interaction = interaction;
             _account = new AccountService(interaction, httpContextAccessor);
             Account acc = new Account(
@@ -97,7 +106,7 @@ namespace O2.Identity.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, _localizer["InvalidLoginAttempt"]);
                     return View(model);
                 }
             }
@@ -246,12 +255,13 @@ namespace O2.Identity.Web.Controllers
                     Firstname = model.Firstname, 
                     Lastname = model.Lastname,
                     PhoneNumber = model.PhoneNumber,
-                    ProfilePhoto = model.ProfilePhoto
+                    ProfilePhoto = model.ProfilePhoto,
+                    RegistrationDate = DateTime.Now
                 };
                 
                 var uploadResult = new ImageUploadResult();
                 var file = model.FormFile;
-                if (file.Length > 0)
+                if (file?.Length > 0)
                 {
                     using (var stream = file.OpenReadStream())
                     {
@@ -264,18 +274,17 @@ namespace O2.Identity.Web.Controllers
                 
                         uploadResult = _cloudinary.Upload(uploadParams);
                     }
-                } 
+                    var newPhoto = new Photo();
+                    newPhoto.Url = uploadResult.Uri.ToString();
+                    newPhoto.PublicId = uploadResult.PublicId;
+                    newPhoto.IsMain = true;
+                    user.Photos = new List<Photo>();
+                    user.Photos.Add(newPhoto);
+                    user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
+                }
 
-                var newPhoto = new Photo();
-                newPhoto.Url = uploadResult.Uri.ToString();
-                newPhoto.PublicId = uploadResult.PublicId;
-                newPhoto.IsMain = true;
-                user.Photos = new List<Photo>();
-                user.Photos.Add(newPhoto);
-                //
-                user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
-                
-               
+
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

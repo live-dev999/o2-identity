@@ -1,0 +1,29 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="SubscriptionBullingTitle" xml:space="preserve">
+        <value>Подписки и выставление счетов</value>
+    </data>
+    <data name="ServiceName" xml:space="preserve">
+        <value>Название сервиса</value>
+    </data>
+    <data name="Description" xml:space="preserve">
+        <value>Описание</value>
+    </data>
+    <data name="SubscriptionType" xml:space="preserve">
+        <value>Тип подписки</value>
+    </data>
+    <data name="Cost" xml:space="preserve">
+        <value>Стоимость</value>
+    </data>
+</root>

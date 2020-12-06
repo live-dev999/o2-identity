@@ -1,0 +1,54 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="ForgotPassword" xml:space="preserve">
+        <value>Şifremi unuttum</value>
+    </data>
+    <data name="LoginHeader" xml:space="preserve">
+        <value>Sisteme giriş yapın</value>
+    </data>
+    <data name="LoginTitle" xml:space="preserve">
+        <value>Sisteme giriş yapmak için "O2 Hesabınızı" kullanın.</value>
+    </data>
+    <data name="RegisterNewUser" xml:space="preserve">
+        <value>Yeni bir kullanıcı olarak kayıt ol?</value>
+    </data>
+    <data name="lbEmail" xml:space="preserve">
+        <value>E-posta adresi</value>
+    </data>
+    <data name="lbPassword" xml:space="preserve">
+        <value>Parola</value>
+    </data>
+    <data name="O2LoginHeader" xml:space="preserve">
+        <value>İşinizi hemen burada ve şimdi bağlayın ve yönetin.</value>
+    </data>
+    <data name="O2LoginHeader2" xml:space="preserve">
+        <value>
+O2 platformu, sizin ve işletmeniz için birçok bileşene sahip devasa bir mikro hizmetler sistemidir. Platforma aşina olmak için resmi web sitesinde daha fazlasını okuyun.</value>
+    </data>
+    <data name="DemoTitle" xml:space="preserve">
+        <value>Demo modunu test etmek ve göstermek için kullanabilirsiniz.</value>
+    </data>
+    <data name="DemoHeader" xml:space="preserve">
+        <value>Demo girişi</value>
+    </data>
+    <data name="DemoAttention" xml:space="preserve">
+        <value>Dikkat! Bazı ürün işlevleri demo modunda kullanılamayabilir.</value>
+    </data>
+    <data name="LogIn" xml:space="preserve">
+        <value>Oturum aç</value>
+    </data>
+    <data name="RememberMe" xml:space="preserve">
+        <value>Beni Hatırla</value>
+    </data>
+</root>

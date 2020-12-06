@@ -9,13 +9,15 @@ namespace O2.Identity.Web.Views.Manage
         public static string ActivePageKey => "ActivePage";
 
         public static string Index => "Index";
+        public static string GetUsers=> "GetUsers";
 
         public static string ChangePassword => "ChangePassword";
 
         public static string ExternalLogins => "ExternalLogins";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
-
+        public static string PaymentsAndBulling => "PaymentsAndBulling";
+        public static string ServicesAndSubscriptions { get; set; }
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
@@ -31,5 +33,12 @@ namespace O2.Identity.Web.Views.Manage
         }
 
         public static void AddActivePage(this ViewDataDictionary viewData, string activePage) => viewData[ActivePageKey] = activePage;
+
+        public static string UsersNavClass(ViewContext viewContext) => PageNavClass(viewContext, GetUsers);
+
+        public static string PaymentAndBillingNavClass(ViewContext viewContext) => PageNavClass(viewContext, PaymentsAndBulling);
+
+        public static object ServicesAndSubscriptionsNavClass(ViewContext viewContext)=> PageNavClass(viewContext, ServicesAndSubscriptions);
+        
     }
 }

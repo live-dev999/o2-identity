@@ -19,5 +19,8 @@ namespace O2.Identity.Web.Models
         public DateTime Birthday { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        
+        public virtual DateTime? LastLoginTime { get; set; }
+        public virtual DateTime? RegistrationDate { get; set; }
     }
 }

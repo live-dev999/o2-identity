@@ -1,4 +1,4 @@
-namespace O2.Business.Auth.Resources
+namespace O2.Identity.Web.Resources
 {
     public class SharedResource
     {
