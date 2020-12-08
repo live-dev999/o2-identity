@@ -20,6 +20,7 @@ using O2.Identity.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Serilog;
 using Serilog.Events;
+using O2.Identity.Web.Filters;
 
 namespace O2.Identity.Web
 {
@@ -106,7 +107,9 @@ namespace O2.Identity.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddScoped<VerifyFilter>();
             
+            services.AddScoped<IVerification, Verification>();
             services.AddConfiguredLocalization();
             services.AddMvc()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -189,6 +192,9 @@ namespace O2.Identity.Web
                         });
                 });
                 services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+                
+                services.AddSingleton<IVerification>(new Verification(
+                    Configuration.GetSection("Twilio").Get<Configuration.Twilio>()));
 
                 
 
