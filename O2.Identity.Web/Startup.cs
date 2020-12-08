@@ -18,6 +18,7 @@ using Microsoft.WindowsAzure.Storage;
 using O2.Identity.Web.Controllers;
 using O2.Identity.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
+using O2.Identity.Web.Filters;
 
 namespace O2.Identity.Web
 {
@@ -104,6 +105,10 @@ namespace O2.Identity.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
+            
+            services.AddScoped<IVerification, Verification>();
+            services.AddScoped<VerifyFilter>();
+            
             services.AddConfiguredLocalization();
             services.AddMvc()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -176,6 +181,9 @@ namespace O2.Identity.Web
                         });
                 });
                 services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+                
+                services.AddSingleton<IVerification>(new Verification(
+                    Configuration.GetSection("Twilio").Get<Configuration.Twilio>()));
 
                 
 

@@ -11,9 +11,10 @@ using System;
 namespace O2.Identity.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201207175320_AddedFieldVerify")]
+    partial class AddedFieldVerify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,8 +179,6 @@ namespace O2.Identity.Web.Data.Migrations
                     b.Property<DateTime?>("RegistrationDate");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("SpecialistId");
 
                     b.Property<bool>("TwoFactorEnabled");
 

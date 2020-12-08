@@ -20,6 +20,9 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using O2.Identity.Web.Extensions;
 using O2.Identity.Web.Resources;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Account = CloudinaryDotNet.Account;
 
 
 namespace O2.Identity.Web.Controllers
@@ -34,6 +37,8 @@ namespace O2.Identity.Web.Controllers
         private readonly ILogger _logger;
         private readonly IStringLocalizer<LoginViewModel> _localizer;
         private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
+        private readonly IVerification _verification;
+      
         private readonly AccountService _account;
         private readonly IIdentityServerInteractionService _interaction;
         private Cloudinary _cloudinary;
@@ -46,7 +51,9 @@ namespace O2.Identity.Web.Controllers
             ILogger<AccountController> logger,
             IOptions<ManageController.CloudinarySettings> _cloudinaryConfig,
             IStringLocalizer<LoginViewModel> localizer,
-            IStringLocalizer<SharedResource> sharedLocalizer)
+            IStringLocalizer<SharedResource> sharedLocalizer,
+            IVerification verification
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -54,6 +61,7 @@ namespace O2.Identity.Web.Controllers
             _logger = logger;
             _localizer = localizer;
             _sharedLocalizer = sharedLocalizer;
+            _verification = verification;
             _interaction = interaction;
             _account = new AccountService(interaction, httpContextAccessor);
             Account acc = new Account(
@@ -260,6 +268,15 @@ namespace O2.Identity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+
+            var message = await MessageResource.CreateAsync(
+                body: "O2 Account: ",
+                @from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+                to: new Twilio.Types.PhoneNumber("+375447987208")
+            );
+            
+            // if(model.SMSCode)
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -314,6 +331,7 @@ namespace O2.Identity.Web.Controllers
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
