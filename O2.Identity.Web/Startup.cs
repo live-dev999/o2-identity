@@ -32,6 +32,7 @@ namespace O2.Identity.Web
             public string StorageAccountName { get; set; }
             public string StorageKeyContainerName { get; set; }
             public string StorageKeyBlobName { get; set; }
+            public string StorageDevKeyBlobName { get; set; }
         }
         public Startup(IConfiguration configuration)
         {
@@ -51,7 +52,7 @@ namespace O2.Identity.Web
             var settings = Configuration.GetSection("DataProtection").Get<DataProtectionSettings>();
             Console.WriteLine(" ========================= SETTINGS ========================== ");
             Console.WriteLine($"ConnectionString={connectionString}");
-            Console.WriteLine($"DataProtection AadTenantId={settings.AadTenantId} keyId={settings.KeyVaultKeyId} account={settings.StorageAccountName} blob={settings.StorageKeyBlobName}");
+            Console.WriteLine($"DataProtection AadTenantId={settings.AadTenantId} keyId={settings.KeyVaultKeyId} account={settings.StorageAccountName} blob={settings.StorageKeyBlobName}  blob-dev={settings.StorageDevKeyBlobName}");
             Console.WriteLine(" ================= END SETTINGS ====================\r\n");
             
             // Custom ProfileService
@@ -82,7 +83,9 @@ namespace O2.Identity.Web
             // as it will be created on-demand.
 
             container.CreateIfNotExistsAsync().GetAwaiter().GetResult();
-            services.AddDataProtection().PersistKeysToAzureBlobStorage(container, "keys.xml");
+            var blobName = IsProduction ? settings.StorageKeyBlobName : settings.StorageDevKeyBlobName;
+            services.AddDataProtection().PersistKeysToAzureBlobStorage(container, blobName);
+            
             
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -160,6 +163,8 @@ namespace O2.Identity.Web
 
         }
 
+        public bool IsProduction { get; set; }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -178,7 +183,7 @@ namespace O2.Identity.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
                 RequireHeaderSymmetry = false
             };
-
+            IsProduction = env.IsProduction();
             forwardOptions.KnownNetworks.Clear();
             forwardOptions.KnownProxies.Clear();
 

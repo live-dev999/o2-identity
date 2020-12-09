@@ -14,4 +14,13 @@
     <data name="Welcome" xml:space="preserve">
         <value>tekrar hoşgeldiniz</value>
     </data>
+    <data name="Register" xml:space="preserve">
+        <value>Kayıt ol</value>
+    </data>
+    <data name="LogIn" xml:space="preserve">
+        <value>oturum aç</value>
+    </data>
+    <data name="LogOut" xml:space="preserve">
+        <value>çıkış Yap</value>
+    </data>
 </root>

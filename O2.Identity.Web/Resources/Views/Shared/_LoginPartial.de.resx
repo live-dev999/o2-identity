@@ -14,4 +14,13 @@
     <data name="Welcome" xml:space="preserve">
         <value>willkommen zurück</value>
     </data>
+    <data name="LogOut" xml:space="preserve">
+        <value>Ausloggen</value>
+    </data>
+    <data name="LogIn" xml:space="preserve">
+        <value>Anmeldung</value>
+    </data>
+    <data name="Register" xml:space="preserve">
+        <value>Registrieren</value>
+    </data>
 </root>
