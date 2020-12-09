@@ -16,6 +16,7 @@ using O2.Identity.Web.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Quickstart.UI;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using O2.Identity.Web.Extensions;
@@ -85,6 +86,22 @@ namespace O2.Identity.Web.Controllers
             _logger.LogInformation("Login - ");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
+        }
+
+        public async Task<IActionResult> Verify(VerifyViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var result = await _verification.CheckVerificationAsync(model.PhoneNumber, model.Code);
+                if (result.IsValid)
+                {
+                    _logger.LogInformation("Verify code - valid");
+                    return RedirectToLocal(returnUrl);
+                }
+                return View(model);
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -232,7 +249,7 @@ namespace O2.Identity.Web.Controllers
                 return View();
             }
         }
-
+    
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()

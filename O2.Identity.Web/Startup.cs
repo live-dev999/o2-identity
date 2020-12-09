@@ -253,7 +253,7 @@ namespace O2.Identity.Web
             // });
             app.UseForwardedHeaders();
             app.UseStaticFiles();
-
+            IsProduction = env.IsProduction();
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
             
@@ -275,6 +275,8 @@ namespace O2.Identity.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        public bool IsProduction { get; set; }
     }
 
 }
