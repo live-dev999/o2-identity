@@ -209,12 +209,16 @@ namespace O2.Identity.Web.Controllers
             int pageSize = 10;   // количество элементов на странице
              
             var source = _userManager.Users.ToList();
+            var speciaCount = source.Count(x => x.IsSpecialist);
+            var clientsCount = source.Count(x => x.IsSpecialist==false);
             var count =  source.Count();
             var items =  source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
  
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             UsersViewModel viewModel = new UsersViewModel
             {
+                SpecialistCount = speciaCount,
+                ClientCount= clientsCount,
                 PageViewModel = pageViewModel,
                 Users = items
             };
