@@ -16,7 +16,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using O2.Identity.Web.Controllers;
 using O2.Identity.Web.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace O2.Identity.Web
