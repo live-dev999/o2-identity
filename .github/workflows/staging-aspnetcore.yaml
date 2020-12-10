@@ -1,6 +1,18 @@
 name: staging-build
 
-on: [push]
+on: 
+  push:
+    branches:
+    - master
+    - release/*
+    - dev 
+  pull_request:
+    branches:
+    - dev
+    - master
+    - feature/*
+    - hotfix/*
+    - release/*
 
 jobs:
   build:
@@ -13,5 +25,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.108
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: Install dependencies
+      run: dotnet restore O2.Identity.Web/O2.Identity.Web.csproj
+    - name: Build
+      run: dotnet build O2.Identity.Web/O2.Identity.Web.csproj --configuration Release --no-restore
+    - name: Test
+      run: dotnet test O2.Identity.Web/O2.Identity.Web.csproj --no-restore --verbosity normal
