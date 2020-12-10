@@ -1,0 +1,58 @@
+on:
+  push:
+    branches:
+    - master
+    - release/*
+  pull_request:
+      branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: o2bionics.azurecr.io
+        username: ${{ secrets.acr_o2bionics_username }}
+        password: ${{ secrets.acr_o2bionics_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/O2.Identity.Web" -f  "O2.Identity.Web/Dockerfile" -t o2bionics.azurecr.io/o2-identity-web:${{ github.sha }}
+        docker push o2bionics.azurecr.io/o2-identity-web:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_o2aks_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep o2platform | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace o2platform`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: o2platform
+        container-registry-url: o2bionics.azurecr.io
+        container-registry-username: ${{ secrets.acr_o2bionics_username }}
+        container-registry-password: ${{ secrets.acr_o2bionics_password }}
+        secret-name: o2aksdockerauth
+       
+    - uses: azure/k8s-deploy@v1
+      with:
+        namespace: o2platform
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+          manifests/ingress.yml
+        images: |
+          o2bionics.azurecr.io/o2-identity-web:${{ github.sha }}
+        imagepullsecrets: |
+          o2aksdockerauth
