@@ -35,6 +35,7 @@
     <a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]">log in with a recovery code</a>.
 </p>
 
+@* ReSharper disable once Razor.SectionNotResolved *@
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

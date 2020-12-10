@@ -75,6 +75,7 @@ namespace O2.Identity.Web
                 new Client{
                     ClientId="pfr-center-spa",
                     ClientName="PFR Center SPA",
+                    RequireConsent = false,
                     AllowedGrantTypes=GrantTypes.Implicit,
                     RedirectUris = {$"{clientUrls["PFRCenterSPA"]}/auth/callback"},
                     PostLogoutRedirectUris = {$"{clientUrls["PFRCenterSPA"]}/"},
