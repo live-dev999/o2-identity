@@ -8,7 +8,7 @@ image:
   repository: o2platform/o2-identity.web
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "linux-v1.20.1211.22"
 
 imagePullSecrets: []
 nameOverride: ""
