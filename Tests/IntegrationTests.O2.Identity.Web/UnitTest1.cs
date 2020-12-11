@@ -8,7 +8,6 @@ namespace IntegrationTests.O2.Identity.Web
         [TestMethod]
         public void TestMethod1()
         {
-            
         }
     }
 }
