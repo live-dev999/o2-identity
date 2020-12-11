@@ -47,11 +47,12 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
     - host: identity.staging.o2bus.com
-      paths: []
+      paths: 
+      - /
   tls:
     - secretName: tls-secret-identity-staging-o2bus
       hosts:
-    - identity.staging.o2bus.com
+      - identity.staging.o2bus.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
