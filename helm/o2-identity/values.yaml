@@ -8,7 +8,7 @@ image:
   repository: o2platform/o2-identity.web
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "linux-v1.20.1211.22"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -21,7 +21,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "identity-staging-o2bus-svc"
 
 podAnnotations: {}
 
@@ -41,17 +41,18 @@ service:
   port: 80
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - host: identity.staging.o2bus.com
+      paths: 
+      - /
+  tls:
+    - secretName: tls-secret-identity-staging-o2bus
+      hosts:
+      - identity.staging.o2bus.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

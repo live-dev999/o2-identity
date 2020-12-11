@@ -8,8 +8,7 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
       protocol: TCP
-      name: http
+      targetPort: 80
   selector:
     {{- include "o2-identity.selectorLabels" . | nindent 4 }}
