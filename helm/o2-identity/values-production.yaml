@@ -46,18 +46,17 @@ ingress:
     nginx.ingress.kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - host: identity.staging.o2bus.com
+    - host: identity.o2bus.com
       paths: 
       - /
   tls:
-    - secretName: tls-secret-identity-staging-o2bus
+    - secretName: tls-secret-identity-o2bus
       hosts:
-      - identity.staging.o2bus.com
-
+      - identity.o2bus.com
 env:
   values:
     - name: ConnectionString
-      value: Server=tcp:52.152.249.199,1433;Initial Catalog=O2Bionics.O2Platform.IdentityDb;User ID=sa;Password=Pass@word;Connection Timeout=30;
+      value: Server=tcp:40.88.219.28,1433;Initial Catalog=O2Bionics.O2Platform.IdentityDb;User ID=sa;Password=Pass@word;Connection Timeout=30;
     - name: DataProtection__KeyVaultKeyId
       value: https://identity.o2bus.com/keys/DataProtectionKey/bfc1bda979bc4081b89ab6f43bad12b8
     - name: DataProtection__AadTenantId
@@ -71,16 +70,16 @@ env:
     - name: DPConnectionString
       value: identity__keystore
     - name: MvcClient           
-      value: https://shop.staging.antonmarkov.com
+      value: https://shop.antonmarkov.com
     - name: BasketApi
-      value: https://api-basket.staging.o2bus.com
+      value: https://api-basket.o2bus.com
     - name: OrdersApi
-      value: https://api-order.staging.o2bus.com
+      value: https://api-order.o2bus.com
     - name: O2BusinessSpa
-      value: https://app.staging.o2bus.com
+      value: https://app.o2bus.com
     - name: PFRCenterSPA
-      value: https://beta.pfr-centr.com
-
+      value: https://pfr-centr.com
+  
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
