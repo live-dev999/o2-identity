@@ -203,7 +203,7 @@ namespace O2.Identity.Web.Controllers
         [HttpGet]
         // [ValidateAntiForgeryToken]
         //[ActionName("Users")]
-        public IActionResult GetUsers(int page=1)
+        public async Task<IActionResult> GetUsers(int page=1)
         {
             
             int pageSize = 10;   // количество элементов на странице
@@ -213,14 +213,16 @@ namespace O2.Identity.Web.Controllers
             var clientsCount = source.Count(x => x.IsSpecialist==false);
             var count =  source.Count();
             var items =  source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
- 
+            
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            var user =await _userManager.GetUserAsync(User);
             UsersViewModel viewModel = new UsersViewModel
             {
                 SpecialistCount = speciaCount,
                 ClientCount= clientsCount,
                 PageViewModel = pageViewModel,
-                Users = items
+                Users = items,
+                UserId = user.Id
             };
             
             return View(viewModel);

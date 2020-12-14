@@ -1,4 +1,6 @@
 ﻿@model IndexViewModel
+@inject SignInManager<O2User> SignInManager
+@inject UserManager<O2User> UserManager
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     ViewData["Title"] = Localizer["UserTitle"];
@@ -21,8 +23,19 @@
                 @* <button type="submit" id="btnCopy" class="btn btn-default" value="copyId" >@Localizer["btnCopyId"]</button> *@
                 @* <button id="btnCopy" value="copyId">@Localizer["btnCopyId"]</button> *@
                 <button type="button" id="btnCopy" value="@Localizer["CopyId"]" class="btn btn-info btn-sm">
-                   @Localizer["btnCopyId"]
+                    @Localizer["btnCopyId"]
                 </button>
+              
+            </div>
+            <div class="form-group">
+                  @if (@UserManager.GetUserAsync(User).Result.IsSpecialist)
+                                {
+                                    
+                                    <button type="button" id="referenceSpecialist" value=" @Localizer["CopyRegiterSpecialLink"]" class="btn btn-info btn-sm">
+                                        @* "Account/Register?specialistId=304deb53-64d7-456a-b5f8-61619b0679df&returnurl=%2FManage%2FIndex" *@
+                                        @Localizer["RegiterSpecialLink"]
+                                    </button>
+                                }
             </div>
              <div class="form-group">
                 <label asp-for="RegistrationDate">@Localizer["RegistrationDate"]</label>
@@ -124,7 +137,32 @@
 
     <script type="text/javascript">
                 $(function () {
-    
+                     function copyToClipboard(text) {
+                                                var $temp = $("<input>");
+                                                $("body").append($temp);
+                                                $temp.val(text).select();
+                                                document.execCommand("copy");
+                                                $temp.remove();
+                                            }
+                                            
+                    $("#referenceSpecialist").click(
+                       
+                                                                      function ()
+                                                                      {
+                                                  
+                                                                          try {
+                                                                              // var link = "https://identity.o2bus.com/Account/Register?specialistId=" + $("#textId").val() + "&returnurl=%2FManage%2FIndex";
+                                                                              var link = "http://localhost:5000/Account/Register?specialistId=" + $("#textId").val() + "&returnurl=%2FManage%2FIndex";
+                                                                              copyToClipboard(link);
+                                                                              var message_localization =  $("#referenceSpecialist").val();
+                                                                              //Localizer["CopyId"]
+                                                                              alert(message_localization);
+                                                                          }
+                                                                          catch (e) {
+                                                                              alert('Copy operation failed');
+                                                                          }
+                                                                      }
+                                                                  );
                     $("#btnCopy").click(
                         function ()
                         {

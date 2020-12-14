@@ -22,5 +22,7 @@ namespace O2.Identity.Web.Models
         
         public virtual DateTime? LastLoginTime { get; set; }
         public virtual DateTime? RegistrationDate { get; set; }
+        
+        public string SpecialistId { get; set; }
     }
 }

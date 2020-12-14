@@ -56,4 +56,10 @@
     <data name="btnCopyId" xml:space="preserve">
         <value>Скопировать идентификатор</value>
     </data>
+    <data name="RegiterSpecialLink" xml:space="preserve">
+        <value>Cсылка для регистрации клиентов</value>
+    </data>
+    <data name="CopyRegiterSpecialLink" xml:space="preserve">
+        <value>Ссылка успешно скопирована в буфер</value>
+    </data>
 </root>
