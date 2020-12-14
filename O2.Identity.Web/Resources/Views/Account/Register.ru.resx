@@ -53,4 +53,13 @@
     <data name="RegisterTitle" xml:space="preserve">
         <value>Создать новый аккаунт.</value>
     </data>
+    <data name="NameSpecialist" xml:space="preserve">
+        <value>Ваш специалист</value>
+    </data>
+    <data name="SpecialistId" xml:space="preserve">
+        <value>Уникальный номер специалиста</value>
+    </data>
+    <data name="SamplePassword" xml:space="preserve">
+        <value>Пример пароля: 2938Nm</value>
+    </data>
 </root>

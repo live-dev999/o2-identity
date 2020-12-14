@@ -60,4 +60,13 @@
     <data name="ConfirmPassword" xml:space="preserve">
         <value>Confirm Password</value>
     </data>
+    <data name="SpecialistId" xml:space="preserve">
+        <value>Unique specialist number</value>
+    </data>
+    <data name="NameSpecialist" xml:space="preserve">
+        <value>Your specialist</value>
+    </data>
+    <data name="SamplePassword" xml:space="preserve">
+        <value>Sample password: 2938Nm</value>
+    </data>
 </root>

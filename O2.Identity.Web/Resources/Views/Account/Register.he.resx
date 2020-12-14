@@ -53,4 +53,13 @@
     <data name="Password" xml:space="preserve">
         <value>סיסמה</value>
     </data>
+    <data name="SpecialistId" xml:space="preserve">
+        <value>מספר מומחה ייחודי</value>
+    </data>
+    <data name="NameSpecialist" xml:space="preserve">
+        <value>המומחה שלך</value>
+    </data>
+    <data name="SamplePassword" xml:space="preserve">
+        <value>סיסמה ראשונה : 2938Nm</value>
+    </data>
 </root>

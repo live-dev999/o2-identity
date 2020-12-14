@@ -56,4 +56,10 @@
     <data name="btnCopyId" xml:space="preserve">
         <value>Kimliği Kopyala</value>
     </data>
+    <data name="RegiterSpecialLink" xml:space="preserve">
+        <value>Müşteri kayıt bağlantısı</value>
+    </data>
+    <data name="CopyRegiterSpecialLink" xml:space="preserve">
+        <value>Bağlantı başarıyla panoya kopyalandı</value>
+    </data>
 </root>

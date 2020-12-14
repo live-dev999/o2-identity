@@ -64,7 +64,15 @@ namespace O2.Identity.Web
 
             
             
-            services.AddIdentity<O2User, IdentityRole>()
+            services.AddIdentity<O2User, IdentityRole>(options =>
+                {
+                    // Basic built in validations
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 6;
+                } )
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             

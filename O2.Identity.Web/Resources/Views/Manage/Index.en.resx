@@ -63,4 +63,10 @@
     <data name="btnCopyId" xml:space="preserve">
         <value>Copy Id</value>
     </data>
+    <data name="RegiterSpecialLink" xml:space="preserve">
+        <value>Client registration link</value>
+    </data>
+    <data name="CopyRegiterSpecialLink" xml:space="preserve">
+        <value>Link successfully copied to clipboard</value>
+    </data>
 </root>

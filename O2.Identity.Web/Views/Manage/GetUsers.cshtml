@@ -60,19 +60,35 @@
             }
             else
             {  <tr>
-                <td>
-                    @if (@u.ProfilePhoto != null)
-                    {
-                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@u.ProfilePhoto">
-                    }
-                    else
-                    {
-                        <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png">
-                    }
-                </td><td>@Localizer["NotAccessPolicy"]</td>
-                <td>@u.Firstname</td>
+                   <td>
+                       @if (@u.ProfilePhoto != null)
+                       {
+                           <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="@u.ProfilePhoto">
+                       }
+                       else
+                       {
+                           <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="~/images/avatars/user.png">
+                       }
+                   </td>
+                   
+                   @if (@u.SpecialistId==@Model.UserId )
+                   {
+                       <td>@u.Email</td>
+                   }
+                   else
+                   {
+                       <td> @Localizer["NotAccessPolicy"]</td>
+                   }
+                   <td>@u.Firstname</td>
                 <td>@u.Lastname</td>
-                <td>@Localizer["NotAccessPolicy"]</td>
+                @if (@u.SpecialistId==@Model.UserId)
+                                   {
+                                       <td>@u.PhoneNumber</td>
+                                   }
+                                   else
+                                   {
+                                       <td> @Localizer["NotAccessPolicy"]</td>
+                                   }
                 <td>@u.Country</td>
                 <td>@u.City</td>
                 <td>
