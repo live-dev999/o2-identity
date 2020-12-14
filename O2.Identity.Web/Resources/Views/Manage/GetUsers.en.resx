@@ -60,4 +60,17 @@
     <data name="TypeSpecialist" xml:space="preserve">
         <value>Specialist</value>
     </data>
+    <data name="CloseContentForClient" xml:space="preserve">
+        <value>This content is available only for users with specialist status</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="Forward" xml:space="preserve">
+        <value>Forward</value>
+    </data>
+    <data name="NotAccessPolicy" xml:space="preserve">
+        <value>
+Hidden</value>
+    </data>
 </root>

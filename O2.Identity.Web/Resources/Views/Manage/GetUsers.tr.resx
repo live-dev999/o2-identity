@@ -53,4 +53,16 @@
     <data name="TypeSpecialist" xml:space="preserve">
         <value>Uzman</value>
     </data>
+    <data name="CloseContentForClient" xml:space="preserve">
+        <value>Bu içerik yalnızca uzman statüsündeki kullanıcılar için mevcuttur</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Geri</value>
+    </data>
+    <data name="Forward" xml:space="preserve">
+        <value>İleri</value>
+    </data>
+    <data name="NotAccessPolicy" xml:space="preserve">
+        <value>Gizli</value>
+    </data>
 </root>

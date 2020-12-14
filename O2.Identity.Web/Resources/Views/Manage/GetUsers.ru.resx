@@ -53,4 +53,16 @@
     <data name="TypeClient" xml:space="preserve">
         <value>Клиент</value>
     </data>
+    <data name="CloseContentForClient" xml:space="preserve">
+        <value>Данный контент доступен только для пользователей со статусом специалист</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value> Назад</value>
+    </data>
+    <data name="Forward" xml:space="preserve">
+        <value>Вперед</value>
+    </data>
+    <data name="NotAccessPolicy" xml:space="preserve">
+        <value>Скрыто</value>
+    </data>
 </root>

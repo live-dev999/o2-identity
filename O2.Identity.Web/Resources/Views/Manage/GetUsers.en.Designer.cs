@@ -128,5 +128,29 @@ namespace O2.Identity.Web.Resources.Views.Manage {
                 return ResourceManager.GetString("TypeSpecialist", resourceCulture);
             }
         }
+        
+        internal static string CloseContentForClient {
+            get {
+                return ResourceManager.GetString("CloseContentForClient", resourceCulture);
+            }
+        }
+        
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        internal static string Forward {
+            get {
+                return ResourceManager.GetString("Forward", resourceCulture);
+            }
+        }
+        
+        internal static string NotAccessPolicy {
+            get {
+                return ResourceManager.GetString("NotAccessPolicy", resourceCulture);
+            }
+        }
     }
 }
