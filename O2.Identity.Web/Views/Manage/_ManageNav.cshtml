@@ -1,4 +1,5 @@
 ﻿@inject SignInManager<O2User> SignInManager
+@inject UserManager<O2User> UserManager
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
@@ -10,8 +11,10 @@
     <li class="@ManageNavPages.PaymentAndBillingNavClass(ViewContext)"><a asp-action="PaymentAndBilling">@Localizer["PaymentAndBilling"]</a></li>
     <li class="@ManageNavPages.ServicesAndSubscriptionsNavClass(ViewContext)"><a asp-action="ServicesAndSubscriptions">@Localizer["ServicesAndSubscriptions"]</a></li>
     <li><a>@Localizer["Devices"]</a></li>
-
-     <li class="@ManageNavPages.UsersNavClass(ViewContext)"><a asp-action="GetUsers">@Localizer["Users"]</a></li>
+    @if (@UserManager.GetUserAsync(User).Result.IsSpecialist)
+    {
+        <li class="@ManageNavPages.UsersNavClass(ViewContext)"><a asp-action="GetUsers">@Localizer["Users"]</a></li>
+    }
     @if (hasExternalLogins)
     {
         <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
