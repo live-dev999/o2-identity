@@ -53,4 +53,16 @@
     <data name="TypeClient" xml:space="preserve">
         <value>לָקוּחַ</value>
     </data>
+    <data name="CloseContentForClient" xml:space="preserve">
+        <value>תוכן זה זמין רק למשתמשים עם סטטוס מומחה</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>חזור</value>
+    </data>
+    <data name="Forward" xml:space="preserve">
+        <value>קָדִימָה</value>
+    </data>
+    <data name="NotAccessPolicy" xml:space="preserve">
+        <value>מוּסתָר</value>
+    </data>
 </root>

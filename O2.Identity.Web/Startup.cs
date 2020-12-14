@@ -118,14 +118,15 @@ namespace O2.Identity.Web
                 //     options.EnableTokenCleanup = true;
                 //     options.TokenCleanupInterval = 30; // interval in seconds
                 // })
-                .AddProfileService<ProfileService>()
+                // .AddProfileService<ProfileService>()
                 .AddDeveloperSigningCredential()
                 .AddInMemoryPersistedGrants()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Config.GetUrls(Configuration)))
-                .AddAspNetIdentity<O2User>();
-
+                .AddAspNetIdentity<O2User>()
+                .Services.AddTransient<IProfileService, ProfileService>();
+                
             // .SetApplicationName("fow-customer-portal")
             // .PersistKeysToFileSystem(new System.IO.DirectoryInfo(@"/var/dpkeys/"));
                 // ----- finally Add this DataProtection -----
