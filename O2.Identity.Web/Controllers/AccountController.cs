@@ -273,7 +273,15 @@ namespace O2.Identity.Web.Controllers
                     RegistrationDate = DateTime.Now,
                     SpecialistId = model.SpecialistId
                 };
-            
+                
+                if (user.SpecialistId != null)
+                { 
+                    if (_userManager.Users.FirstOrDefault(x => x.Id == user.SpecialistId && user.IsSpecialist) != null)
+                    {
+                        throw new Exception("fail specialist link");
+                    }
+                    
+                }
                 
                 var uploadResult = new ImageUploadResult();
                 var file = model.FormFile;
