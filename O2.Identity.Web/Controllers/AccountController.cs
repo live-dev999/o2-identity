@@ -234,9 +234,23 @@ namespace O2.Identity.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public IActionResult Register(string specialistId = null,string returnUrl = null)
         {
+           
             ViewData["ReturnUrl"] = returnUrl;
+            if (specialistId != null)
+            { 
+                ViewData["SpecialistId"] = specialistId;
+                var userSpecialist = _userManager.Users.Single(x => x.Id == specialistId);
+                var model = new RegisterViewModel()
+                {
+                    SpecialistId = specialistId,
+                    SpecialistName = userSpecialist.Firstname +" "+userSpecialist.Lastname
+                };
+               return View(model);
+            }
+            
+            
             return View();
         }
         
@@ -256,8 +270,18 @@ namespace O2.Identity.Web.Controllers
                     Lastname = model.Lastname,
                     PhoneNumber = model.PhoneNumber,
                     ProfilePhoto = model.ProfilePhoto,
-                    RegistrationDate = DateTime.Now
+                    RegistrationDate = DateTime.Now,
+                    SpecialistId = model.SpecialistId
                 };
+                
+                if (user.SpecialistId != null)
+                { 
+                    if (_userManager.Users.FirstOrDefault(x => x.Id == user.SpecialistId && user.IsSpecialist) != null)
+                    {
+                        throw new Exception("fail specialist link");
+                    }
+                    
+                }
                 
                 var uploadResult = new ImageUploadResult();
                 var file = model.FormFile;
@@ -282,8 +306,7 @@ namespace O2.Identity.Web.Controllers
                     user.Photos.Add(newPhoto);
                     user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
                 }
-
-
+                
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

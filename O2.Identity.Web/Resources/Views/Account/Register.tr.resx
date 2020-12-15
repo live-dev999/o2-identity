@@ -53,4 +53,13 @@
     <data name="Password" xml:space="preserve">
         <value>Parola</value>
     </data>
+    <data name="SpecialistId" xml:space="preserve">
+        <value>Benzersiz uzman numarası</value>
+    </data>
+    <data name="NameSpecialist" xml:space="preserve">
+        <value>Uzmanınız</value>
+    </data>
+    <data name="SamplePassword" xml:space="preserve">
+        <value>Örnek şifre: 2938Nm</value>
+    </data>
 </root>

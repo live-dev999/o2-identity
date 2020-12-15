@@ -53,4 +53,13 @@
     <data name="Password" xml:space="preserve">
         <value>Passwort</value>
     </data>
+    <data name="SpecialistId" xml:space="preserve">
+        <value>Eindeutige Fachnummer</value>
+    </data>
+    <data name="NameSpecialist" xml:space="preserve">
+        <value>Ihr Spezialist</value>
+    </data>
+    <data name="SamplePassword" xml:space="preserve">
+        <value>Beispielpasswort: 2938Nm</value>
+    </data>
 </root>

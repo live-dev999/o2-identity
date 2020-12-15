@@ -8,5 +8,6 @@ namespace O2.Identity.Web.Models.ManageViewModels
         public PageViewModel PageViewModel { get; set; }
         public int SpecialistCount { get; set; }
         public int ClientCount { get; set; }
+        public string UserId { get; set; }
     }
 }

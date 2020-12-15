@@ -128,5 +128,23 @@ namespace O2.Identity.Web.Resources.Views.Account {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
+        
+        internal static string SpecialistId {
+            get {
+                return ResourceManager.GetString("SpecialistId", resourceCulture);
+            }
+        }
+        
+        internal static string NameSpecialist {
+            get {
+                return ResourceManager.GetString("NameSpecialist", resourceCulture);
+            }
+        }
+        
+        internal static string SamplePassword {
+            get {
+                return ResourceManager.GetString("SamplePassword", resourceCulture);
+            }
+        }
     }
 }

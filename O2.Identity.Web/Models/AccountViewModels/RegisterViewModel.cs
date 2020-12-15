@@ -41,7 +41,8 @@ namespace O2.Identity.Web.Models.AccountViewModels
         [Phone]
         [Display(Name="PhoneNumber")]
         public string PhoneNumber { get; set; }
-        
-        
+
+        public string SpecialistId { get; set; }
+        public string SpecialistName { get; set; }
     }
 }
