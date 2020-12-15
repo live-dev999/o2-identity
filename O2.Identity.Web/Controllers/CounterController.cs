@@ -8,7 +8,7 @@ using O2.Identity.Web.Models;
 namespace O2.Identity.Web.Controllers
 {
     [Route("api/system-count")]
-    public class CounterController:Controller
+    public class CounterController: Controller
     {
         private readonly UserManager<O2User> _userManager;
 
@@ -22,12 +22,12 @@ namespace O2.Identity.Web.Controllers
         {
             int countUsers = await _userManager.Users.CountAsync();
             int countSpecialist = await _userManager.Users.Where(x=>x.IsSpecialist).CountAsync();
-            var CountViewModel = new CountViewModel()
+            var countViewModel = new CountViewModel()
             {
                 CountUsers=countUsers,
                 CountSpecialist = countSpecialist
             };
-            return Ok(CountViewModel);
+            return Ok(countViewModel);
         }
     }
 
