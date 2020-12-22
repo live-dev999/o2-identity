@@ -79,7 +79,7 @@ namespace O2.Identity.Web
 
             services.Configure<ManageController.CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             
-            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net"); 
+            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=DqudZCNaYAcVTMYRP87Tk4+za8+wuKXTKIkY/E22cI6sx8hWkgoyRu32TnuPBc/EavyilImSOMtMwZvUnj3lQA==;EndpointSuffix=core.windows.net"); 
                 //CloudStorageAccount.DevelopmentStorageAccount;
                 Console.WriteLine($"storageAccount={storageAccount}");
             var client = storageAccount.CreateCloudBlobClient();
