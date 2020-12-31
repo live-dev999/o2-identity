@@ -25,6 +25,18 @@ namespace O2.Identity.Web.Controllers
             var countViewModel = new CountViewModel()
             {
                 CountUsers=countUsers,
+                CountSpecialist = countSpecialist+100
+            };
+            return Ok(countViewModel);
+        }
+        [HttpGet("/real")]
+        public async Task<IActionResult> GetSystemRealCount()
+        {
+            int countUsers = await _userManager.Users.CountAsync();
+            int countSpecialist = await _userManager.Users.Where(x=>x.IsSpecialist).CountAsync();
+            var countViewModel = new CountViewModel()
+            {
+                CountUsers=countUsers,
                 CountSpecialist = countSpecialist
             };
             return Ok(countViewModel);
