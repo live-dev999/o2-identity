@@ -24,8 +24,8 @@ namespace O2.Identity.Web.Controllers
             int countSpecialist = await _userManager.Users.Where(x=>x.IsSpecialist).CountAsync();
             var countViewModel = new CountViewModel()
             {
-                CountUsers=countUsers,
-                CountSpecialist = countSpecialist+100
+                CountUsers=countUsers+110,
+                CountSpecialist = countSpecialist
             };
             return Ok(countViewModel);
         }
