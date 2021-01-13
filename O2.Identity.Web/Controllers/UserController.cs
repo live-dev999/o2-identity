@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using O2.Identity.Web.Helpers;
 using O2.Identity.Web.Models;
 
 namespace O2.Identity.Web.Controllers
@@ -32,12 +34,66 @@ namespace O2.Identity.Web.Controllers
         [HttpGet("referrals/{userId}")]
         public async Task<IActionResult>  GetReferrals(string userId)
         {
+            
             //string userId
              var users = await _userManager.Users.Where(x => x.SpecialistId==userId).ToListAsync();
             //var users = await _userManager.Users.Where(x => x.IsSpecialist).ToListAsync();
             return Ok(users);
         }
 
+        public class UserParam
+        {
+            private const int MaxPageSize = 50;
+            public int PageNumber { get; set; } = 1;
+            private int pageSize = 10;
+
+            public int PageSize
+            {
+                get { return pageSize; }
+                set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
+            }
+        }
+
+        public class UserViewM
+        {
+            public string Id { get; set; }
+            public string Email { get; set; }
+            public string Firstname { get; set; }
+            public string Lastname { get; set; }
+            public DateTime? RegistrationDate { get; set; }
+        }
+        
+        
+        [HttpGet("all")]
+        public async Task<IActionResult> GetUsersAll([FromQuery] UserParam certificateParam)
+        {
+            
+            List<O2User> users = null;
+        
+            List<UserViewM> usersView = new List<UserViewM>();
+                users  =  _userManager.Users.ToList();
+                foreach (var user in users)
+                {
+                    usersView.Add(
+                        new UserViewM()
+                        {
+                            Id= user.Id,
+                            Email = user.Email,
+                            Firstname = user.Firstname,
+                            Lastname = user.Lastname,
+                            RegistrationDate = user.RegistrationDate
+                        }
+                        );
+                }
+               var paginator = await PagedList<UserViewM>.CreateAsync(
+                    usersView.OrderByDescending(x => x.RegistrationDate).AsQueryable(), certificateParam.PageNumber,
+                    certificateParam.PageSize);
+
+            Response.AddPagination(paginator.CurrentPage, paginator.PageSize,
+                paginator.TotalCount, paginator.TotalPages);
+            return Ok(usersView);
+            
+        }
         [HttpGet("{userId}")]
         public IActionResult GetUser(string userId)
         {
