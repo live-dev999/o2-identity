@@ -168,6 +168,9 @@ namespace O2.Identity.Web
                                 .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                         });
                 });
+                services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+
+                
 
         }
 
