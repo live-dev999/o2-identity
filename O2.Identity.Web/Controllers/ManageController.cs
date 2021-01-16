@@ -231,7 +231,7 @@ namespace O2.Identity.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
+        // [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         [RequestSizeLimit(209715200)]
         public async Task<IActionResult> Index(IndexViewModel model, string submit)
         {
