@@ -11,6 +11,7 @@ using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
@@ -46,7 +47,13 @@ namespace O2.Identity.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 209715200;
+                //options.MultipartBodyLengthLimit = 80000000;
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartHeadersLengthLimit = int.MaxValue;
+            });
             var connectionString = Configuration["ConnectionString"];
             var settings = Configuration.GetSection("DataProtection").Get<DataProtectionSettings>();
             Console.WriteLine(" ========================= SETTINGS ========================== ");
