@@ -17,7 +17,7 @@ namespace O2.Identity.Web
         {
             try
             {
-                var host = BuildWebHost(args);
+                var host = CreateHostBuilder(args);
 
                 Log.Logger = new LoggerConfiguration()
                             .Enrich.FromLogContext()
@@ -54,22 +54,15 @@ namespace O2.Identity.Web
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHost CreateHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-        UseKestrel(options =>
-        {
-            //http://www.binaryintellect.net/articles/612cf2d1-5b3d-40eb-a5ff-924005955a62.aspx
-            options.Limits.MaxRequestBodySize = 209715200;
-        })
+                .UseKestrel(options =>
+                {
+                    //http://www.binaryintellect.net/articles/612cf2d1-5b3d-40eb-a5ff-924005955a62.aspx
+                    options.Limits.MaxRequestBodySize = 209715200;
+                })
                 .UseSerilog() // <- Add this line
-                // Add the following lines
-                // .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                // .ReadFrom.Configuration(hostingContext.Configuration))
-                // .UseSerilog((context, config) =>
-                // {
-                //     config.ReadFrom.Configuration(context.Configuration);
-                // })
                 .Build();
     }
 }
