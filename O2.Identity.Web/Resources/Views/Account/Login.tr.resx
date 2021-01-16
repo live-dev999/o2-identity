@@ -37,7 +37,7 @@
 O2 platformu, sizin ve işletmeniz için birçok bileşene sahip devasa bir mikro hizmetler sistemidir. Platforma aşina olmak için resmi web sitesinde daha fazlasını okuyun.</value>
     </data>
     <data name="DemoTitle" xml:space="preserve">
-        <value>Demo modunu test etmek ve göstermek için kullanabilirsiniz.</value>
+        <value>Demo modunu PaginationHeader etmek ve göstermek için kullanabilirsiniz.</value>
     </data>
     <data name="DemoHeader" xml:space="preserve">
         <value>Demo girişi</value>

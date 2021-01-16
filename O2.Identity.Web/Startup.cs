@@ -11,6 +11,7 @@ using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
@@ -46,7 +47,13 @@ namespace O2.Identity.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 209715200;
+                //options.MultipartBodyLengthLimit = 80000000;
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartHeadersLengthLimit = int.MaxValue;
+            });
             var connectionString = Configuration["ConnectionString"];
             var settings = Configuration.GetSection("DataProtection").Get<DataProtectionSettings>();
             Console.WriteLine(" ========================= SETTINGS ========================== ");
@@ -79,7 +86,7 @@ namespace O2.Identity.Web
 
             services.Configure<ManageController.CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             
-            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=EYEQMcWR9T82+fdqO4JyawF3Mc1HIEY5ML7476tCFw/mFh9SnyatcnJ5cwlZ9o2vD19BEr1/8WyedkEdcF/rCg==;EndpointSuffix=core.windows.net"); 
+            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=o2platform;AccountKey=DqudZCNaYAcVTMYRP87Tk4+za8+wuKXTKIkY/E22cI6sx8hWkgoyRu32TnuPBc/EavyilImSOMtMwZvUnj3lQA==;EndpointSuffix=core.windows.net"); 
                 //CloudStorageAccount.DevelopmentStorageAccount;
                 Console.WriteLine($"storageAccount={storageAccount}");
             var client = storageAccount.CreateCloudBlobClient();
@@ -168,6 +175,9 @@ namespace O2.Identity.Web
                                 .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                         });
                 });
+                services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+
+                
 
         }
 
