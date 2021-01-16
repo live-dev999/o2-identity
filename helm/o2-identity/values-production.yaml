@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: o2platform/o2-identity.web
@@ -45,6 +45,8 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/proxy-body-size: 16m
+    nginx.ingress.kubernetes.io/client-body-buffer-size: 16m
   hosts:
     - host: identity.o2bus.com
       paths: 

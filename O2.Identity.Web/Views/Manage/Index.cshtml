@@ -28,14 +28,14 @@
               
             </div>
             <div class="form-group">
-                  @if (@UserManager.GetUserAsync(User).Result.IsSpecialist)
-                                {
+                  @* @if (@UserManager.GetUserAsync(User).Result.IsSpecialist) *@
+                                @* { *@
                                     
                                     <button type="button" id="referenceSpecialist" value=" @Localizer["CopyRegiterSpecialLink"]" class="btn btn-info btn-sm">
                                         @* "Account/Register?specialistId=304deb53-64d7-456a-b5f8-61619b0679df&returnurl=%2FManage%2FIndex" *@
                                         @Localizer["RegiterSpecialLink"]
                                     </button>
-                                }
+                                @* } *@
             </div>
              <div class="form-group">
                 <label asp-for="RegistrationDate">@Localizer["RegistrationDate"]</label>

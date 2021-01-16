@@ -231,6 +231,8 @@ namespace O2.Identity.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
+        [RequestSizeLimit(209715200)]
         public async Task<IActionResult> Index(IndexViewModel model, string submit)
         {
             if (submit=="copyId")
@@ -269,6 +271,7 @@ namespace O2.Identity.Web.Controllers
                 }
             }
 
+            
             var profilePhoto = user.ProfilePhoto;
             if (model.ProfilePhoto != profilePhoto || profilePhoto==null)
             {
@@ -278,6 +281,7 @@ namespace O2.Identity.Web.Controllers
                 {
                     if (file.Length > 0)
                     {
+                        
                         using (var stream = file.OpenReadStream())
                         {
                             var uploadParams = new ImageUploadParams()
