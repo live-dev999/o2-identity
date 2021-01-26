@@ -34,10 +34,25 @@ namespace O2.Identity.Web
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
+        
+        private static IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            return builder.Build();
+        }
+        
         public static int Main(string[] args)
         {
             try
             {
+                var configuration = GetConfiguration();
+
+                Log.Logger = CreateSerilogLogger(configuration);
+                
                 var host = CreateHostBuilder(args);
 
                 Log.Logger = new LoggerConfiguration()
@@ -45,6 +60,7 @@ namespace O2.Identity.Web
                             .WriteTo.Console()
                             .CreateLogger();
 
+                
                 using (var scope = host.Services.CreateScope())
                 {
 

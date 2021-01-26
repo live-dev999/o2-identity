@@ -236,7 +236,7 @@ namespace O2.Identity.Web.Controllers
         [AllowAnonymous]
         public IActionResult Register(string specialistId = null,string returnUrl = null)
         {
-           
+            _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             ViewData["ReturnUrl"] = returnUrl;
             if (specialistId != null)
             { 
@@ -260,6 +260,7 @@ namespace O2.Identity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -340,6 +341,7 @@ namespace O2.Identity.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
+            _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             // // build a model so the logout page knows what to display
             // var vm = await _account.BuildLogoutViewModelAsync(logoutId);
             //
@@ -367,6 +369,7 @@ namespace O2.Identity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout(LogoutInputModel model)
         {
+            _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             var vm = await _account.BuildLoggedOutViewModelAsync(model.LogoutId);
 
             await _signInManager.SignOutAsync();
