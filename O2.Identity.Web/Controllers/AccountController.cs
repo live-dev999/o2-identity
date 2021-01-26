@@ -372,18 +372,24 @@ namespace O2.Identity.Web.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    
-                    // Find your Account Sid and Token at twilio.com/console
-                    TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
 
-                    var message = MessageResource.Create(
-                        body: $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
-                        from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
-                        to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
-                    );
-                    
-                    _logger.LogInformation($"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
-                    
+                    if (_verification.Config.NotificationSms)
+                    {
+                        // Find your Account Sid and Token at twilio.com/console
+                        TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+
+                        var message = MessageResource.Create(
+                            body:
+                            $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
+                            from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+                            to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
+                        );
+
+
+                        _logger.LogInformation(
+                            $"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
+                    }
+
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -573,7 +579,7 @@ namespace O2.Identity.Web.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
-
+                
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
