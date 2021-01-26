@@ -18,6 +18,7 @@ using Microsoft.WindowsAzure.Storage;
 using O2.Identity.Web.Controllers;
 using O2.Identity.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Serilog;
 
 namespace O2.Identity.Web
 {
@@ -201,6 +202,8 @@ namespace O2.Identity.Web
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
                 RequireHeaderSymmetry = false
             };
+            app.UseSerilogRequestLogging(); // <-- Add this line
+            
             IsProduction = env.IsProduction();
             forwardOptions.KnownNetworks.Clear();
             forwardOptions.KnownProxies.Clear();
