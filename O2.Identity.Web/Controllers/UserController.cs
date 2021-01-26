@@ -61,6 +61,7 @@ namespace O2.Identity.Web.Controllers
             public string Firstname { get; set; }
             public string Lastname { get; set; }
             public DateTime? RegistrationDate { get; set; }
+            public string ProfilePhoto { get; set; }
         }
         
         
@@ -81,7 +82,8 @@ namespace O2.Identity.Web.Controllers
                             Email = user.Email,
                             Firstname = user.Firstname,
                             Lastname = user.Lastname,
-                            RegistrationDate = user.RegistrationDate
+                            RegistrationDate = user.RegistrationDate,
+                            ProfilePhoto = user.ProfilePhoto
                         }
                         );
                 }
