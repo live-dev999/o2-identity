@@ -74,7 +74,7 @@ namespace O2.Identity.Web.Controllers
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
+            _logger.LogInformation("Login - ");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
