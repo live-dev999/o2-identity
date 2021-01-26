@@ -86,6 +86,14 @@ env:
       value: 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
     - name: SendGridUser
       value: 'Support #PF_R Community'
+    - name: Twilio__NotificationSms
+      value: 0,
+    - name: Twilio__AccountSid
+      value: ACa9a20dd4f6f83827a70577125a028d54,
+    - name: Twilio__AuthToken
+      value: 325d415c458d3613ef56908ba88c6f24,
+    - name: Twilio__VerificationSid
+      value: VAf8474fe46d2bb889435cb8584ceb80cd
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
