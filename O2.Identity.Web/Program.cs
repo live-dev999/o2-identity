@@ -87,7 +87,7 @@ namespace O2.Identity.Web
 
                         Log.Information("Applying migrations ({ApplicationContext})...", AppName);
                         IdentityDbInit.Initialize(context, userManager);
-                        Log.Fatal("SUPER ERROR");
+                        // Log.Fatal("SUPER ERROR");
                 }
                 
                 Log.Information("Starting web host ({ApplicationContext})...", AppName);
