@@ -81,6 +81,10 @@ env:
       value: https://app.o2bus.com
     - name: PFRCenterSPA
       value: https://pfr-centr.com
+    - name: Serilog__SeqServerUrl
+      value: http://elk.o2bus.com:5340
+    - name: Serilog__LogstashgUrl
+      value: http://elk.o2bus.com:8080
   
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
