@@ -235,6 +235,8 @@ namespace O2.Identity.Web.Controllers
         [RequestSizeLimit(209715200)]
         public async Task<IActionResult> Index(IndexViewModel model, string submit)
         {
+            _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            
             if (submit=="copyId")
             {
                 return View(model);

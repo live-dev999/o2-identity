@@ -29,7 +29,7 @@ namespace O2.Identity.Web
                 .Enrich.WithProperty("ApplicationContext", AppName)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
+                // .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
                 .WriteTo.Http(string.IsNullOrWhiteSpace(logstashUrl) ? "http://localhost:8080" : logstashUrl)
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
@@ -78,7 +78,7 @@ namespace O2.Identity.Web
 
                         Log.Information("Applying migrations ({ApplicationContext})...", AppName);
                         IdentityDbInit.Initialize(context, userManager);
-                    
+                        Log.Fatal("SUPER ERROR");
                 }
                 
                 Log.Information("Starting web host ({ApplicationContext})...", AppName);
