@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using O2.Identity.Web.Models;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 
 namespace O2.Identity.Web
@@ -31,6 +32,14 @@ namespace O2.Identity.Web
                 .WriteTo.Console()
                 // .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
                 .WriteTo.Http(string.IsNullOrWhiteSpace(logstashUrl) ? "http://localhost:8080" : logstashUrl)
+                // .WriteTo.Elasticsearch(
+                //     new ElasticsearchSinkOptions(new Uri("http://elk.o2bus.com:9200"))
+                //     {
+                //         IndexFormat = $"o2-{AppName}-logs-{0:yyyy.MM}",
+                //         AutoRegisterTemplate = true,
+                //         AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6
+                //     }
+                // )
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
@@ -78,7 +87,7 @@ namespace O2.Identity.Web
 
                         Log.Information("Applying migrations ({ApplicationContext})...", AppName);
                         IdentityDbInit.Initialize(context, userManager);
-                        Log.Fatal("SUPER ERROR");
+                        // Log.Fatal("SUPER ERROR");
                 }
                 
                 Log.Information("Starting web host ({ApplicationContext})...", AppName);
