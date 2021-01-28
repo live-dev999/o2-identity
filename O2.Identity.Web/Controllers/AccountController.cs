@@ -92,7 +92,7 @@ namespace O2.Identity.Web.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation($"User logged in. data= {model}");
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
