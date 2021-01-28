@@ -247,7 +247,8 @@ namespace O2.Identity.Web.Controllers
                     SpecialistId = specialistId,
                     SpecialistName = userSpecialist.Firstname +" "+userSpecialist.Lastname
                 };
-               return View(model);
+                _logger.LogInformation($"Show register view with specialId = {specialistId}");
+                return View(model);
             }
             
             
@@ -261,6 +262,7 @@ namespace O2.Identity.Web.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            _logger.LogInformation($"Register user = {model}, returnUrl = {returnUrl}");
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
