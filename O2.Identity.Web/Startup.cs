@@ -249,24 +249,7 @@ namespace O2.Identity.Web
             //     //MinimumSameSitePolicy = AspNetCore.Http.SameSiteMode.Lax
             // });
 
-            app.UseCors(x => x.AllowAnyOrigin()
-                .WithOrigins(
-
-                    "https://pfr-centr.com",
-                    "http://pfr-centr.com",
-                    
-                    "https://beta.pfr-centr.com",
-                    "http://beta.pfr-centr.com",
-
-                    "http://pfr-community.o2bus.com",
-                    "https://pfr-community.o2bus.com",
-                    
-                    "http://chat-api.o2bus.com", 
-                    "https://chat-api.o2bus.com",
-                    
-                    "http://localhost:5010",
-                    "http://localhost:4200")
-                .AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            app.UseCors(MyAllowSpecificOrigins);
             
             app.UseMvc(routes =>
             {
