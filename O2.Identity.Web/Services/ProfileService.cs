@@ -57,6 +57,9 @@ namespace O2.Identity.Web.Services
                 
                
                 claims.Add(new Claim("is_specialist", user.IsSpecialist.ToString()));
+                var role = user.IsSpecialist ? "Member" : "Client";
+                
+                claims.Add(new Claim(JwtClaimTypes.Role, role));
                 // context.IssuedClaims = claims.ToList();
                 //
                 // claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();

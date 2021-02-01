@@ -29,6 +29,9 @@ namespace O2.Identity.Web
                 .MinimumLevel.Verbose()
                 .Enrich.WithProperty("ApplicationContext", AppName)
                 .Enrich.FromLogContext()
+#if DEBUG
+                .WriteTo.File("Logs/system_logs.txt")
+#endif
                 .WriteTo.Console()
                 // .WriteTo.Seq(string.IsNullOrWhiteSpace(seqServerUrl) ? "http://seq" : seqServerUrl)
                 .WriteTo.Http(string.IsNullOrWhiteSpace(logstashUrl) ? "http://localhost:8080" : logstashUrl)
@@ -64,10 +67,8 @@ namespace O2.Identity.Web
                 
                 var host = CreateHostBuilder(args);
 
-                Log.Logger = new LoggerConfiguration()
-                            .Enrich.FromLogContext()
-                            .WriteTo.Console()
-                            .CreateLogger();
+               
+                            
 
                 
                 using (var scope = host.Services.CreateScope())
