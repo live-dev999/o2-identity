@@ -8,7 +8,7 @@ namespace O2.Identity.Web.Models
     public class O2User : IdentityUser
     {
         public bool IsSpecialist { get; set; }   
-        
+        public bool IsPractitioner { get; set; } 
         public string ProfilePhoto { get; set; }
         
         // maybe be other code in this model

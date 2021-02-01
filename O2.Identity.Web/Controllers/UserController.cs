@@ -65,6 +65,28 @@ namespace O2.Identity.Web.Controllers
         }
         
         
+        [HttpGet("all/{userId}")]
+        public async Task<IActionResult> GetUsersAll(string userId)
+        {
+             var user = _userManager.Users.SingleOrDefault(x=>userId != null && x.Id==userId);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var model = new UserViewM
+            {
+               Id= user.Id,
+                            Email = user.Email,
+                            Firstname = user.Firstname,
+                            Lastname = user.Lastname,
+                            RegistrationDate = user.RegistrationDate,
+                            ProfilePhoto = user.ProfilePhoto
+            };
+
+            return Ok(model);
+        }
+
         [HttpGet("all")]
         public async Task<IActionResult> GetUsersAll([FromQuery] UserParam certificateParam)
         {
