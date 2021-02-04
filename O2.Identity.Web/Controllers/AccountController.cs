@@ -286,9 +286,17 @@ namespace O2.Identity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+
             _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             _logger.LogInformation($"Register user = {model}, returnUrl = {returnUrl}");
-            TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+            // TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+            //
+            // var message = await MessageResource.CreateAsync(
+            //     body: "O2 Account: ",
+            //     @from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+            //     to: new Twilio.Types.PhoneNumber("+375447987208")
+            // );
+
             // string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             // string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
             //
@@ -310,6 +318,7 @@ namespace O2.Identity.Web.Controllers
             // );
             
             
+
             
             // if(model.SMSCode)
             ViewData["ReturnUrl"] = returnUrl;
@@ -372,24 +381,18 @@ namespace O2.Identity.Web.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+                    
+                    // Find your Account Sid and Token at twilio.com/console
+                    TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
 
-                    if (_verification.Config.NotificationSms)
-                    {
-                        // Find your Account Sid and Token at twilio.com/console
-                        TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
-
-                        var message = MessageResource.Create(
-                            body:
-                            $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
-                            from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
-                            to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
-                        );
-
-
-                        _logger.LogInformation(
-                            $"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
-                    }
-
+                    var message = MessageResource.Create(
+                        body: $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
+                        from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+                        to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
+                    );
+                    
+                    _logger.LogInformation($"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
+                    
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -579,7 +582,7 @@ namespace O2.Identity.Web.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
-                
+
                 // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
