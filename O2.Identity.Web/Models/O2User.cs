@@ -24,5 +24,8 @@ namespace O2.Identity.Web.Models
         public virtual DateTime? RegistrationDate { get; set; }
         
         public string SpecialistId { get; set; }
+        
+        //Verify SMS
+        public bool Verified { get; set; }
     }
 }

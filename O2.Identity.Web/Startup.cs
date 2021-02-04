@@ -20,6 +20,7 @@ using O2.Identity.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Serilog;
 using Serilog.Events;
+using O2.Identity.Web.Filters;
 
 namespace O2.Identity.Web
 {
@@ -44,7 +45,7 @@ namespace O2.Identity.Web
 
         public IConfiguration Configuration { get; }
 
-        
+        public bool IsProduction { get; set; }
         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -106,7 +107,9 @@ namespace O2.Identity.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddScoped<VerifyFilter>();
             
+            services.AddScoped<IVerification, Verification>();
             services.AddConfiguredLocalization();
             services.AddMvc()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -189,12 +192,14 @@ namespace O2.Identity.Web
                         });
                 });
                 services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+                
+                services.AddSingleton<IVerification>(new Verification(
+                    Configuration.GetSection("Twilio").Get<Configuration.Twilio>()));
 
                 
 
         }
 
-        public bool IsProduction { get; set; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -247,7 +252,7 @@ namespace O2.Identity.Web
             // });
             app.UseForwardedHeaders();
             app.UseStaticFiles();
-
+            IsProduction = env.IsProduction();
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
             
@@ -269,6 +274,8 @@ namespace O2.Identity.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+ 
     }
 
 }

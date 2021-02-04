@@ -16,10 +16,14 @@ using O2.Identity.Web.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Quickstart.UI;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using O2.Identity.Web.Extensions;
 using O2.Identity.Web.Resources;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Account = CloudinaryDotNet.Account;
 
 
 namespace O2.Identity.Web.Controllers
@@ -34,6 +38,8 @@ namespace O2.Identity.Web.Controllers
         private readonly ILogger _logger;
         private readonly IStringLocalizer<LoginViewModel> _localizer;
         private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
+        private readonly IVerification _verification;
+      
         private readonly AccountService _account;
         private readonly IIdentityServerInteractionService _interaction;
         private Cloudinary _cloudinary;
@@ -46,7 +52,9 @@ namespace O2.Identity.Web.Controllers
             ILogger<AccountController> logger,
             IOptions<ManageController.CloudinarySettings> _cloudinaryConfig,
             IStringLocalizer<LoginViewModel> localizer,
-            IStringLocalizer<SharedResource> sharedLocalizer)
+            IStringLocalizer<SharedResource> sharedLocalizer,
+            IVerification verification
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -54,6 +62,7 @@ namespace O2.Identity.Web.Controllers
             _logger = logger;
             _localizer = localizer;
             _sharedLocalizer = sharedLocalizer;
+            _verification = verification;
             _interaction = interaction;
             _account = new AccountService(interaction, httpContextAccessor);
             Account acc = new Account(
@@ -77,6 +86,22 @@ namespace O2.Identity.Web.Controllers
             _logger.LogInformation("Login - ");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
+        }
+
+        public async Task<IActionResult> Verify(VerifyViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var result = await _verification.CheckVerificationAsync(model.PhoneNumber, model.Code);
+                if (result.IsValid)
+                {
+                    _logger.LogInformation("Verify code - valid");
+                    return RedirectToLocal(returnUrl);
+                }
+                return View(model);
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -224,7 +249,7 @@ namespace O2.Identity.Web.Controllers
                 return View();
             }
         }
-
+    
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
@@ -261,8 +286,41 @@ namespace O2.Identity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+
             _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             _logger.LogInformation($"Register user = {model}, returnUrl = {returnUrl}");
+            // TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+            //
+            // var message = await MessageResource.CreateAsync(
+            //     body: "O2 Account: ",
+            //     @from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+            //     to: new Twilio.Types.PhoneNumber("+375447987208")
+            // );
+
+            // string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+            // string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+            //
+            // TwilioClient.Init(accountSid, authToken);
+            //
+            // var message = MessageResource.Create(
+            //     body: "Join Earth's mightiest heroes. Like Kevin Bacon.",
+            //     from: new Twilio.Types.PhoneNumber("+15017122661"),
+            //     to: new Twilio.Types.PhoneNumber("+15558675310")
+            // );
+
+            // // Console.WriteLine(message.Sid);
+            // TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+            //
+            // var message = await MessageResource.CreateAsync(
+            //     body: "O2 Platfrom",
+            //     @from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+            //     to: new Twilio.Types.PhoneNumber("+375447987208")
+            // );
+            
+            
+
+            
+            // if(model.SMSCode)
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -317,11 +375,24 @@ namespace O2.Identity.Web.Controllers
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+                    
+                    // Find your Account Sid and Token at twilio.com/console
+                    TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+
+                    var message = MessageResource.Create(
+                        body: $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
+                        from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+                        to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
+                    );
+                    
+                    _logger.LogInformation($"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
+                    
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
