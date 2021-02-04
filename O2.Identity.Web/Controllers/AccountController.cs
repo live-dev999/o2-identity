@@ -106,7 +106,7 @@ namespace O2.Identity.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["InvalidLoginAttempt"]);
+                    ModelState.AddModelError(string.Empty, _localizer["InvalidLoginAttForgotPasswordViewModelempt"]);
                     return View(model);
                 }
             }

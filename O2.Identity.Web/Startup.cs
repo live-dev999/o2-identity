@@ -105,7 +105,8 @@ namespace O2.Identity.Web
             
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+            
             services.AddConfiguredLocalization();
             services.AddMvc()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -173,7 +174,17 @@ namespace O2.Identity.Web
                                     "https://chat-api.o2bus.com",
 
                                     "http://localhost:5010",
-                                    "http://localhost:4200")
+                                    "http://localhost:4200",
+                                    
+                                    "http://localhost:5988",
+                                    
+                                    "https://client-history-api.staging.o2bus.com",
+                                    "http://client-history-api.staging.o2bus.com",
+                                    
+                                    "http://client-history-api.o2bus.com",
+                                    "https://client-history-api.o2bus.com"
+                                    
+                                    )
                                 .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                         });
                 });
