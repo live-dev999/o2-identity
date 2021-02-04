@@ -85,6 +85,10 @@ env:
       value: http://elk.o2bus.com:5340
     - name: Serilog__LogstashgUrl
       value: http://elk.o2bus.com:8080
+    - name: SendGridKey
+      value: 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
+    - name: SendGridUser
+      value: 'Support #PF_R Community'
   
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
