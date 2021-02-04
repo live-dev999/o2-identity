@@ -105,7 +105,8 @@ namespace O2.Identity.Web
             
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+            
             services.AddConfiguredLocalization();
             services.AddMvc()
             .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)

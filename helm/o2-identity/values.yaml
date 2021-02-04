@@ -82,6 +82,10 @@ env:
       value: https://app.staging.o2bus.com
     - name: PFRCenterSPA
       value: https://beta.pfr-centr.com
+    - name: SendGridKey
+      value: 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
+    - name: SendGridUser
+      value: 'Support #PF_R Community'
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
