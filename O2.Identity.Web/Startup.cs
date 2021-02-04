@@ -176,7 +176,11 @@ namespace O2.Identity.Web
                                     "http://localhost:4200",
                                     
                                     "http://localhost:5988",
+                                    
                                     "https://client-history-api.staging.o2bus.com",
+                                    "http://client-history-api.staging.o2bus.com",
+                                    
+                                    "http://client-history-api.o2bus.com",
                                     "https://client-history-api.o2bus.com"
                                     
                                     )
