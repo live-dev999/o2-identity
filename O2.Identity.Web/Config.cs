@@ -86,6 +86,7 @@ namespace O2.Identity.Web
                     },
                     AllowedCorsOrigins = {$"{clientUrls["PFRCenterSPA"]}"},
                     AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
                     AccessTokenLifetime = 3600
                 },
                 new Client
