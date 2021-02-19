@@ -1,0 +1,29 @@
+@model VerifyViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Verify Phone Number";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Code">Verification Code</label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Verify</button>
+        </form>
+        
+          <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                    <label asp-for="Code">Didn't you receive the code?</label>
+                    @*     <input asp-for="Code" class="form-control" /> *@
+                    @*     <span asp-validation-for="Code" class="text-danger"></span> *@
+                    </div>
+                    <button type="submit" class="btn btn-default">Resend</button>
+            </form>
+    </div>
+</div>

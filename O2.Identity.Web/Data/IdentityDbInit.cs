@@ -17,62 +17,62 @@ namespace O2.Identity.Web.Data
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreatedAsync();
             context.Database.Migrate();
-            // for (int i = 0; i < 500; i++)
-            // {
-            //     //If there is already an Administrator role, abort
-            //     //  if (context.Roles.Any(r => r.Name == "Administrator")) return;
-            //     
-            //     //Create the Administartor Role
-            //     // await roleManager.CreateAsync(new IdentityRole("Administrator"));
-            //     
-            //    
-            //     //Create the default Admin account and apply the Administrator role
-            //     string user;
-            //
-            //     if (i == 0)
-            //     {
-            //          if (context.Users.Any(r => r.UserName == "demo@demo.com")) 
-            //              return;
-            //         user = "demo@demo.com";
-            //         string password = "P@ssword1";
-            //         userManager.CreateAsync(
-            //             new O2User
-            //             {
-            //                 UserName = user, 
-            //                 Email = user, 
-            //                 Firstname = "demo", 
-            //                 Lastname = "demo", 
-            //                 RegistrationDate = DateTime.Now, 
-            //                 EmailConfirmed = true, 
-            //                 IsSpecialist = true
-            //             }, 
-            //             password).GetAwaiter().GetResult();
-            //     }
-            //     else
-            //     {
-            //         if (context.Users.Any(r => r.UserName == "demo"+i+"@demo.com")) 
-            //              return;
-            //         var userId = context.Users.Single(x => x.UserName == "demo@demo.com").Id;
-            //         user = "demo" + i + "@demo.com";
-            //         string password = "P@ssword1";
-            //         userManager.CreateAsync(
-            //             new O2User
-            //             {
-            //                 UserName = user, 
-            //                 Email = user, 
-            //                 SpecialistId = userId,
-            //                 Firstname = "demo", 
-            //                 Lastname = "demo", 
-            //                 RegistrationDate = DateTime.Now, 
-            //                 EmailConfirmed = true, 
-            //                 IsSpecialist = true
-            //             }, 
-            //             password).GetAwaiter().GetResult();
-            //     }
-            //
-            //
-            //    
-            // }
+            for (int i = 0; i < 500; i++)
+            {
+                //If there is already an Administrator role, abort
+                //  if (context.Roles.Any(r => r.Name == "Administrator")) return;
+                
+                //Create the Administartor Role
+                // await roleManager.CreateAsync(new IdentityRole("Administrator"));
+                
+               
+                //Create the default Admin account and apply the Administrator role
+                string user;
+            
+                if (i == 0)
+                {
+                     if (context.Users.Any(r => r.UserName == "demo@demo.com")) 
+                         return;
+                    user = "demo@demo.com";
+                    string password = "P@ssword1";
+                    userManager.CreateAsync(
+                        new O2User
+                        {
+                            UserName = user, 
+                            Email = user, 
+                            Firstname = "demo", 
+                            Lastname = "demo", 
+                            RegistrationDate = DateTime.Now, 
+                            EmailConfirmed = true, 
+                            IsSpecialist = true
+                        }, 
+                        password).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    if (context.Users.Any(r => r.UserName == "demo"+i+"@demo.com")) 
+                         return;
+                    var userId = context.Users.Single(x => x.UserName == "demo@demo.com").Id;
+                    user = "demo" + i + "@demo.com";
+                    string password = "P@ssword1";
+                    userManager.CreateAsync(
+                        new O2User
+                        {
+                            UserName = user, 
+                            Email = user, 
+                            SpecialistId = userId,
+                            Firstname = "demo", 
+                            Lastname = "demo", 
+                            RegistrationDate = DateTime.Now, 
+                            EmailConfirmed = true, 
+                            IsSpecialist = true
+                        }, 
+                        password).GetAwaiter().GetResult();
+                }
+            
+            
+               
+            }
             // if (context.Users.Any(r => r.UserName == "demo2@demo.com"))
             //     return;
             // //Create the default Client account and apply the Administrator role
