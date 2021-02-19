@@ -87,7 +87,7 @@ env:
     - name: SendGridUser
       value: 'Support #PF_R Community'
     - name: Twilio__NotificationSms
-      value: 0,
+      value: false,
     - name: Twilio__AccountSid
       value: ACa9a20dd4f6f83827a70577125a028d54,
     - name: Twilio__AuthToken
