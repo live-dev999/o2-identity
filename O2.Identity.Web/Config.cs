@@ -75,9 +75,12 @@ namespace O2.Identity.Web
                 new Client{
                     ClientId="pfr-center-spa",
                     ClientName="PFR Center SPA",
+                    RequirePkce = true,
+                    AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
-                    AllowedGrantTypes=GrantTypes.Implicit,
-                    RedirectUris = {$"{clientUrls["PFRCenterSPA"]}/auth/callback"},
+                    RequireClientSecret = false,
+                    AllowedGrantTypes=GrantTypes.Code,
+                    RedirectUris = new List<string>{ $"{clientUrls["PFRCenterSPA"]}/auth/callback", $"{clientUrls["PFRCenterSPA"]}/assets/silent-callback.html"},
                     PostLogoutRedirectUris = {$"{clientUrls["PFRCenterSPA"]}/"},
                     AllowedScopes = new List<string>
                     {
@@ -85,7 +88,7 @@ namespace O2.Identity.Web
                         IdentityServerConstants.StandardScopes.Profile
                     },
                     AllowedCorsOrigins = {$"{clientUrls["PFRCenterSPA"]}"},
-                    AllowAccessTokensViaBrowser = true,
+                    
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AccessTokenLifetime = 3600
                 },
