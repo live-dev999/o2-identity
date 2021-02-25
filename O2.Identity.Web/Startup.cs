@@ -165,27 +165,27 @@ namespace O2.Identity.Web
                     {
                         builder
                             
-                            // .WithOrigins(
-                            //     "https://pfr-centr.com",
-                            //     "http://pfr-centr.com",
-                            //     "https://beta.pfr-centr.com",
-                            //     "http://beta.pfr-centr.com",
-                            //     "http://pfr-community.o2bus.com",
-                            //     "https://pfr-community.o2bus.com",
-                            //     "http://chat-api.o2bus.com",
-                            //     "https://chat-api.o2bus.com",
-                            //     "http://localhost:5010",
-                            //     "http://localhost:4200",
-                            //     "http://localhost:5988",
-                            //     "https://client-history-api.staging.o2bus.com",
-                            //     "http://client-history-api.staging.o2bus.com",
-                            //     "http://client-history-api.o2bus.com",
-                            //     "https://client-history-api.o2bus.com",
-                            //     "https://media-api.staging.o2bus.com",
-                            //     "http://media-api.staging.o2bus.com",
-                            //     "http://media-api.o2bus.com",
-                            //     "https://media-api.o2bus.com"
-                            // )
+                            .WithOrigins(
+                                "https://pfr-centr.com",
+                                "http://pfr-centr.com",
+                                "https://beta.pfr-centr.com",
+                                "http://beta.pfr-centr.com",
+                                "http://pfr-community.o2bus.com",
+                                "https://pfr-community.o2bus.com",
+                                "http://chat-api.o2bus.com",
+                                "https://chat-api.o2bus.com",
+                                "http://localhost:5010",
+                                "http://localhost:4200",
+                                "http://localhost:5988",
+                                "https://client-history-api.staging.o2bus.com",
+                                "http://client-history-api.staging.o2bus.com",
+                                "http://client-history-api.o2bus.com",
+                                "https://client-history-api.o2bus.com",
+                                "https://media-api.staging.o2bus.com",
+                                "http://media-api.staging.o2bus.com",
+                                "http://media-api.o2bus.com",
+                                "https://media-api.o2bus.com"
+                            )
                             .AllowAnyOrigin()
                             .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                     });
