@@ -19,7 +19,6 @@ using O2.Identity.Web.Controllers;
 using O2.Identity.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Serilog;
-using Serilog.Events;
 using O2.Identity.Web.Filters;
 
 namespace O2.Identity.Web
@@ -177,6 +176,10 @@ namespace O2.Identity.Web
                                 "http://localhost:5010",
                                 "http://localhost:4200",
                                 "http://localhost:5988",
+                                "https://chat-api.staging.o2bus.com",
+                                "http://chat-api.staging.o2bus.com",
+                                "https://chat-api.o2bus.com",
+                                "http://chat-api.o2bus.com",
                                 "https://client-history-api.staging.o2bus.com",
                                 "http://client-history-api.staging.o2bus.com",
                                 "http://client-history-api.o2bus.com",
