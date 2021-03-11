@@ -72,4 +72,16 @@
     <data name="AboutMe" xml:space="preserve">
         <value>About me</value>
     </data>
+    <data name="LanguageProficiency" xml:space="preserve">
+        <value>Language proficiency</value>
+    </data>
+    <data name="Education" xml:space="preserve">
+        <value>Education / Certificates</value>
+    </data>
+    <data name="EducationInfo" xml:space="preserve">
+        <value>Year of Study / Institution / Degree / Qualification</value>
+    </data>
+    <data name="Specialization" xml:space="preserve">
+        <value>Specialization / Additional directions</value>
+    </data>
 </root>

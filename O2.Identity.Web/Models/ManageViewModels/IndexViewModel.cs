@@ -34,5 +34,8 @@ namespace O2.Identity.Web.Models.ManageViewModels
         public string City { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public string AboutMe { get; set; }
+        public string Specialization { get; set; }
+        public string LanguageProficiency { get; set; }
+        public string Education { get; set; }
     }
 }

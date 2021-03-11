@@ -152,5 +152,29 @@ namespace O2.Identity.Web.Resources.Views.Manage {
                 return ResourceManager.GetString("AboutMe", resourceCulture);
             }
         }
+        
+        internal static string LanguageProficiency {
+            get {
+                return ResourceManager.GetString("LanguageProficiency", resourceCulture);
+            }
+        }
+        
+        internal static string Education {
+            get {
+                return ResourceManager.GetString("Education", resourceCulture);
+            }
+        }
+        
+        internal static string EducationInfo {
+            get {
+                return ResourceManager.GetString("EducationInfo", resourceCulture);
+            }
+        }
+        
+        internal static string Specialization {
+            get {
+                return ResourceManager.GetString("Specialization", resourceCulture);
+            }
+        }
     }
 }

@@ -29,5 +29,8 @@ namespace O2.Identity.Web.Models
         
         //Verify SMS
         public bool Verified { get; set; }
+        public string Specialization { get; set; }
+        public string LanguageProficiency { get; set; }
+        public string Education { get; set; }
     }
 }

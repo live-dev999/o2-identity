@@ -90,7 +90,7 @@ namespace O2.Identity.Web
                     AllowedCorsOrigins = {$"{clientUrls["PFRCenterSPA"]}"},
                     
                     AlwaysIncludeUserClaimsInIdToken = true,
-                    AccessTokenLifetime = 3600
+                    AccessTokenLifetime = 3600*4
                 },
                 new Client
                 {

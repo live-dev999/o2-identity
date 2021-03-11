@@ -65,4 +65,16 @@
     <data name="AboutMe" xml:space="preserve">
         <value>Обо мне</value>
     </data>
+    <data name="LanguageProficiency" xml:space="preserve">
+        <value>Владение языками</value>
+    </data>
+    <data name="Education" xml:space="preserve">
+        <value>Образование / Сертификаты</value>
+    </data>
+    <data name="EducationInfo" xml:space="preserve">
+        <value>Год обучения / Учебное Заведение / Степень / Квалификация</value>
+    </data>
+    <data name="Specialization" xml:space="preserve">
+        <value>Специализация / Дополнительные направления</value>
+    </data>
 </root>
