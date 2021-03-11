@@ -96,6 +96,7 @@ namespace O2.Identity.Web.Controllers
                 Lastname = user.Lastname,
                 Country = user.Country,
                 City = user.City,
+                AboutMe = user.AboutMe,
                 Birthday = user.Birthday,
                 RegistrationDate = user.RegistrationDate
             };
@@ -373,6 +374,18 @@ namespace O2.Identity.Web.Controllers
                 }
                 
             }
+            var aboutMe = user.AboutMe;
+            if (model.AboutMe != aboutMe)
+            {
+                user.AboutMe = model.AboutMe;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+                
+            }
+            
             StatusMessage = "Ваш профиль has been updated";
             return RedirectToAction(nameof(Index));
         }

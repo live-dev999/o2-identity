@@ -62,4 +62,7 @@
     <data name="CopyRegiterSpecialLink" xml:space="preserve">
         <value>הקישור הועתק בהצלחה ללוח</value>
     </data>
+    <data name="AboutMe" xml:space="preserve">
+        <value>עליי</value>
+    </data>
 </root>

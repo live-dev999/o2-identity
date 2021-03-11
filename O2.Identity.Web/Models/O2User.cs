@@ -18,6 +18,8 @@ namespace O2.Identity.Web.Models
         public string Firstname { get; set; }
         public DateTime Birthday { get; set; }
         public string City { get; set; }
+        
+        public string AboutMe { get; set; }
         public string Country { get; set; }
         
         public virtual DateTime? LastLoginTime { get; set; }

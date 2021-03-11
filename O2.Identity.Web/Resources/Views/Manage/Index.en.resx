@@ -69,4 +69,7 @@
     <data name="CopyRegiterSpecialLink" xml:space="preserve">
         <value>Link successfully copied to clipboard</value>
     </data>
+    <data name="AboutMe" xml:space="preserve">
+        <value>About me</value>
+    </data>
 </root>

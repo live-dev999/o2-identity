@@ -62,4 +62,7 @@
     <data name="CopyRegiterSpecialLink" xml:space="preserve">
         <value>Link erfolgreich in Zwischenablage kopiert</value>
     </data>
+    <data name="AboutMe" xml:space="preserve">
+        <value>Über mich</value>
+    </data>
 </root>
