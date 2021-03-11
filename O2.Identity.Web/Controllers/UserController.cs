@@ -169,6 +169,7 @@ namespace O2.Identity.Web.Controllers
                 Lastname = user.Lastname,
                 Country = user.Country,
                 City = user.City,
+                AboutMe = user.AboutMe,
                 Birthday = user.Birthday,
                 RegistrationDate = user.RegistrationDate
             };
@@ -207,5 +208,6 @@ namespace O2.Identity.Web.Controllers
         public string City { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public bool IsSpecialist { get; set; }
+        public string AboutMe { get; set; }
     }
 }

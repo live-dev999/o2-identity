@@ -33,5 +33,6 @@ namespace O2.Identity.Web.Models.ManageViewModels
         public  string Country { get; set; }
         public string City { get; set; }
         public DateTime? RegistrationDate { get; set; }
+        public string AboutMe { get; set; }
     }
 }

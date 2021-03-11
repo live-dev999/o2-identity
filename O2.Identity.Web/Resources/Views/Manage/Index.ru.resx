@@ -62,4 +62,7 @@
     <data name="CopyRegiterSpecialLink" xml:space="preserve">
         <value>Ссылка успешно скопирована в буфер</value>
     </data>
+    <data name="AboutMe" xml:space="preserve">
+        <value>Обо мне</value>
+    </data>
 </root>
