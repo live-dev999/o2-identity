@@ -146,5 +146,11 @@ namespace O2.Identity.Web.Resources.Views.Manage {
                 return ResourceManager.GetString("CopyRegiterSpecialLink", resourceCulture);
             }
         }
+        
+        internal static string AboutMe {
+            get {
+                return ResourceManager.GetString("AboutMe", resourceCulture);
+            }
+        }
     }
 }
