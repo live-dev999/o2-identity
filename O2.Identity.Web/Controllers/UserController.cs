@@ -171,7 +171,10 @@ namespace O2.Identity.Web.Controllers
                 City = user.City,
                 AboutMe = user.AboutMe,
                 Birthday = user.Birthday,
-                RegistrationDate = user.RegistrationDate
+                RegistrationDate = user.RegistrationDate,
+                Education = user.Education,
+                Specialization = user.Specialization,
+                LanguageProficiency= user.LanguageProficiency,
             };
 
             return Ok(model);
@@ -209,5 +212,8 @@ namespace O2.Identity.Web.Controllers
         public DateTime? RegistrationDate { get; set; }
         public bool IsSpecialist { get; set; }
         public string AboutMe { get; set; }
+        public string Education { get; set; }
+        public string Specialization { get; set; }
+        public string LanguageProficiency { get; set; }
     }
 }

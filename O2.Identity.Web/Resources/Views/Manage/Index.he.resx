@@ -65,4 +65,16 @@
     <data name="AboutMe" xml:space="preserve">
         <value>עליי</value>
     </data>
+    <data name="LanguageProficiency" xml:space="preserve">
+        <value>שליטה בשפה</value>
+    </data>
+    <data name="Education" xml:space="preserve">
+        <value>השכלה / תעודות</value>
+    </data>
+    <data name="EducationInfo" xml:space="preserve">
+        <value>שנת לימוד / מוסד / תואר / הכשרה</value>
+    </data>
+    <data name="Specialization" xml:space="preserve">
+        <value>התמחות / הוראות נוספות</value>
+    </data>
 </root>

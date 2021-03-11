@@ -91,13 +91,32 @@
                 <input asp-for="City" class="form-control"/>
             </div>
 
-      
+            <div class="form-group">
+                <label asp-for="LanguageProficiency">@Localizer["LanguageProficiency"]</label>
+                <textarea asp-for="LanguageProficiency" class="form-control" type="text" style="min-height: 250px" ></textarea>
+                <span asp-validation-for="LanguageProficiency" class="text-danger"></span>
+            </div>
+
+            @if (@UserManager.GetUserAsync(User).Result.IsSpecialist)
+            {
+                <div class="form-group">
+                    <label asp-for="Education">@Localizer["Education"]</label>
+                    <textarea asp-for="Education" class="form-control" type="text" style="min-height: 250px" placeholder="@Localizer["EducationInfo"]" ></textarea>
+                    <span asp-validation-for="Education" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Specialization">@Localizer["Specialization"]</label>
+                    <textarea asp-for="Specialization" class="form-control" type="text"  style="min-height: 250px" ></textarea>
+                    <span asp-validation-for="Specialization" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="AboutMe">@Localizer["AboutMe"]</label>
-                <textarea asp-for="AboutMe" class="form-control" type="text" ></textarea>
+                <textarea asp-for="AboutMe" class="form-control" type="text" style="min-height: 250px" ></textarea>
                 <span asp-validation-for="AboutMe" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 @* <label asp-for="ProfilePhoto" style="width: 100%;"></label> *@
                 @if (Model.ProfilePhoto != null)

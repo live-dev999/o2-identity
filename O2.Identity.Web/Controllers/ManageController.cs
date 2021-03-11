@@ -96,6 +96,9 @@ namespace O2.Identity.Web.Controllers
                 Lastname = user.Lastname,
                 Country = user.Country,
                 City = user.City,
+                Education = user.Education,
+                Specialization = user.Specialization,
+                LanguageProficiency= user.LanguageProficiency,
                 AboutMe = user.AboutMe,
                 Birthday = user.Birthday,
                 RegistrationDate = user.RegistrationDate
@@ -357,6 +360,36 @@ namespace O2.Identity.Web.Controllers
             if (model.Country != country)
             {
                 user.Country = model.Country;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+            }
+            var education = user.Education;
+            if (model.Education != education)
+            {
+                user.Education = model.Education;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+            }
+            var specialization = user.Specialization;
+            if (model.Specialization != specialization)
+            {
+                user.Specialization = model.Specialization;
+                var setUpdateUser = await _userManager.UpdateAsync(user);
+                if (!setUpdateUser.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
+                }
+            }
+            var languageProficiency = user.LanguageProficiency;
+            if (model.LanguageProficiency != languageProficiency)
+            {
+                user.LanguageProficiency = model.LanguageProficiency;
                 var setUpdateUser = await _userManager.UpdateAsync(user);
                 if (!setUpdateUser.Succeeded)
                 {
