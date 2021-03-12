@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ using O2.Identity.Web.Models;
 using O2.Identity.Web.Services;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
@@ -18,6 +20,7 @@ using Microsoft.WindowsAzure.Storage;
 using O2.Identity.Web.Controllers;
 using O2.Identity.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using O2.Identity.Web.Filters;
 
@@ -250,7 +253,13 @@ namespace O2.Identity.Web
             //     await next();
             // });
             app.UseForwardedHeaders();
-            app.UseStaticFiles();
+            app.UseStaticFiles(
+                new StaticFileOptions()
+                {
+                    FileProvider = new 
+                        PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Templetes")),
+                    RequestPath = new PathString("/Templetes")
+                });
             IsProduction = env.IsProduction();
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
