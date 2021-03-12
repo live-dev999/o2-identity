@@ -23,8 +23,8 @@ namespace O2.Identity.Web.Controllers
         public async Task<IActionResult> Send(string username, string password,string phoneNumber)
         {
             // Find your Account Sid and Token at twilio.com/console
-            //if (_verification.Config.NotificationSms=="true")
-            // {
+            // if (_verification.Config.NotificationSms=="true")
+             // {
                 // Find your Account Sid and Token at twilio.com/console
                 TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
 
@@ -38,7 +38,7 @@ namespace O2.Identity.Web.Controllers
 
                 _logger.LogInformation(
                     $"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
-             //}
+             // }
 
             // Console.WriteLine(message.Sid);
             // TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
