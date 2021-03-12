@@ -84,4 +84,7 @@
     <data name="Specialization" xml:space="preserve">
         <value>Specialization / Additional directions</value>
     </data>
+    <data name="BackToClientApp" xml:space="preserve">
+        <value>Return to application</value>
+    </data>
 </root>

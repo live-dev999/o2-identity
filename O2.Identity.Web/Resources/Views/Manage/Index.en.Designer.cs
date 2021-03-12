@@ -176,5 +176,11 @@ namespace O2.Identity.Web.Resources.Views.Manage {
                 return ResourceManager.GetString("Specialization", resourceCulture);
             }
         }
+        
+        internal static string BackToClientApp {
+            get {
+                return ResourceManager.GetString("BackToClientApp", resourceCulture);
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@ namespace O2.Identity.Web.Controllers
         private readonly IStringLocalizer<IndexViewModel> _localizer;
         private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
         private Cloudinary _cloudinary;
+        public static string returnUrl;
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -75,14 +76,18 @@ namespace O2.Identity.Web.Controllers
         [TempData] public string StatusMessage { get; set; }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string returnUrl = null)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            if(!string.IsNullOrEmpty(returnUrl))
+            {
+                ManageController.returnUrl = returnUrl;
+                
+            }
             var model = new IndexViewModel
             {
                 Id = user.Id,
@@ -101,7 +106,8 @@ namespace O2.Identity.Web.Controllers
                 LanguageProficiency= user.LanguageProficiency,
                 AboutMe = user.AboutMe,
                 Birthday = user.Birthday,
-                RegistrationDate = user.RegistrationDate
+                RegistrationDate = user.RegistrationDate,
+                ReturnUrl = returnUrl
             };
 
             return View(model);
@@ -235,6 +241,22 @@ namespace O2.Identity.Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BackApp()
+        {
+// if (submit=="BackToClientApp")
+            // {
+            // Request.QueryString
+            // string returnUrl = HttpContext.Request.QueryString("returnUrl").ToString();
+            if (string.IsNullOrEmpty(ManageController.returnUrl))
+            {
+                throw new ArgumentException(string.Format("Invalid argument {0}" + nameof(ManageController.returnUrl)));
+            }
+            return Redirect(ManageController.returnUrl);
+            // }
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         // [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
         [RequestSizeLimit(209715200)]
         public async Task<IActionResult> Index(IndexViewModel model, string submit)
@@ -245,6 +267,16 @@ namespace O2.Identity.Web.Controllers
             {
                 return View(model);
             }
+            
+            // if (submit=="BackToClientApp")
+            // {
+            //     if (string.IsNullOrEmpty(model.ReturnUrl))
+            //     {
+            //         throw new ArgumentException(string.Format("Invalid argument {0}" + nameof(model.ReturnUrl)));
+            //     }
+            //     return Redirect(model.ReturnUrl);
+            // }
+
             
             if (!ModelState.IsValid)
             {
@@ -679,6 +711,8 @@ namespace O2.Identity.Web.Controllers
             _logger.LogInformation("User with ID {UserId} has disabled 2fa.", user.Id);
             return RedirectToAction(nameof(TwoFactorAuthentication));
         }
+
+     
 
         [HttpGet]
         public async Task<IActionResult> EnableAuthenticator()
