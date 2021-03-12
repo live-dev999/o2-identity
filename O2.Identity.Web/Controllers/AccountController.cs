@@ -131,7 +131,7 @@ namespace O2.Identity.Web.Controllers
                     string body = string.Empty;
                     
                         //using streamreader for reading my htmltemplate   
-                    using (var reader = new StreamReader(Path.Combine("/Templetes", "lockout.html")))
+                    using (var reader = new StreamReader(Path.Combine("Templetes", "lockout.html")))
                     {
                         body = reader.ReadToEnd();
                     }
