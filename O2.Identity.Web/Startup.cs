@@ -254,12 +254,13 @@ namespace O2.Identity.Web
             // });
             app.UseForwardedHeaders();
             app.UseStaticFiles(
-                new StaticFileOptions()
-                {
-                    FileProvider = new 
-                        PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Templetes")),
-                    RequestPath = new PathString("/Templetes")
-                });
+                // new StaticFileOptions()
+                // {
+                //     FileProvider = new 
+                //         PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Templetes")),
+                //     RequestPath = new PathString("/Templetes")
+                // }
+                );
             IsProduction = env.IsProduction();
             // app.UseIdentity(); // not needed, since UseIdentityServer adds the authentication middleware
             app.UseIdentityServer();
