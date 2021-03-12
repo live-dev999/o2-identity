@@ -136,7 +136,9 @@ namespace O2.Identity.Web.Controllers
                         body = reader.ReadToEnd();
                     }
                     //_localizer["UserAccountLockedOut"]
-                    
+                    body = body.Replace("{EmailContent}", _localizer["UserAccountLockedOut"]);
+                    body = body.Replace("{EmailHeader}", _localizer["EmailHeaderUserAccountLockedOut"]);
+                    body = body.Replace("{AccountName}", model.Email);
                     ModelState.AddModelError(string.Empty, _localizer["UserAccountLockedOut"]);
                     await _emailSender.SendEmailAsync(model.Email, "User account locked out",
                         body);
