@@ -37,5 +37,6 @@ namespace O2.Identity.Web.Models.ManageViewModels
         public string Specialization { get; set; }
         public string LanguageProficiency { get; set; }
         public string Education { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

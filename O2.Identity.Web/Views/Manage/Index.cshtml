@@ -1,4 +1,5 @@
-﻿@model IndexViewModel
+﻿@using O2.Identity.Web.Controllers
+@model IndexViewModel
 @inject SignInManager<O2User> SignInManager
 @inject UserManager<O2User> UserManager
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
@@ -151,9 +152,13 @@
                 @*     $1$ <input type="file" name="file" asp-action="Upload"/> #1# *@
                 @*     $1$ <input type="submit"/> #1# *@
                 @* </form> *@
-            </div>
-
+            </div>    
             <button type="submit" class="btn btn-default">@Localizer["Save"]</button>
+            @* returnUrl *@
+            @if (!string.IsNullOrEmpty(Model.ReturnUrl) || !string.IsNullOrEmpty(ManageController.returnUrl) )
+            {
+                <button type="submit" class="btn btn-default" formaction="BackApp">@Localizer["BackToClientApp"]</button>
+            }
         </form>
     </div>
 </div>
