@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -126,10 +127,21 @@ namespace O2.Identity.Web.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    // _logger.LogWarning("User account locked out.");
+                    string body = string.Empty;
+                    
+                        //using streamreader for reading my htmltemplate   
+                    using (var reader = new StreamReader(Path.Combine("Templetes", "lockout.html")))
+                    {
+                        body = reader.ReadToEnd();
+                    }
+                    //_localizer["UserAccountLockedOut"]
+                    body = body.Replace("{EmailContent}", _localizer["UserAccountLockedOut"]);
+                    body = body.Replace("{EmailHeader}", _localizer["EmailHeaderUserAccountLockedOut"]);
+                    body = body.Replace("{AccountName}", model.Email);
                     ModelState.AddModelError(string.Empty, _localizer["UserAccountLockedOut"]);
                     await _emailSender.SendEmailAsync(model.Email, "User account locked out",
-                        _localizer["UserAccountLockedOut"]);
+                        body);
                     return RedirectToAction(nameof(Lockout));
                 }
                 else

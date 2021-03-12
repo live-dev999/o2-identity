@@ -17,4 +17,7 @@
     <data name="UserAccountLockedOut" xml:space="preserve">
         <value>חשבון המשתמש נעול. נסה שוב בעוד עשר דקות.</value>
     </data>
+    <data name="EmailHeaderUserAccountLockedOut" xml:space="preserve">
+        <value>חסימת חשבונך</value>
+    </data>
 </root>

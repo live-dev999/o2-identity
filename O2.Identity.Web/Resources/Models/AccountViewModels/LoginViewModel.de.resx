@@ -17,4 +17,7 @@
     <data name="UserAccountLockedOut" xml:space="preserve">
         <value>Das Benutzerkonto ist gesperrt. Bitte versuchen Sie es in 10 Minuten erneut.</value>
     </data>
+    <data name="EmailHeaderUserAccountLockedOut" xml:space="preserve">
+        <value>Sperren Sie Ihr Konto</value>
+    </data>
 </root>

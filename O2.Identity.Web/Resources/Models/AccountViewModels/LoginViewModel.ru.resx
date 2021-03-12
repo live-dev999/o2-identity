@@ -26,4 +26,7 @@
     <data name="UserAccountLockedOut" xml:space="preserve">
         <value>Учетная запись пользователя заблокирована. Повторите попытку через 10 минут.</value>
     </data>
+    <data name="EmailHeaderUserAccountLockedOut" xml:space="preserve">
+        <value>Блокировка вашей учетной записи</value>
+    </data>
 </root>

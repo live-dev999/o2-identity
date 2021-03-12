@@ -149,4 +149,13 @@
       <DependentUpon>Lockout.en.resx</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\email-templates" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templetes\lockout.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
