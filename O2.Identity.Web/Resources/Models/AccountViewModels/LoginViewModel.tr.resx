@@ -12,6 +12,9 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="InvalidLoginAttempt" xml:space="preserve">
-        <value>Geçersiz oturum açma denemesi.</value>
+        <value>Giriş başarısız. Yanlış giriş veya şifre.</value>
+    </data>
+    <data name="UserAccountLockedOut" xml:space="preserve">
+        <value>Kullanıcı hesabı kilitlendi. Lütfen 10 dakika sonra tekrar deneyin.</value>
     </data>
 </root>

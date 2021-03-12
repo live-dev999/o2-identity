@@ -82,6 +82,9 @@ namespace O2.Identity.Web
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = true;
                     options.Password.RequiredLength = 6;
+                    
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -125,10 +128,6 @@ namespace O2.Identity.Web
                     {
                         options.IssuerUri = "null";
                         options.Authentication.CookieLifetime = TimeSpan.FromHours(2);
-                        //     options.Events.RaiseErrorEvents = true;
-                        //     options.Events.RaiseInformationEvents = true;
-                        //     options.Events.RaiseFailureEvents = true;
-                        //     options.Events.RaiseSuccessEvents = true;
                     }
                 )
                 // // this adds the operational data from DB (codes, tokens, consents)

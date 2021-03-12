@@ -18,11 +18,10 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    
-    <data name="InvalidLoginAttempt">
-        <value>Invalid login attempt.</value>
+    <data name="LockedOutHeader" xml:space="preserve">
+        <value>Locked out</value>
     </data>
-    <data name="UserAccountLockedOut" xml:space="preserve">
+    <data name="LockedOutMessage" xml:space="preserve">
         <value>The user account is locked. Please try again in 10 minutes.</value>
     </data>
 </root>
