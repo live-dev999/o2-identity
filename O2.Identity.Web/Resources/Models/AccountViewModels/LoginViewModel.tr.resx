@@ -17,4 +17,7 @@
     <data name="UserAccountLockedOut" xml:space="preserve">
         <value>Kullanıcı hesabı kilitlendi. Lütfen 10 dakika sonra tekrar deneyin.</value>
     </data>
+    <data name="EmailHeaderUserAccountLockedOut" xml:space="preserve">
+        <value>Hesabınızı bloke etme</value>
+    </data>
 </root>
