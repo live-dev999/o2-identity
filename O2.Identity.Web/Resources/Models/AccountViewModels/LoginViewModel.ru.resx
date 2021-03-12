@@ -21,6 +21,9 @@
 
 
     <data name="InvalidLoginAttempt">
-        <value>Неверная попытка входа.</value>
-    </data> 
+        <value>Ошибка при входе в систему. Неверный логин или пароль.</value>
+    </data>
+    <data name="UserAccountLockedOut" xml:space="preserve">
+        <value>Учетная запись пользователя заблокирована. Повторите попытку через 10 минут.</value>
+    </data>
 </root>

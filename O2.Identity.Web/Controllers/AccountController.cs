@@ -114,7 +114,7 @@ namespace O2.Identity.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation($"User logged in. data= {model}");
@@ -127,11 +127,14 @@ namespace O2.Identity.Web.Controllers
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
+                    ModelState.AddModelError(string.Empty, _localizer["UserAccountLockedOut"]);
+                    await _emailSender.SendEmailAsync(model.Email, "User account locked out",
+                        _localizer["UserAccountLockedOut"]);
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, _localizer["InvalidLoginAttForgotPasswordViewModelempt"]);
+                    ModelState.AddModelError(string.Empty, _localizer["InvalidLoginAttempt"]);
                     return View(model);
                 }
             }
