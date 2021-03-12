@@ -40,10 +40,11 @@ namespace O2.Identity.Web.Controllers
         private readonly IStringLocalizer<LoginViewModel> _localizer;
         private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
         private readonly IVerification _verification;
-      
+
         private readonly AccountService _account;
         private readonly IIdentityServerInteractionService _interaction;
         private Cloudinary _cloudinary;
+
         public AccountController(
             UserManager<O2User> userManager,
             SignInManager<O2User> signInManager,
@@ -55,7 +56,7 @@ namespace O2.Identity.Web.Controllers
             IStringLocalizer<LoginViewModel> localizer,
             IStringLocalizer<SharedResource> sharedLocalizer,
             IVerification verification
-            )
+        )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -75,8 +76,7 @@ namespace O2.Identity.Web.Controllers
             _cloudinary = new Cloudinary(acc);
         }
 
-        [TempData]
-        public string ErrorMessage { get; set; }
+        [TempData] public string ErrorMessage { get; set; }
 
         [HttpGet]
         [AllowAnonymous]
@@ -100,8 +100,10 @@ namespace O2.Identity.Web.Controllers
                     _logger.LogInformation("Verify code - valid");
                     return RedirectToLocal(returnUrl);
                 }
+
                 return View(model);
             }
+
             return View(model);
         }
 
@@ -115,26 +117,30 @@ namespace O2.Identity.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                    lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation($"User logged in. data= {model}");
                     return RedirectToLocal(returnUrl);
                 }
+
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
+                    return RedirectToAction(nameof(LoginWith2fa), new {returnUrl, model.RememberMe});
                 }
+
                 if (result.IsLockedOut)
                 {
                     // _logger.LogWarning("User account locked out.");
                     string body = string.Empty;
-                    
-                        //using streamreader for reading my htmltemplate   
+
+                    //using streamreader for reading my htmltemplate   
                     using (var reader = new StreamReader(Path.Combine("Templetes", "lockout.html")))
                     {
                         body = reader.ReadToEnd();
                     }
+
                     //_localizer["UserAccountLockedOut"]
                     body = body.Replace("{EmailContent}", _localizer["UserAccountLockedOut"]);
                     body = body.Replace("{EmailHeader}", _localizer["EmailHeaderUserAccountLockedOut"]);
@@ -167,7 +173,7 @@ namespace O2.Identity.Web.Controllers
                 throw new ApplicationException($"Unable to load two-factor authentication user.");
             }
 
-            var model = new LoginWith2faViewModel { RememberMe = rememberMe };
+            var model = new LoginWith2faViewModel {RememberMe = rememberMe};
             ViewData["ReturnUrl"] = returnUrl;
 
             return View(model);
@@ -176,7 +182,8 @@ namespace O2.Identity.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe,
+            string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -191,7 +198,9 @@ namespace O2.Identity.Web.Controllers
 
             var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-            var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
+            var result =
+                await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe,
+                    model.RememberMachine);
 
             if (result.Succeeded)
             {
@@ -230,7 +239,8 @@ namespace O2.Identity.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginWithRecoveryCode(LoginWithRecoveryCodeViewModel model, string returnUrl = null)
+        public async Task<IActionResult> LoginWithRecoveryCode(LoginWithRecoveryCodeViewModel model,
+            string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -252,6 +262,7 @@ namespace O2.Identity.Web.Controllers
                 _logger.LogInformation("User with ID {UserId} logged in with a recovery code.", user.Id);
                 return RedirectToLocal(returnUrl);
             }
+
             if (result.IsLockedOut)
             {
                 _logger.LogWarning("User with ID {UserId} account locked out.", user.Id);
@@ -264,7 +275,7 @@ namespace O2.Identity.Web.Controllers
                 return View();
             }
         }
-    
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
@@ -274,34 +285,33 @@ namespace O2.Identity.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string specialistId = null,string returnUrl = null)
+        public IActionResult Register(string specialistId = null, string returnUrl = null)
         {
             _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             ViewData["ReturnUrl"] = returnUrl;
             if (specialistId != null)
-            { 
+            {
                 ViewData["SpecialistId"] = specialistId;
                 var userSpecialist = _userManager.Users.Single(x => x.Id == specialistId);
                 var model = new RegisterViewModel()
                 {
                     SpecialistId = specialistId,
-                    SpecialistName = userSpecialist.Firstname +" "+userSpecialist.Lastname
+                    SpecialistName = userSpecialist.Firstname + " " + userSpecialist.Lastname
                 };
                 _logger.LogInformation($"Show register view with specialId = {specialistId}");
                 return View(model);
             }
-            
-            
+
+
             return View();
         }
-        
-        
+
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
-
             _logger.LogInformation(System.Reflection.MethodBase.GetCurrentMethod().Name);
             _logger.LogInformation($"Register user = {model}, returnUrl = {returnUrl}");
             // TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
@@ -331,34 +341,31 @@ namespace O2.Identity.Web.Controllers
             //     @from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
             //     to: new Twilio.Types.PhoneNumber("+375447987208")
             // );
-            
-            
 
-            
+
             // if(model.SMSCode)
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 var user = new O2User
                 {
-                    UserName = model.Email, Email = model.Email, 
-                    Firstname = model.Firstname, 
+                    UserName = model.Email, Email = model.Email,
+                    Firstname = model.Firstname,
                     Lastname = model.Lastname,
                     PhoneNumber = model.PhoneNumber,
                     ProfilePhoto = model.ProfilePhoto,
                     RegistrationDate = DateTime.Now,
                     SpecialistId = model.SpecialistId
                 };
-                
+
                 if (user.SpecialistId != null)
-                { 
+                {
                     if (_userManager.Users.FirstOrDefault(x => x.Id == user.SpecialistId && user.IsSpecialist) != null)
                     {
                         throw new Exception("fail specialist link");
                     }
-                    
                 }
-                
+
                 var uploadResult = new ImageUploadResult();
                 var file = model.FormFile;
                 if (file?.Length > 0)
@@ -367,13 +374,14 @@ namespace O2.Identity.Web.Controllers
                     {
                         var uploadParams = new ImageUploadParams()
                         {
-                            File = new FileDescription(user.Id+"_"+file.Name, stream),
+                            File = new FileDescription(user.Id + "_" + file.Name, stream),
                             Transformation = new Transformation()
                                 .Width(500).Height(500).Crop("fill").Gravity("face")
                         };
-                
+
                         uploadResult = _cloudinary.Upload(uploadParams);
                     }
+
                     var newPhoto = new Photo();
                     newPhoto.Url = uploadResult.Uri.ToString();
                     newPhoto.PublicId = uploadResult.PublicId;
@@ -382,7 +390,7 @@ namespace O2.Identity.Web.Controllers
                     user.Photos.Add(newPhoto);
                     user.ProfilePhoto = user.Photos.Single(x => x.IsMain).Url;
                 }
-                
+
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -390,26 +398,37 @@ namespace O2.Identity.Web.Controllers
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    
+
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    
-                    // Find your Account Sid and Token at twilio.com/console
-                    TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
 
-                    var message = MessageResource.Create(
-                        body: $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
-                        from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
-                        to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
-                    );
-                    
-                    _logger.LogInformation($"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
-                    
-                    return RedirectToLocal(returnUrl);
+                    if (_verification.Config.NotificationSms == "true")
+                    {
+                        // Find your Account Sid and Token at twilio.com/console
+                        TwilioClient.Init(_verification.Config.AccountSid, _verification.Config.AuthToken);
+
+                        var message = MessageResource.Create(
+                            body:
+                            $"\"#PF_R COMMUNITY\". https://pfr-centr.com. Username: {model.Email}, Password: {model.Password}.",
+                            from: new Twilio.Types.PhoneNumber(_verification.Config.PhoneNumber),
+                            to: new Twilio.Types.PhoneNumber(model.PhoneNumber)
+                        );
+
+                        _logger.LogInformation(
+                            $"Send sms to account PhoneNumber = {message.To} ,SID SMS= {message.Sid} ");
+                    }
+
+                    if (returnUrl.Contains("http"))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                        return RedirectToLocal(returnUrl);
                 }
+
                 AddErrors(result);
             }
 
@@ -451,7 +470,7 @@ namespace O2.Identity.Web.Controllers
         //     var context = await _interaction.GetLogoutContextAsync(logoutId);
         //     return Redirect(context.PostLogoutRedirectUri);
         // }
-        
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -469,16 +488,15 @@ namespace O2.Identity.Web.Controllers
                 // build a return URL so the upstream provider will redirect back
                 // to us after the user has logged out. this allows us to then
                 // complete our single sign-out processing.
-                string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
+                string url = Url.Action("Logout", new {logoutId = vm.LogoutId});
 
                 // this triggers a redirect to the external provider for sign-out
                 // hack: try/catch to handle social providers that throw
-                return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
+                return SignOut(new AuthenticationProperties {RedirectUri = url}, vm.ExternalAuthenticationScheme);
             }
 
             return View("LoggedOut", vm);
         }
-
 
 
         [HttpPost]
@@ -487,7 +505,7 @@ namespace O2.Identity.Web.Controllers
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new {returnUrl});
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
@@ -501,6 +519,7 @@ namespace O2.Identity.Web.Controllers
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToAction(nameof(Login));
             }
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -508,12 +527,14 @@ namespace O2.Identity.Web.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
+                isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
+
             if (result.IsLockedOut)
             {
                 return RedirectToAction(nameof(Lockout));
@@ -524,14 +545,15 @@ namespace O2.Identity.Web.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+                return View("ExternalLogin", new ExternalLoginViewModel {Email = email});
             }
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model,
+            string returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -541,7 +563,8 @@ namespace O2.Identity.Web.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new O2User { UserName = model.Email, Email = model.Email };
+
+                var user = new O2User {UserName = model.Email, Email = model.Email};
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -553,6 +576,7 @@ namespace O2.Identity.Web.Controllers
                         return RedirectToLocal(returnUrl);
                     }
                 }
+
                 AddErrors(result);
             }
 
@@ -568,11 +592,13 @@ namespace O2.Identity.Web.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -603,7 +629,7 @@ namespace O2.Identity.Web.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
                 await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
@@ -626,7 +652,8 @@ namespace O2.Identity.Web.Controllers
             {
                 throw new ApplicationException("A code must be supplied for password reset.");
             }
-            var model = new ResetPasswordViewModel { Code = code };
+
+            var model = new ResetPasswordViewModel {Code = code};
             return View(model);
         }
 
@@ -639,17 +666,20 @@ namespace O2.Identity.Web.Controllers
             {
                 return View(model);
             }
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             AddErrors(result);
             return View();
         }

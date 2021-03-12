@@ -8,46 +8,86 @@
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
+    <div class="col-md-8">
+        <img style="max-width: 50vh" src="~/images/pfr.png" alt="">
+
+        <p>
+            <strong>Почему мы создали платформу:</strong>
+        </p>
+        <ul>
+            <li>Сохранить конфедециальность наших клиентов.</li>
+            <li>Сохранять полученные результаты, обеспечить качество сеансов.</li>
+            <li>
+                Дать нашим клиентам актуальную информацию о методике #PF_R от сертифицированных специалистов
+                #PF_R, и самого разработчика данной методики Антона Маркова.
+            </li>
+            <li>Простой способ получить сеанс #PF_R всего в несколько кликов.</li>
+            <li>Обеспечить клиентов коммуникацией с квалифицированными специалистами #PF_R.</li>
+            <li>Уберечь наших клиентов от некачественных #PF_R услуг.</li>
+            <li>Избежать фактов мошенничества со стороны третьих лиц.</li>
+            <li>Отслеживать качество наших услуг.</li>
+            <li>Предоставлять скидки и бонусы зарегистрированным клиентам.</li>
+        </ul>
+        <p>
+            <strong>Вам доступно также:</strong>
+        </p>
+        <ul>
+            <li>
+                Лента новостей: самая актуальная информация от специалистов. Фото и видео. Тут же вы можете
+                комментировать посты которые были опубликованы, а также задавать интересующие вас вопросы, прямо
+                в ленте.
+                Именно тут все спецалисты #PF_R смогут провести дискуссию по задаваемому вопросу. А именно
+                специалисты со всего мира, имеющие медицинское образование.
+            </li>
+
+            <li>
+                Возможность пройти сеанс #PF_R прямо через платформу #PF_R Community всего в несколько кликов и
+                без установки стороннего программного обеспечения.
+                Для этого вам нужен лишь интернет и любое утройство которое позовляет открывать веб страницу в
+                Интернете.
+            </li>
+            <li>Ознакомиться с базой наших сертифицированных специалистов #PF_R.</li>
+        </ul>
+    </div>
     <div class="col-md-4">
         <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
             <h4>@Localizer["RegisterTitle"]</h4>
-            <hr />
-        <div asp-validation-summary="All" class="text-danger"></div>
-        @if (Model?.SpecialistId != null)
-        {
-        
-            <div class="form-group">
-                <label asp-for="SpecialistId">@Localizer["SpecialistId"]</label>
-                <input asp-for="SpecialistId" class="form-control" readonly/>
-            </div>
+            <hr/>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @if (Model?.SpecialistId != null)
+            {
+                <div class="form-group">
+                    <label asp-for="SpecialistId">@Localizer["SpecialistId"]</label>
+                    <input asp-for="SpecialistId" class="form-control" readonly/>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SpecialistName">@Localizer["NameSpecialist"]</label>
+                    <input asp-for="SpecialistName" class="form-control" readonly/>
+                </div>
+            }
 
             <div class="form-group">
-                <label asp-for="SpecialistName">@Localizer["NameSpecialist"]</label>
-                <input asp-for="SpecialistName" class="form-control"  readonly />
-            </div>
-        }
-          
-            <div class="form-group">
                 <label asp-for="Firstname">@Localizer["Firstname"]</label>
-                <input asp-for="Firstname" class="form-control" />
+                <input asp-for="Firstname" class="form-control"/>
                 <span asp-validation-for="Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Lastname">@Localizer["Lastname"]</label>
-                <input asp-for="Lastname" class="form-control" />
+                <input asp-for="Lastname" class="form-control"/>
                 <span asp-validation-for="Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email">@Localizer["Email"]</label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                        <label style="color: darkorange">+XXXXXXXXXXX</label>
-                    </div>
+                <label style="color: darkorange">+XXXXXXXXXXX</label>
+            </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber">@Localizer["PhoneNumber"]</label>
-                <input asp-for="PhoneNumber" class="form-control" />
+                <input asp-for="PhoneNumber" class="form-control"/>
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -55,32 +95,33 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password">@Localizer["Password"]</label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ConfirmPassword">@Localizer["ConfirmPassword"]</label>
-                <input asp-for="ConfirmPassword" class="form-control" />
+                <input asp-for="ConfirmPassword" class="form-control"/>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-             @* <div class="form-group"> *@
-             @*                                    <dl> *@
-             @*                                        <dt> *@
-             @*                                            <label asp-for="FormFile">@Localizer["ProfilePhoto"]</label> *@
-             @*                                        </dt> *@
-             @*                                        <dd> *@
-             @*                                            <input asp-for="FormFile" type="file"> *@
-             @*                                            <span asp-validation-for="FormFile"></span> *@
-             @*                                        </dd> *@
-             @*                                    </dl> *@
-             @* *@
-             @*            </div> *@
+            @* <div class="form-group"> *@
+            @*                                    <dl> *@
+            @*                                        <dt> *@
+            @*                                            <label asp-for="FormFile">@Localizer["ProfilePhoto"]</label> *@
+            @*                                        </dt> *@
+            @*                                        <dd> *@
+            @*                                            <input asp-for="FormFile" type="file"> *@
+            @*                                            <span asp-validation-for="FormFile"></span> *@
+            @*                                        </dd> *@
+            @*                                    </dl> *@
+            @* *@
+            @*            </div> *@
             <button type="submit" class="btn btn-default">@Localizer["Register"]</button>
         </form>
     </div>
 </div>
 
 @* ReSharper disable once Razor.SectionNotResolved *@
+
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
