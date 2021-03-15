@@ -153,7 +153,7 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<DateTime>("EndTrialDate");
+                    b.Property<DateTime?>("EndTrialDate");
 
                     b.Property<string>("Firstname");
 
@@ -193,9 +193,9 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<string>("Specialization");
 
-                    b.Property<DateTime>("StartTrialDate");
+                    b.Property<DateTime?>("StartTrialDate");
 
-                    b.Property<bool>("Trial");
+                    b.Property<bool?>("Trial");
 
                     b.Property<bool>("TwoFactorEnabled");
 
