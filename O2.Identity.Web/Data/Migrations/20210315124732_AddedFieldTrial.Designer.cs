@@ -11,9 +11,10 @@ using System;
 namespace O2.Identity.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210315124732_AddedFieldTrial")]
+    partial class AddedFieldTrial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,8 +154,6 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<DateTime>("EndTrialDate");
-
                     b.Property<string>("Firstname");
 
                     b.Property<bool>("IsPractitioner");
@@ -193,7 +192,7 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<string>("Specialization");
 
-                    b.Property<DateTime>("StartTrialDate");
+                    b.Property<bool>("StartTrialDate");
 
                     b.Property<bool>("Trial");
 
