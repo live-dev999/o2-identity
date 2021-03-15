@@ -195,8 +195,6 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<DateTime?>("StartTrialDate");
 
-                    b.Property<bool?>("Trial");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
