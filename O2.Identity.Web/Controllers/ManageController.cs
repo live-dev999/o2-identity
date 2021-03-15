@@ -243,6 +243,8 @@ namespace O2.Identity.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BackApp()
         {
+        //ToDO: Create dinamic url
+                return Redirect("https://pfr-centr.com");
 // if (submit=="BackToClientApp")
             // {
             // Request.QueryString
