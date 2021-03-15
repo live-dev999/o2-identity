@@ -26,9 +26,7 @@ namespace O2.Identity.Web.Models
         public virtual DateTime? RegistrationDate { get; set; }
         
         public string SpecialistId { get; set; }
-        
-        public bool? Trial { get; set; }
-        
+
         public DateTime? StartTrialDate { get; set; }
         
         public DateTime? EndTrialDate { get; set; }
