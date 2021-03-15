@@ -11,7 +11,7 @@ using System;
 namespace O2.Identity.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210315152955_AddedFieldEndTrialDate")]
+    [Migration("20210315202436_AddedFieldEndTrialDate")]
     partial class AddedFieldEndTrialDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
