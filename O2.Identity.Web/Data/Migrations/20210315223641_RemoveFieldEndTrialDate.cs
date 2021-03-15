@@ -4,18 +4,18 @@ using System.Collections.Generic;
 
 namespace O2.Identity.Web.Data.Migrations
 {
-    public partial class AddedFieldEndTrialDate : Migration
+    public partial class RemoveFieldEndTrialDate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
-                name: "EndTrialDate",
+                name: "TrialEndDate",
                 table: "AspNetUsers",
                 type: "datetime2",
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "StartTrialDate",
+                name: "TrialStartDate",
                 table: "AspNetUsers",
                 type: "datetime2",
                 nullable: true);
@@ -24,11 +24,11 @@ namespace O2.Identity.Web.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "EndTrialDate",
+                name: "TrialEndDate",
                 table: "AspNetUsers");
 
             migrationBuilder.DropColumn(
-                name: "StartTrialDate",
+                name: "TrialStartDate",
                 table: "AspNetUsers");
         }
     }

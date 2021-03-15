@@ -27,9 +27,9 @@ namespace O2.Identity.Web.Models
         
         public string SpecialistId { get; set; }
 
-        public DateTime? StartTrialDate { get; set; }
+        public DateTime? TrialStartDate { get; set; }
         
-        public DateTime? EndTrialDate { get; set; }
+        public DateTime? TrialEndDate { get; set; }
         
         //Verify SMS
         public bool Verified { get; set; }

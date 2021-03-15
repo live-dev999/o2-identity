@@ -11,7 +11,7 @@ using System;
 namespace O2.Identity.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210315212559_RemoveFieldEndTrialDate")]
+    [Migration("20210315223641_RemoveFieldEndTrialDate")]
     partial class RemoveFieldEndTrialDate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,8 +154,6 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<DateTime?>("EndTrialDate");
-
                     b.Property<string>("Firstname");
 
                     b.Property<bool>("IsPractitioner");
@@ -194,7 +192,9 @@ namespace O2.Identity.Web.Data.Migrations
 
                     b.Property<string>("Specialization");
 
-                    b.Property<DateTime?>("StartTrialDate");
+                    b.Property<DateTime?>("TrialEndDate");
+
+                    b.Property<DateTime?>("TrialStartDate");
 
                     b.Property<bool>("TwoFactorEnabled");
 
