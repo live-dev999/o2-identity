@@ -77,4 +77,7 @@
     <data name="Specialization" xml:space="preserve">
         <value>Специализация / Дополнительные направления</value>
     </data>
+    <data name="BackToClientApp" xml:space="preserve">
+        <value>Вернуть в приложение</value>
+    </data>
 </root>
