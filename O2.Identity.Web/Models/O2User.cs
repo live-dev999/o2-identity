@@ -27,6 +27,12 @@ namespace O2.Identity.Web.Models
         
         public string SpecialistId { get; set; }
         
+        public bool? Trial { get; set; }
+        
+        public DateTime? StartTrialDate { get; set; }
+        
+        public DateTime? EndTrialDate { get; set; }
+        
         //Verify SMS
         public bool Verified { get; set; }
         public string Specialization { get; set; }
